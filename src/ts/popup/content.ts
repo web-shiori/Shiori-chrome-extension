@@ -1,15 +1,15 @@
 // TODO: デフォルトのサムネイルurlを定数で持っておく
 
 interface content {
-    title: string
-    url: string
-    thumbnail_img_url: string
-    registered_at: string
-    scroll_position_x: number
-    scroll_position_y: number
-    max_scroll_position_x: number
-    max_scroll_position_y: number
-    video_playback_position: number
+    title: string;
+    url: string;
+    thumbnail_img_url: string;
+    registered_at: string;
+    scroll_position_x: number;
+    scroll_position_y: number;
+    max_scroll_position_x: number;
+    max_scroll_position_y: number;
+    video_playback_position: number;
 }
 
 const content_1: content = {
@@ -21,7 +21,7 @@ const content_1: content = {
     scroll_position_y: 500,
     max_scroll_position_x: 1000,
     max_scroll_position_y: 1000,
-    video_playback_position: 500,
+    video_playback_position: 50,
 }
 
 const content_2: content = {
@@ -33,7 +33,7 @@ const content_2: content = {
     scroll_position_y: 500,
     max_scroll_position_x: 1000,
     max_scroll_position_y: 1000,
-    video_playback_position: 500,
+    video_playback_position: 100,
 }
 const content_list = [content_1, content_2]
 
@@ -41,7 +41,7 @@ let content_view_tl = `
     <h4>保存済みのコンテンツ</h4>
     <hr>
 `
-
+// TODO: リファクタリング 一つの関数にする
 for (const content of content_list) {
     //TODO: サムネイルをurlから取得する
     //TODO: 登録日を加工する
@@ -62,14 +62,18 @@ if (content_list_view !== null) {
     content_list_view.innerHTML = content_view_tl;
 
     const content_view = document.getElementsByClassName('content-view');
-    for(var i = 0; i < content_view.length; i++) {
-        (function(index) {
-            content_view[index].addEventListener("click", function() {
-                alert("unko")
-            })
-        })(i);
+    for(let i = 0; i < content_view.length; i++) {
+        content_view[i].addEventListener("click", function (){
+            open_content(i)
+        }, false)
+        // content_view[i].addEventListener("click", open_content)
     }
-} else {
-    alert(document.documentElement.innerHTML)
 }
 
+async function open_content(index: number) {
+    const targetContent: content = content_list[index]
+    const url: string = targetContent.url
+    // 新しいタブを開く
+    await chrome.tabs.create({ url })
+    chrome.runtime.sendMessage(targetContent)
+}
