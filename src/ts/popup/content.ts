@@ -1,17 +1,5 @@
 // TODO: デフォルトのサムネイルurlを定数で持っておく
 
-interface content {
-    title: string;
-    url: string;
-    thumbnail_img_url: string;
-    registered_at: string;
-    scroll_position_x: number;
-    scroll_position_y: number;
-    max_scroll_position_x: number;
-    max_scroll_position_y: number;
-    video_playback_position: number;
-}
-
 const content_1: content = {
     title: "title1",
     url: "https://www.youtube.com/watch?v=pBtcTIDsS24&ab_channel=AbleNet",
