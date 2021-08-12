@@ -25,36 +25,45 @@ const content_2: content = {
 }
 const content_list = [content_1, content_2]
 
-let content_view_tl = `
+// コンテンツviewを生成する
+function generateContentView() {
+    let content_view_tl = `
     <h4>保存済みのコンテンツ</h4>
     <hr>
-`
-// TODO: リファクタリング 一つの関数にする
-for (const content of content_list) {
-    //TODO: サムネイルをurlから取得する
-    //TODO: 登録日を加工する
-    const view_tl = `
-    <div class="content-view">
-    <img src="${content.thumbnail_img_url}" height="50px" width="50px">
-    <h6>${content.title}</h6>
-    <h6>${content.url}</h6>
-    <h6>${content.registered_at}</h6>
-    </div>
-    <hr>
     `
-    content_view_tl += view_tl
+
+    for (const content of content_list) {
+        //TODO: サムネイルをurlから取得する
+        //TODO: 登録日を加工する
+        const view_tl = `
+        <div class="content-view">
+        <img src="${content.thumbnail_img_url}" height="50px" width="50px">
+        <h6>${content.title}</h6>
+        <h6>${content.url}</h6>
+        <h6>${content.registered_at}</h6>
+        </div>
+        <hr>
+        `
+        content_view_tl += view_tl
+    }
+    return content_view_tl
 }
 
-const content_list_view = document.getElementById("content-list-view");
-if (content_list_view !== null) {
-    content_list_view.innerHTML = content_view_tl;
+// コンテンツのviewを表示する
+function drawContentView(content_view_tl: string) {
+    const content_list_view = document.getElementById("content-list-view");
+    if (content_list_view !== null) {
+        content_list_view.innerHTML = content_view_tl;
+    }
+}
 
+// コンテンツにイベントを登録する
+function addEventToContentView() {
     const content_view = document.getElementsByClassName('content-view');
     for(let i = 0; i < content_view.length; i++) {
         content_view[i].addEventListener("click", function (){
             open_content(i)
         }, false)
-        // content_view[i].addEventListener("click", open_content)
     }
 }
 
@@ -67,3 +76,12 @@ async function open_content(index: number) {
     // メッセージを送る
     chrome.runtime.sendMessage(targetContent)
 }
+
+// ポップアップviewにコンテンツを表示する
+async function initialize_content() {
+    const content_view_tl = generateContentView()
+    await drawContentView(content_view_tl)
+    addEventToContentView()
+}
+
+initialize_content()
