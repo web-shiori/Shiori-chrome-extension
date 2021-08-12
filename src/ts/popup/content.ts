@@ -58,10 +58,12 @@ if (content_list_view !== null) {
     }
 }
 
+// コンテンツを新しいタブで開く
 async function open_content(index: number) {
     const targetContent: content = content_list[index]
     const url: string = targetContent.url
     // 新しいタブを開く
     await chrome.tabs.create({ url })
+    // メッセージを送る
     chrome.runtime.sendMessage(targetContent)
 }
