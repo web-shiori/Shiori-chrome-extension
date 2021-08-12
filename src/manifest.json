@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "shiori-web-chrome-extension",
+  "version": "1.0.0",
+  "description": "shiori-web-chrome-extension",
+  "browser_action": {
+    "default_title": "Web Shiori",
+    "default_icon": {
+      "16": "img/icon16.png",
+      "24": "img/icon16.png",
+      "32": "img/icon16.png"
+    },
+    "default_popup": "html/popup.html"
+  },
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "http://*/",
+    "https://*/"
+  ],
+  "author": "MasatoraAtarashi"
+}
