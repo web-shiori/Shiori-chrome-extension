@@ -6,9 +6,9 @@
   "browser_action": {
     "default_title": "Web Shiori",
     "default_icon": {
-      "16": "img/icon16.png",
-      "24": "img/icon16.png",
-      "32": "img/icon16.png"
+      "16": "img/icons/icon16.png",
+      "24": "img/icons/icon16.png",
+      "32": "img/icons/icon16.png"
     },
     "default_popup": "html/popup.html"
   },
