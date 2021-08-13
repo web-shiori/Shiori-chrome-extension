@@ -82,6 +82,7 @@ async function open_content(index: number) {
 
 // ポップアップviewにコンテンツを表示する
 async function initialize_content() {
+    // NOTE: 表示にちょっと時間がかかる(仕方ない？)
     await fetchContentList()
     const content_view_tl = await generateContentView()
     await drawContentView(content_view_tl)
