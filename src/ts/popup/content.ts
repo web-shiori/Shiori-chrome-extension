@@ -22,6 +22,7 @@ function fetchContentList() {
             console.error("エラーレスポンス", response);
         } else {
             return response.json().then((contentListJson: any) => {
+                // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
                 content_list = contentListJson.data.content
             });
         }
