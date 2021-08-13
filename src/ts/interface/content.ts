@@ -1,12 +1,23 @@
 interface content {
-    id: number;
+    content_id: number;
+    type: string;
     title: string;
     url: string;
+    sharing_url: string;
+    file_url: string;
     thumbnail_img_url: string;
-    registered_at: string;
     scroll_position_x: number;
     scroll_position_y: number;
     max_scroll_position_x: number;
     max_scroll_position_y: number;
     video_playback_position: number;
+    specified_text: string;
+    specified_dom_id: string;
+    specified_dom_class: string;
+    specified_dom_tag: string;
+    liked: boolean;
+    delete_flag: boolean;
+    deleted_at: string;
+    created_at: string;
+    updated_at: string;
 }

@@ -24,22 +24,7 @@ function fetchContentList() {
             console.error("エラーレスポンス", response);
         } else {
             return response.json().then((contentListJson: any) => {
-                // NOTE: もっといい感じに書けそう？
-                for (const contentJson of contentListJson.data.content) {
-                    const content: content = {
-                        id: contentJson.content_id,
-                        title: contentJson.title,
-                        url: contentJson.url,
-                        thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-                        registered_at: contentJson.created_at,
-                        scroll_position_x: contentJson.scroll_position_x,
-                        scroll_position_y: contentJson.scroll_position_y,
-                        max_scroll_position_x: contentJson.max_scroll_position_x,
-                        max_scroll_position_y: contentJson.max_scroll_position_y,
-                        video_playback_position: contentJson.video_playback_position,
-                    }
-                    content_list.push(content)
-                }
+                content_list = contentListJson.data.content
             });
         }
     }
@@ -54,7 +39,6 @@ function generateContentView() {
     `
 
     for (const content of content_list) {
-        console.log("generateのfor文")
         //TODO: サムネイルをurlから取得する
         //TODO: 登録日を加工する
         const view_tl = `
@@ -62,7 +46,7 @@ function generateContentView() {
         <img src="${content.thumbnail_img_url}" height="50px" width="50px">
         <h6>${content.title}</h6>
         <h6>${content.url}</h6>
-        <h6>${content.registered_at}</h6>
+        <h6>${content.updated_at}</h6>
         </div>
         <hr>
         `
