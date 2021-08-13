@@ -6,7 +6,6 @@
 
 # 開発
 ## インストール
-- TypeScript
 ```shell
 npm install
 ```
