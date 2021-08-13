@@ -16,6 +16,7 @@ function fetchContentList() {
         console.error(error);
     });
 
+    // NOTE: ts-ignoreを消したい
     // @ts-ignore
     function processFetchedResponse(response) {
         if (!response.ok) {
