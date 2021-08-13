@@ -1,6 +1,6 @@
 // TODO: デフォルトのサムネイルurlを定数で持っておく
 
-let content_list: content[] = []
+let contentList: content[] = []
 
 // コンテンツ一覧を取得する(上限5個)
 function fetchContentList() {
@@ -23,7 +23,7 @@ function fetchContentList() {
         } else {
             return response.json().then((contentListJson: any) => {
                 // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
-                content_list = contentListJson.data.content
+                contentList = contentListJson.data.content
             });
         }
     }
@@ -32,15 +32,15 @@ function fetchContentList() {
 
 // コンテンツviewを生成する
 function generateContentView() {
-    let content_view_tl = `
+    let contentViewTl = `
     <h4>保存済みのコンテンツ</h4>
     <hr>
     `
 
-    for (const content of content_list) {
+    for (const content of contentList) {
         //TODO: サムネイルをurlから取得する
         //TODO: 登録日を加工する
-        const view_tl = `
+        const viewTl = `
         <div class="content-view">
         <img src="${content.thumbnail_img_url}" height="50px" width="50px">
         <h6>${content.title}</h6>
@@ -49,44 +49,44 @@ function generateContentView() {
         </div>
         <hr>
         `
-        content_view_tl += view_tl
+        contentViewTl += viewTl
     }
-    return content_view_tl
+    return contentViewTl
 }
 
 // コンテンツのviewを表示する
-function drawContentView(content_view_tl: string) {
-    const content_list_view = document.getElementById("content-list-view");
-    if (content_list_view !== null) {
-        content_list_view.innerHTML = content_view_tl;
+function drawContentView(contentViewTl: string) {
+    const contentListView = document.getElementById("content-list-view");
+    if (contentListView !== null) {
+        contentListView.innerHTML = contentViewTl;
     }
 }
 
 // コンテンツにイベントを登録する
 function addEventToContentView() {
-    const content_view = document.getElementsByClassName('content-view');
-    for(let i = 0; i < content_view.length; i++) {
-        content_view[i].addEventListener("click", function (){
-            open_content(i)
+    const contentView = document.getElementsByClassName('content-view');
+    for(let i = 0; i < contentView.length; i++) {
+        contentView[i].addEventListener("click", function (){
+            openContent(i)
         }, false)
     }
 }
 
 // コンテンツを新しいタブで開く
-async function open_content(index: number) {
-    const targetContent: content = content_list[index]
+async function openContent(index: number) {
+    const targetContent: content = contentList[index]
     const url: string = targetContent.url
     await chrome.tabs.create({ url })
     chrome.runtime.sendMessage(targetContent)
 }
 
 // ポップアップviewにコンテンツを表示する
-async function initialize_content() {
+async function initializeContent() {
     // NOTE: 表示にちょっと時間がかかる(仕方ない？)
     await fetchContentList()
-    const content_view_tl = await generateContentView()
-    await drawContentView(content_view_tl)
+    const contentViewTl = await generateContentView()
+    await drawContentView(contentViewTl)
     addEventToContentView()
 }
 
-initialize_content()
+initializeContent()
