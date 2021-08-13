@@ -15,7 +15,7 @@ function clean(cb) {
 // ファイルコピー
 function copy() {
     return gulp.src([
-        './src/**/*.*', '!src/sass/**/*.scss', '!src/ts/**/*.ts'
+        './src/**/*.*', '!src/scss/**/*.scss', '!src/ts/**/*.ts'
     ], {
         base: './src'
     })
@@ -24,14 +24,14 @@ function copy() {
 
 // sassのコンパイル
 function sass() {
-    return gulp.src('./src/sass/*.scss')
+    return gulp.src('./src/scss/*.scss')
         .pipe(
             gulpSass({
                 fiber: Fiber,
                 outputStyle: 'compressed',
             })
         )
-        .pipe(gulp.dest('./dist/sass'))
+        .pipe(gulp.dest('./dist/scss'))
 }
 
 // TypeScriptのトランスパイル
