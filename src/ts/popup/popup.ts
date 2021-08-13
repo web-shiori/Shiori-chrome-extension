@@ -10,6 +10,14 @@ if (saveButton !== null) {
     })
 }
 
+// `コンテンツ一覧`ボタンをクリックしたときの処理
+const showContentListViewButton = document.getElementById("show-content-list-view-button")
+if (showContentListViewButton !== null) {
+    showContentListViewButton.addEventListener('click', function () {
+        chrome.tabs.create({url: '../html/contentList.html'})
+    })
+}
+
 // 現在開いているタブのコンテンツを取得する
 async function getContent(): Promise<PostContent> {
     const metaDataPromise = getMetaData()
