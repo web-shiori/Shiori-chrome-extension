@@ -1,5 +1,5 @@
 // メッセージが送られてきたときの処理
-chrome.runtime.onMessage.addListener((content: content) => {
+chrome.runtime.onMessage.addListener((content: Content) => {
     setScrollPosition(content.scroll_position_x, content.scroll_position_y)
     setVideoPlayBackPosition(content.video_playback_position)
 })
