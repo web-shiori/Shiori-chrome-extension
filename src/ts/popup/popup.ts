@@ -28,8 +28,8 @@ async function getContent(): Promise<postContent> {
             url: metaData.url,
             scroll_position_x: scrollPositionX,
             scroll_position_y: scrollPositionY,
-            max_scroll_position_x: metaData.width,
-            max_scroll_position_y: metaData.height,
+            max_scroll_position_x: metaData.max_scroll_position_x,
+            max_scroll_position_y: metaData.max_scroll_position_y,
             video_playback_position: videoPlayBackPosition,
             specified_text: null,
             specified_dom_id: null,
@@ -42,14 +42,19 @@ async function getContent(): Promise<postContent> {
 
 // 現在開いているタブのメタデータ(title,url,height,width)を取得する
 function getMetaData() {
-    // TODO: metaDataインターフェイスを定義する
-    return new Promise<{ title: string, url: string, height: number, width: number }>((resolve) => {
+    return new Promise<MetaData>((resolve) => {
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
             const title = tabs[0].title ?? ""
             const url = tabs[0].url ?? "a"
-            const height: number = tabs[0].height ?? 0
-            const width = tabs[0].width ?? 0
-            resolve({ title, url, height, width })
+            const max_scroll_position_x = tabs[0].width ?? 0
+            const max_scroll_position_y = tabs[0].height ?? 0
+            const metaData: MetaData = {
+                title,
+                url,
+                max_scroll_position_x,
+                max_scroll_position_y
+            }
+            resolve(metaData)
         })
     })
 }
