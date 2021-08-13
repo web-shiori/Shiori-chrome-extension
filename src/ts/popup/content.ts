@@ -16,9 +16,7 @@ function fetchContentList() {
         console.error(error);
     });
 
-    // NOTE: ts-ignoreを消したい
-    // @ts-ignore
-    function processFetchedResponse(response) {
+    function processFetchedResponse(response: any) {
         if (!response.ok) {
             // TODO: エラー時の処理を実装する
             console.error("エラーレスポンス", response);
