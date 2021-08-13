@@ -11,7 +11,7 @@ if (saveButton !== null) {
 }
 
 // 現在開いているタブのコンテンツを取得する
-async function getContent(): Promise<postContent> {
+async function getContent(): Promise<PostContent> {
     console.log("getContentFronCurrentTab")
     const metaDataPromise = getMetaData()
     const videoPlayBackPositionPromise = getVideoPlayBackPosition()
@@ -23,7 +23,7 @@ async function getContent(): Promise<postContent> {
 
     // TODO: エラー起きたときの処理も書く
     return new Promise((resolve => {
-        const postContent: postContent = {
+        const postContent: PostContent = {
             title: metaData.title,
             url: metaData.url,
             scroll_position_x: scrollPositionX,
@@ -96,6 +96,6 @@ function getScrollPositionY(): Promise<number> {
 }
 
 // 取得したコンテンツを保存する
-function saveContent(content: postContent) {
+function saveContent(content: PostContent) {
     alert(content.url)
 }

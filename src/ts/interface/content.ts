@@ -1,4 +1,4 @@
-interface content {
+interface Content {
     content_id: number;
     type: string;
     title: string;
@@ -22,7 +22,7 @@ interface content {
     updated_at: string;
 }
 
-interface postContent {
+interface PostContent {
     title: string;
     url: string;
     scroll_position_x: number;

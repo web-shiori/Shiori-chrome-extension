@@ -1,6 +1,6 @@
 // TODO: デフォルトのサムネイルurlを定数で持っておく
 
-let contentList: content[] = []
+let contentList: Content[] = []
 
 // コンテンツ一覧を取得する(上限5個)
 function fetchContentList() {
@@ -74,7 +74,7 @@ function addEventToContentView() {
 
 // コンテンツを新しいタブで開く
 async function openContent(index: number) {
-    const targetContent: content = contentList[index]
+    const targetContent: Content = contentList[index]
     const url: string = targetContent.url
     await chrome.tabs.create({ url })
     chrome.runtime.sendMessage(targetContent)
