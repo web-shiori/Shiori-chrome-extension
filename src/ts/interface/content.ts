@@ -1,4 +1,5 @@
 interface content {
+    id: number;
     title: string;
     url: string;
     thumbnail_img_url: string;

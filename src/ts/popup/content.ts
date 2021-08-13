@@ -1,29 +1,49 @@
 // TODO: デフォルトのサムネイルurlを定数で持っておく
 
-const content_1: content = {
-    title: "title1",
-    url: "https://www.youtube.com/watch?v=pBtcTIDsS24&ab_channel=AbleNet",
-    thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-    registered_at: "2019-05-12T20:48:24.000+09:00",
-    scroll_position_x: 0,
-    scroll_position_y: 500,
-    max_scroll_position_x: 1000,
-    max_scroll_position_y: 1000,
-    video_playback_position: 50,
+let content_list: content[] = []
+
+// コンテンツ一覧を取得する(上限5個)
+function fetchContentList() {
+    const limit = 5
+    // TODO: URLを本番APIに修正する
+    return fetch(`https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content?limit=${limit}`, {
+        headers: {
+            'access-token': 'access-token',
+            'client': 'client',
+            'uid': 'uid'
+        }
+    }).then(processFetchedResponse).catch(error => {
+        console.error(error);
+    });
+
+    // @ts-ignore
+    function processFetchedResponse(response) {
+        if (!response.ok) {
+            // TODO: エラー時の処理を実装する
+            console.error("エラーレスポンス", response);
+        } else {
+            return response.json().then((contentListJson: any) => {
+                // NOTE: もっといい感じに書けそう？
+                for (const contentJson of contentListJson.data.content) {
+                    const content: content = {
+                        id: contentJson.content_id,
+                        title: contentJson.title,
+                        url: contentJson.url,
+                        thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+                        registered_at: contentJson.created_at,
+                        scroll_position_x: contentJson.scroll_position_x,
+                        scroll_position_y: contentJson.scroll_position_y,
+                        max_scroll_position_x: contentJson.max_scroll_position_x,
+                        max_scroll_position_y: contentJson.max_scroll_position_y,
+                        video_playback_position: contentJson.video_playback_position,
+                    }
+                    content_list.push(content)
+                }
+            });
+        }
+    }
 }
 
-const content_2: content = {
-    title: "title2",
-    url: "https://www.youtube.com/watch?v=pBtcTIDsS24&ab_channel=AbleNet",
-    thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-    registered_at: "2019-05-12T20:48:24.000+09:00",
-    scroll_position_x: 0,
-    scroll_position_y: 500,
-    max_scroll_position_x: 1000,
-    max_scroll_position_y: 1000,
-    video_playback_position: 100,
-}
-const content_list = [content_1, content_2]
 
 // コンテンツviewを生成する
 function generateContentView() {
@@ -33,6 +53,7 @@ function generateContentView() {
     `
 
     for (const content of content_list) {
+        console.log("generateのfor文")
         //TODO: サムネイルをurlから取得する
         //TODO: 登録日を加工する
         const view_tl = `
@@ -79,7 +100,8 @@ async function open_content(index: number) {
 
 // ポップアップviewにコンテンツを表示する
 async function initialize_content() {
-    const content_view_tl = generateContentView()
+    await fetchContentList()
+    const content_view_tl = await generateContentView()
     await drawContentView(content_view_tl)
     addEventToContentView()
 }
