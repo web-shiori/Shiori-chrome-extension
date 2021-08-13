@@ -12,7 +12,6 @@ if (saveButton !== null) {
 
 // 現在開いているタブのコンテンツを取得する
 async function getContent(): Promise<PostContent> {
-    console.log("getContentFronCurrentTab")
     const metaDataPromise = getMetaData()
     const videoPlayBackPositionPromise = getVideoPlayBackPosition()
     const scrollPositionXPromise = getScrollPositionX()
@@ -97,5 +96,26 @@ function getScrollPositionY(): Promise<number> {
 
 // 取得したコンテンツを保存する
 function saveContent(content: PostContent) {
-    alert(content.url)
+    // TODO: URLを本番APIに修正する
+    const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'access-token': 'access-token',
+            'client': 'client',
+            'uid': 'uid'
+        },
+        body: JSON.stringify(content)
+    }).then(processResponse).catch(error => {
+        console.error(error);
+    });
+
+    function processResponse(response: any) {
+        if (!response.ok) {
+            // TODO: エラー時の処理を実装する
+            console.error("エラーレスポンス", response);
+        } else {
+            console.log(response.status)
+        }
+    }
 }
