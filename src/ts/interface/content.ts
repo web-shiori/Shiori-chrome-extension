@@ -21,3 +21,17 @@ interface content {
     created_at: string;
     updated_at: string;
 }
+
+interface postContent {
+    title: string;
+    url: string;
+    scroll_position_x: number;
+    scroll_position_y: number;
+    max_scroll_position_x: number;
+    max_scroll_position_y: number;
+    video_playback_position: number;
+    specified_text: string|null;
+    specified_dom_id: string|null;
+    specified_dom_class: string|null;
+    specified_dom_tag: string|null;
+}
