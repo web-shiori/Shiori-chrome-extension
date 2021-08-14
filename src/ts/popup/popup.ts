@@ -123,7 +123,10 @@ function saveContent(content: PostContent) {
             // TODO: エラー時の処理を実装する
             console.error("エラーレスポンス", response);
         } else {
-            console.log(response.status)
+            const defaultPopup = document.getElementById("default-popup");
+            const contentSavedPopup = document.getElementById("content-saved-popup");
+            defaultPopup!.style.display = "none"
+            contentSavedPopup!.style.display = "block"
         }
     }
 }
