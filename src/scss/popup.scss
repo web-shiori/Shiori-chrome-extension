@@ -3,7 +3,7 @@
 $shiori-primary-color: #1DDBB5;
 
 #default-popup {
-  .save-button-view {
+  #save-button-view {
     background-color: $shiori-primary-color;
 
     #save-button {
@@ -23,8 +23,12 @@ $shiori-primary-color: #1DDBB5;
     text-decoration: underline
   }
 
+  #profile-view {
+    border-top: thin solid gray;
+    text-align: right;
+  }
 }
 
 #content-saved-popup {
-  
+
 }

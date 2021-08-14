@@ -33,7 +33,7 @@ function fetchContentList() {
 // コンテンツviewを生成する
 function generateContentView() {
     let contentViewTl = `
-    <h4>保存済みのコンテンツ</h4>
+    <h6>保存済みのコンテンツ</h6>
     <hr>
     `
 
@@ -43,9 +43,9 @@ function generateContentView() {
         const viewTl = `
         <div class="content-view">
         <img src="${content.thumbnail_img_url}" height="50px" width="50px">
-        <h6>${content.title}</h6>
-        <h6>${content.url}</h6>
-        <h6>${content.updated_at}</h6>
+        <p>${content.title}</p>
+        <p>${content.url}</p>
+        <p>${content.updated_at}</p>
         </div>
         <hr>
         `
