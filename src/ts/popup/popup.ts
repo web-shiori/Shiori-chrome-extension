@@ -123,6 +123,7 @@ function saveContent(content: PostContent) {
             // TODO: エラー時の処理を実装する
             console.error("エラーレスポンス", response);
         } else {
+            // 保存完了画面表示
             const defaultPopup = document.getElementById("default-popup");
             const contentSavedPopup = document.getElementById("content-saved-popup");
             defaultPopup!.style.display = "none"
