@@ -5,13 +5,18 @@
     <link rel="stylesheet" type="text/css" href="../scss/popup.css">
 </head>
 <body class="popup-body">
-    <div class="save-button-view">
-        <button id="save-button">保存する</button>
-    </div>
+    <div id="default-popup">
+        <div class="save-button-view">
+            <button id="save-button">保存する</button>
+        </div>
 
-    <div id="content-list-view">
+        <div id="content-list-view">
+        </div>
+        <p id="show-content-list-view-button">コンテンツ一覧</p>
     </div>
-    <p id="show-content-list-view-button">コンテンツ一覧</p>
+    <div id="content-saved-popup" style="display: none">
+        保存完了
+    </div>
 
     <script type="text/javascript" src="../js/popup/popup.js"></script>
     <script type="text/javascript" src="../js/popup/content.js"></script>
