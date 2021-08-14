@@ -33,7 +33,7 @@ function fetchContentList() {
 // コンテンツviewを生成する
 function generateContentView() {
     let contentViewTl = `
-    <h6>保存済みのコンテンツ</h6>
+    <h6 id="saved-content-text">保存済みのコンテンツ</h6>
     <hr>
     `
 
@@ -42,10 +42,10 @@ function generateContentView() {
         //TODO: 登録日を加工する
         const viewTl = `
         <div class="content-view">
-        <img src="${content.thumbnail_img_url}" height="50px" width="50px">
-        <p>${content.title}</p>
-        <p>${content.url}</p>
-        <p>${content.updated_at}</p>
+        <img src="${content.thumbnail_img_url}" class="content-thumbnail" height="50px" width="50px">
+        <p class="content-title">${content.title}</p>
+        <p class="content-url">${content.url}</p>
+        <p class="content-updated_at">${content.updated_at}</p>
         </div>
         <hr>
         `
