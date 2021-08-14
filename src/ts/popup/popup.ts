@@ -1,23 +1,3 @@
-// `保存する`ボタンをクリックしたときの処理
-const saveButton = document.getElementById("save-button");
-if (saveButton !== null) {
-    saveButton.addEventListener('click', async function () {
-        getContent().then(content => {
-            saveContent(content)
-        }).catch((error) => {
-            console.error("エラー", error)
-        })
-    })
-}
-
-// `コンテンツ一覧`ボタンをクリックしたときの処理
-const showContentListViewButton = document.getElementById("show-content-list-view-button")
-if (showContentListViewButton !== null) {
-    showContentListViewButton.addEventListener('click', function () {
-        chrome.tabs.create({url: '../html/contentList.html'})
-    })
-}
-
 // 現在開いているタブのコンテンツを取得する
 async function getContent(): Promise<PostContent> {
     const metaDataPromise = getMetaData()
@@ -130,4 +110,32 @@ function saveContent(content: PostContent) {
             contentSavedPopup!.style.display = "block"
         }
     }
+}
+
+// `保存する`ボタンをクリックしたときの処理
+const saveButton = document.getElementById("save-button");
+if (saveButton !== null) {
+    saveButton.addEventListener('click', async function () {
+        getContent().then(content => {
+            saveContent(content)
+        }).catch((error) => {
+            console.error("エラー", error)
+        })
+    })
+}
+
+// `コンテンツ一覧`ボタンをクリックしたときの処理
+const showContentListViewButton = document.getElementById("show-content-list-view-button")
+if (showContentListViewButton !== null) {
+    showContentListViewButton.addEventListener('click', function () {
+        chrome.tabs.create({url: '../html/contentList.html'})
+    })
+}
+
+// ⚙ボタンをクリックしたときの処理
+const showOptionViewButton = document.getElementById("show-option-view-button")
+if (showOptionViewButton !== null) {
+    showOptionViewButton.addEventListener('click', function () {
+        chrome.tabs.create({url: '../html/options.html'})
+    })
 }
