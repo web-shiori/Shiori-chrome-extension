@@ -12,3 +12,11 @@ $shiori-primary-color: #1DDBB5;
   }
 }
 
+#show-content-list-view-button {
+  text-align: center;
+}
+
+#show-content-list-view-button:hover {
+  color: $shiori-primary-color; 	/*リンクにマウスが乗ったら背景色を変更する*/
+  text-decoration: underline
+}
