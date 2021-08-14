@@ -55,7 +55,7 @@ function generateContentView() {
 }
 
 // コンテンツのviewを表示する
-function drawContentView(contentViewTl: string) {
+function renderContentView(contentViewTl: string) {
     const contentListView = document.getElementById("content-list-view");
     if (contentListView !== null) {
         contentListView.innerHTML = contentViewTl;
@@ -85,7 +85,7 @@ async function initializeContent() {
     // NOTE: 表示にちょっと時間がかかる(仕方ない？)
     await fetchContentList()
     const contentViewTl = await generateContentView()
-    await drawContentView(contentViewTl)
+    await renderContentView(contentViewTl)
     addEventToContentView()
 }
 
