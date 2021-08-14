@@ -40,11 +40,14 @@ function generateContentView() {
     for (const content of contentList) {
         //TODO: サムネイルをurlから取得する
         //TODO: 登録日を加工する
+
+        const domain = new URL(content.url).host
+
         const viewTl = `
         <div class="content-view">
         <img src="${content.thumbnail_img_url}" class="content-thumbnail" height="50px" width="50px">
         <p class="content-title">${content.title}</p>
-        <p class="content-url">${content.url}</p>
+        <p class="content-url">${domain}</p>
         <p class="content-updated_at">${content.updated_at}</p>
         </div>
         <hr>
