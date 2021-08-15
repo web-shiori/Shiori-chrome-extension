@@ -106,8 +106,12 @@ function saveContent(content: PostContent) {
             // 保存完了画面表示
             const defaultPopup = document.getElementById("default-popup");
             const contentSavedPopup = document.getElementById("content-saved-popup");
-            defaultPopup!.style.display = "none"
-            contentSavedPopup!.style.display = "block"
+            if (defaultPopup !== null) {
+                defaultPopup.style.display = "none"
+            }
+            if (contentSavedPopup !== null) {
+                contentSavedPopup.style.display = "block"
+            }
         }
     }
 }
