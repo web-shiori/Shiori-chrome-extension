@@ -159,7 +159,6 @@ function dummyFetchContentList() {
 function generateContentView() {
     let contentViewTl = `
     <h6 id="saved-content-text">保存済みのコンテンツ</h6>
-    <hr>
     `
 
     for (const content of contentList) {
@@ -180,7 +179,6 @@ function generateContentView() {
                 </div>
             </div>
         </div>
-        <hr>
         `
         contentViewTl += viewTl
     }
