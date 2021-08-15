@@ -48,10 +48,15 @@ function generateContentView() {
 
         const viewTl = `
         <div class="content-view">
-        <img src="${content.thumbnail_img_url}" class="content-thumbnail" height="50px" width="50px">
-        <p class="content-title">${content.title}</p>
-        <p class="content-url">${domain}</p>
-        <p class="content-updated_at">${month}月${date}日</p>
+            <div class="content-thumbnail-view">
+                <img src="${content.thumbnail_img_url}" class="content-thumbnail-img">
+            </div>
+            <div class="content-info">
+                <div class="content-info-text-area">
+                    <p class="content-title">${content.title}</p>
+                    <p class="content-sub-info">${domain}・${month}月${date}日</p>
+                </div>
+            </div>
         </div>
         <hr>
         `
