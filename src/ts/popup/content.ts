@@ -38,9 +38,6 @@ function generateContentView() {
     `
 
     for (const content of contentList) {
-        //TODO: サムネイルをurlから取得する
-        //TODO: 登録日を加工する
-
         const domain = new URL(content.url).host
         const dateTime = new Date(content.updated_at)
         const month = dateTime.getMonth() + 1
