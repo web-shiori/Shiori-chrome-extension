@@ -152,6 +152,7 @@ function dummyFetchContentList() {
     }
 
     contentList = [content1, content2, content3, content4, content5]
+    contentList = []
 }
 
 
@@ -160,6 +161,22 @@ function generateContentView() {
     let contentViewTl = `
     <h6 id="saved-content-text">保存済みのコンテンツ</h6>
     `
+
+    // 保存済みのコンテンツが無い時の表示
+    if (contentList.length === 0) {
+        const contentListView = document.getElementById("content-list-view");
+        const showContentListViewButtonView = document.getElementById("show-content-list-view-button");
+        const footerView = document.getElementById("footer-view");
+        if (contentListView !== null) {
+            contentListView.style.display = "none"
+        }
+        if (showContentListViewButtonView !== null) {
+            showContentListViewButtonView.style.display = "none"
+        }
+        if (footerView !== null) {
+            footerView.style.marginTop = "0"
+        }
+    }
 
     for (const content of contentList) {
         const domain = new URL(content.url).host
