@@ -4,102 +4,112 @@ $shiori-primary-color: #1DDBB5;
 
 #popup-body {
   width: 300px;
+  // どれがいいかわからない
+  border: 3px solid gainsboro;
+  //border: 3px solid #08ADEC;
+  /* border: 3px solid #1DDBB5; */
 
-  #default-popup {
-    #save-button-view {
+#default-popup {
+  #save-button-view {
+    background-color: $shiori-primary-color;
+    border-radius: 50px;
+    margin: 10px;
+
+    #save-button {
+      color: white;
       background-color: $shiori-primary-color;
-      border-radius: 50px;
-      margin: 10px;
-
-      #save-button {
-        color: white;
-        background-color: $shiori-primary-color;
-        width: 100%;
-        height: 40px;
-        border: none;
-        border-radius: 5px;
-        outline: none;
-      }
+      width: 100%;
+      height: 40px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
     }
 
-    #content-list-view {
-      border-bottom: 1px solid rgba(0,0,0,.1);
-      margin-top: 20px;
+    #save-button:hover {
+      filter: brightness(80%);
+    }
+  }
 
-      .content-view {
-        width: 100%;
-        height: 70px;
-        border-top: 1px solid rgba(0,0,0,.1);
-        .content-thumbnail-view {
-          float: left;
-          width: 30%;
-          height: 100%;
-          position: relative;
-          .content-thumbnail-img {
-            width: 70px;
-            height: 50px;
-            border-radius: 5px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-          }
-        }
+  #content-list-view {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    margin-top: 20px;
 
-        .content-info {
-          height: 100%;
-          width: 70%;
-          float: left;
-          font-size: small;
-          position: relative;
-          .content-info-text-area {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            height: 80%;
-            .content-title {
-              margin-top: 10px;
-              margin-bottom: 0px;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-              margin-right: 10px;
-            }
-            .content-sub-info {
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-              margin-right: 10px;
-              margin-top: 0px;
-              margin-bottom: 0px;
-            }
-          }
+    .content-view {
+      width: 100%;
+      height: 70px;
+      border-top: 1px solid rgba(0,0,0,.1);
+      cursor: pointer;
+      .content-thumbnail-view {
+        float: left;
+        width: 30%;
+        height: 100%;
+        position: relative;
+        .content-thumbnail-img {
+          width: 70px;
+          height: 50px;
+          border-radius: 5px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
         }
       }
-      .content-view:hover {
-        background-color: gainsboro;
+
+      .content-info {
+        height: 100%;
+        width: 70%;
+        float: left;
+        font-size: small;
+        position: relative;
+        .content-info-text-area {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          height: 80%;
+          .content-title {
+            margin-top: 10px;
+            margin-bottom: 0px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-right: 10px;
+          }
+          .content-sub-info {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-right: 10px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+          }
+        }
       }
     }
-
-    #saved-content-text {
-      margin-top: 20px;
-      margin-left: 10px;
-      margin-bottom: 5px;
+    .content-view:hover {
+      background-color: gainsboro;
     }
+  }
 
-    #show-content-list-view-button {
-      text-align: center;
-      margin-top: 5px;
-      font-size: small;
-    }
+  #saved-content-text {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+  }
 
-    #show-content-list-view-button:hover {
-      color: $shiori-primary-color; /*リンクにマウスが乗ったら背景色を変更する*/
+  #show-content-list-view-button {
+    text-align: center;
+    margin-top: 5px;
+    font-size: small;
+    cursor: pointer;
+  }
+
+  #show-content-list-view-button:hover {
+    color: $shiori-primary-color; /*リンクにマウスが乗ったら背景色を変更する*/
       text-decoration: underline
     }
 
@@ -112,6 +122,7 @@ $shiori-primary-color: #1DDBB5;
       #show-option-view-button {
         font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
         font-style: normal;
+        cursor: pointer;
       }
 
       #show-option-view-button:hover {
