@@ -38,6 +38,7 @@ $shiori-primary-color: #1DDBB5;
       width: 100%;
       height: 70px;
       border-top: 1px solid rgba(0,0,0,.1);
+      cursor: pointer;
       .content-thumbnail-view {
         float: left;
         width: 30%;
@@ -104,6 +105,7 @@ $shiori-primary-color: #1DDBB5;
     text-align: center;
     margin-top: 5px;
     font-size: small;
+    cursor: pointer;
   }
 
   #show-content-list-view-button:hover {
@@ -120,6 +122,7 @@ $shiori-primary-color: #1DDBB5;
       #show-option-view-button {
         font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
         font-style: normal;
+        cursor: pointer;
       }
 
       #show-option-view-button:hover {
