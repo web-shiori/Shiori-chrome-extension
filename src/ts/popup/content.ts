@@ -29,6 +29,131 @@ function fetchContentList() {
     }
 }
 
+// 動作確認用コンテンツ一覧取得
+function dummyFetchContentList() {
+    const content1: Content = {
+        content_id: 0,
+        created_at: "",
+        delete_flag: false,
+        deleted_at: "",
+        file_url: "",
+        liked: false,
+        max_scroll_position_x: 0,
+        max_scroll_position_y: 0,
+        scroll_position_x: 0,
+        scroll_position_y: 0,
+        sharing_url: "",
+        specified_dom_class: "",
+        specified_dom_id: "",
+        specified_dom_tag: "",
+        specified_text: "",
+        thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+        title: "Web-Shioriデモ動画",
+        type: "",
+        updated_at: "2019-05-12T20:48:24.000+09:00",
+        url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
+        video_playback_position: 30
+    }
+
+    const content2: Content = {
+        content_id: 0,
+        created_at: "",
+        delete_flag: false,
+        deleted_at: "",
+        file_url: "",
+        liked: false,
+        max_scroll_position_x: 0,
+        max_scroll_position_y: 0,
+        scroll_position_x: 0,
+        scroll_position_y: 500,
+        sharing_url: "",
+        specified_dom_class: "",
+        specified_dom_id: "",
+        specified_dom_tag: "",
+        specified_text: "",
+        thumbnail_img_url: "https://gyazo.com/f149c85d239c13b76388822357755672/thumb/400",
+        title: "アイデア",
+        type: "",
+        updated_at: "2020-05-12T20:48:24.000+09:00",
+        url: "https://qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d",
+        video_playback_position: 0
+    }
+
+    const content3: Content = {
+        content_id: 0,
+        created_at: "",
+        delete_flag: false,
+        deleted_at: "",
+        file_url: "",
+        liked: false,
+        max_scroll_position_x: 0,
+        max_scroll_position_y: 0,
+        scroll_position_x: 0,
+        scroll_position_y: 500,
+        sharing_url: "",
+        specified_dom_class: "",
+        specified_dom_id: "",
+        specified_dom_tag: "",
+        specified_text: "",
+        thumbnail_img_url: "https://hayabusa.io/ca/files/topics/26111_ext_24_1.jpg?version=1619512503&v=1619512503",
+        title: "テクノロジーマップ",
+        type: "",
+        updated_at: "2019-05-12T20:48:24.000+09:00",
+        url: "https://d2utiq8et4vl56.cloudfront.net/files/user/pdf/techinfo/AIDataTechnologyMap_210520.pdf?v=1621566300",
+        video_playback_position: 0
+    }
+
+    const content4: Content = {
+        content_id: 0,
+        created_at: "",
+        delete_flag: false,
+        deleted_at: "",
+        file_url: "",
+        liked: false,
+        max_scroll_position_x: 0,
+        max_scroll_position_y: 0,
+        scroll_position_x: 0,
+        scroll_position_y: 0,
+        sharing_url: "",
+        specified_dom_class: "",
+        specified_dom_id: "",
+        specified_dom_tag: "",
+        specified_text: "",
+        thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+        title: "Web-Shioriデモ動画",
+        type: "",
+        updated_at: "2019-05-12T20:48:24.000+09:00",
+        url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
+        video_playback_position: 30
+    }
+
+    const content5: Content = {
+        content_id: 0,
+        created_at: "",
+        delete_flag: false,
+        deleted_at: "",
+        file_url: "",
+        liked: false,
+        max_scroll_position_x: 0,
+        max_scroll_position_y: 0,
+        scroll_position_x: 0,
+        scroll_position_y: 0,
+        sharing_url: "",
+        specified_dom_class: "",
+        specified_dom_id: "",
+        specified_dom_tag: "",
+        specified_text: "",
+        thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+        title: "Web-Shioriデモ動画",
+        type: "",
+        updated_at: "2019-05-12T20:48:24.000+09:00",
+        url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
+        video_playback_position: 30
+    }
+
+    contentList = [content1, content2, content3, content4, content5]
+}
+
 
 // コンテンツviewを生成する
 function generateContentView() {
@@ -91,7 +216,8 @@ async function openContent(index: number) {
 // ポップアップviewにコンテンツを表示する
 async function initializeContent() {
     // NOTE: 表示にちょっと時間がかかる(仕方ない？)
-    await fetchContentList()
+    // await fetchContentList()
+    await dummyFetchContentList()
     const contentViewTl = await generateContentView()
     await renderContentView(contentViewTl)
     addEventToContentView()
