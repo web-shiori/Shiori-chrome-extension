@@ -192,7 +192,7 @@ module contentList {
 
     // コンテンツにイベントを登録する
     function addEventToContentView() {
-        const contentView = document.getElementsByClassName('content-view');
+        const contentView = document.getElementsByClassName('content-view')
         for (let i = 0; i < contentView.length; i++) {
             contentView[i].addEventListener("click", function () {
                 openContent(i)
