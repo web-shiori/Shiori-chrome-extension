@@ -153,6 +153,7 @@ module contentList {
         	// contentList = []
     }
 
+    // フォルダに含まれているコンテンツ一覧を取得する
     function fetchFolderContentList(folderId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content`
@@ -234,6 +235,7 @@ module contentList {
         chrome.runtime.sendMessage(targetContent)
     }
 
+    // インジケータを表示
     function startIndicator() {
         const contentIndicator = document.getElementById("content-list-indicator")
         if (contentIndicator !== null) {
@@ -241,6 +243,7 @@ module contentList {
         }
     }
 
+    // インジケータを非表示にする
     function stopIndicator() {
         const contentIndicator = document.getElementById("content-list-indicator")
         if (contentIndicator !== null) {
@@ -251,6 +254,7 @@ module contentList {
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(folderId: number|null) {
         startIndicator()
+
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
             await fetchFolderContentList(folderId)
@@ -261,6 +265,7 @@ module contentList {
         const contentViewTl = await generateContentView()
         await renderContentView(contentViewTl)
         addEventToContentView()
+
         stopIndicator()
     }
 

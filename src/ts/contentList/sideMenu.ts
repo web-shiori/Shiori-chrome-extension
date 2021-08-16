@@ -1,6 +1,7 @@
 module contentList {
     let folderList: Folder[] = []
 
+    // フォルダ一覧を取得する
     function fetchFolderList() {
         // TODO: URLを本番APIに修正する
         const url = "https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder"
@@ -26,6 +27,7 @@ module contentList {
         }
     }
 
+    // フォルダviewを生成する
     function generateFolderView(): string {
         let folderViewTl: string = `
         `
@@ -44,6 +46,7 @@ module contentList {
         return folderViewTl
     }
 
+    // フォルダのviewを表示する
     function renderFolderView(folderViewTl: string) {
         const folderListView = document.getElementsByClassName("folder-list-view")[0]
         if (folderListView !== null) {
@@ -51,6 +54,7 @@ module contentList {
         }
     }
 
+    // フォルダにイベントを登録する
     function addEventToFolderView() {
         const folderVIew = document.getElementsByClassName("folder-view")
         for (let i = 0; i < folderVIew.length; i++) {
@@ -61,14 +65,11 @@ module contentList {
         }
     }
 
+    // サイドメニューにフォルダを表示する
     async function initializeSideMenu() {
-        // フォルダ一覧取得
         await fetchFolderList()
-        // html作成
         const folderViewTl = await generateFolderView()
-        // 表示
         await renderFolderView(folderViewTl)
-        // イベント追加
         addEventToFolderView()
     }
 
