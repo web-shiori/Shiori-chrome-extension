@@ -35,7 +35,7 @@ module contentList {
             const viewTl = `
             <div class="folder-view">
                 <div class="folder-text-area">
-                    <p class="folder-info">${folder.name} ${folder.content_count}</p>
+                    <p class="folder-info"><i class="bi-gear-fill"></i>${folder.name} ${folder.content_count}</p>
                 </div>
             </div>
             `

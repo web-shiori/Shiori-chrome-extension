@@ -19,6 +19,17 @@ $header-height: 48px;
     height: calc(100vh - #{$header-height});
     display: block;
     float: left;
+
+    .folder-list-view {
+      .folder-view {
+        //消す
+        background-color: azure;
+      }
+
+      .folder-view:hover {
+        background-color: gainsboro;
+      }
+    }
   }
 
   .main {
