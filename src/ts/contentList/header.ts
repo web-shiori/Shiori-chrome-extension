@@ -18,13 +18,4 @@ module contentList {
             return false;
         }
     }
-
-    //NOTE: もっとかんたんにやる方法ある気がする。formのAPIを調べる
-    const searchButton = document.getElementById("search-button")
-    if (searchButton !== null) {
-        searchButton.addEventListener("click", async function () {
-            const searchQuery = await getSearchQuery()
-            initializeContent(searchQuery, currentFolderId)
-        })
-    }
 }
