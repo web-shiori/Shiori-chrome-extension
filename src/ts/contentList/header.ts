@@ -1,5 +1,6 @@
 module contentList {
 
+    // 入力された検索ワードを取得
     function getSearchQuery(): Promise<string> {
         const searchQuery = (<HTMLInputElement>document.getElementById("search-text-field")).value || ""
         return new Promise<string>((resolve => {
