@@ -1,131 +1,157 @@
 module contentList {
     let contentList: Content[] = []
 
-	// 動作確認用コンテンツ一覧取得
-    function dummyFetchContentList() {
-        const content1: Content = {
-            content_id: 0,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
+    // コンテンツ一覧を取得する
+    function fetchContentList() {
+        // TODO: URLを本番APIに修正する
+        return fetch(`https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`, {
+            headers: {
+                'access-token': 'access-token',
+                'client': 'client',
+                'uid': 'uid'
+            }
+        }).then(processFetchedResponse).catch(error => {
+            console.error(error);
+        });
 
-        const content2: Content = {
-            content_id: 0,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 500,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https:	//gyazo.com/f149c85d239c13b76388822357755672/thumb/400",
-            title: "アイデア",
-            type: "",
-            updated_at: "2020-05-12T20:48:24.000+09:00",
-            url: "https:	//qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d",
-            video_playback_position: 0
+        function processFetchedResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response);
+            } else {
+                return response.json().then((contentListJson: any) => {
+                    // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
+                    contentList = contentListJson.data.content
+                });
+            }
         }
-
-        const content3: Content = {
-            content_id: 0,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 500,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https:	//hayabusa.io/ca/files/topics/26111_ext_24_1.jpg?version=1619512503&v=1619512503",
-            title: "テクノロジーマップ",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//d2utiq8et4vl56.cloudfront.net/files/user/pdf/techinfo/AIDataTechnologyMap_210520.pdf?v=1621566300",
-            video_playback_position: 0
-        }
-
-        const content4: Content = {
-            content_id: 0,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "ながああああああああああああああああああああああああああああああああああああああああああああああああああああいタイトル",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content5: Content = {
-            content_id: 0,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        contentList = [content1, content2, content3, content4, content5]
-        	// contentList = []
     }
+
+    // 動作確認用コンテンツ一覧取得
+    // function dummyFetchContentList() {
+    //     const content1: Content = {
+    //         content_id: 0,
+    //         created_at: "",
+    //         delete_flag: false,
+    //         deleted_at: "",
+    //         file_url: "",
+    //         liked: false,
+    //         max_scroll_position_x: 0,
+    //         max_scroll_position_y: 0,
+    //         scroll_position_x: 0,
+    //         scroll_position_y: 0,
+    //         sharing_url: "",
+    //         specified_dom_class: "",
+    //         specified_dom_id: "",
+    //         specified_dom_tag: "",
+    //         specified_text: "",
+    //         thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+    //         title: "Web-Shioriデモ動画",
+    //         type: "",
+    //         updated_at: "2019-05-12T20:48:24.000+09:00",
+    //         url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
+    //         video_playback_position: 30
+    //     }
+    //
+    //     const content2: Content = {
+    //         content_id: 0,
+    //         created_at: "",
+    //         delete_flag: false,
+    //         deleted_at: "",
+    //         file_url: "",
+    //         liked: false,
+    //         max_scroll_position_x: 0,
+    //         max_scroll_position_y: 0,
+    //         scroll_position_x: 0,
+    //         scroll_position_y: 500,
+    //         sharing_url: "",
+    //         specified_dom_class: "",
+    //         specified_dom_id: "",
+    //         specified_dom_tag: "",
+    //         specified_text: "",
+    //         thumbnail_img_url: "https:	//gyazo.com/f149c85d239c13b76388822357755672/thumb/400",
+    //         title: "アイデア",
+    //         type: "",
+    //         updated_at: "2020-05-12T20:48:24.000+09:00",
+    //         url: "https:	//qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d",
+    //         video_playback_position: 0
+    //     }
+    //
+    //     const content3: Content = {
+    //         content_id: 0,
+    //         created_at: "",
+    //         delete_flag: false,
+    //         deleted_at: "",
+    //         file_url: "",
+    //         liked: false,
+    //         max_scroll_position_x: 0,
+    //         max_scroll_position_y: 0,
+    //         scroll_position_x: 0,
+    //         scroll_position_y: 500,
+    //         sharing_url: "",
+    //         specified_dom_class: "",
+    //         specified_dom_id: "",
+    //         specified_dom_tag: "",
+    //         specified_text: "",
+    //         thumbnail_img_url: "https:	//hayabusa.io/ca/files/topics/26111_ext_24_1.jpg?version=1619512503&v=1619512503",
+    //         title: "テクノロジーマップ",
+    //         type: "",
+    //         updated_at: "2019-05-12T20:48:24.000+09:00",
+    //         url: "https:	//d2utiq8et4vl56.cloudfront.net/files/user/pdf/techinfo/AIDataTechnologyMap_210520.pdf?v=1621566300",
+    //         video_playback_position: 0
+    //     }
+    //
+    //     const content4: Content = {
+    //         content_id: 0,
+    //         created_at: "",
+    //         delete_flag: false,
+    //         deleted_at: "",
+    //         file_url: "",
+    //         liked: false,
+    //         max_scroll_position_x: 0,
+    //         max_scroll_position_y: 0,
+    //         scroll_position_x: 0,
+    //         scroll_position_y: 0,
+    //         sharing_url: "",
+    //         specified_dom_class: "",
+    //         specified_dom_id: "",
+    //         specified_dom_tag: "",
+    //         specified_text: "",
+    //         thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+    //         title: "ながああああああああああああああああああああああああああああああああああああああああああああああああああああいタイトル",
+    //         type: "",
+    //         updated_at: "2019-05-12T20:48:24.000+09:00",
+    //         url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
+    //         video_playback_position: 30
+    //     }
+    //
+    //     const content5: Content = {
+    //         content_id: 0,
+    //         created_at: "",
+    //         delete_flag: false,
+    //         deleted_at: "",
+    //         file_url: "",
+    //         liked: false,
+    //         max_scroll_position_x: 0,
+    //         max_scroll_position_y: 0,
+    //         scroll_position_x: 0,
+    //         scroll_position_y: 0,
+    //         sharing_url: "",
+    //         specified_dom_class: "",
+    //         specified_dom_id: "",
+    //         specified_dom_tag: "",
+    //         specified_text: "",
+    //         thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+    //         title: "Web-Shioriデモ動画",
+    //         type: "",
+    //         updated_at: "2019-05-12T20:48:24.000+09:00",
+    //         url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
+    //         video_playback_position: 30
+    //     }
+    //
+    //     contentList = [content1, content2, content3, content4, content5]
+    //     	// contentList = []
+    // }
 
     // コンテンツviewを生成する
     function generateContentView(): string {
@@ -184,8 +210,7 @@ module contentList {
 
     // main領域にコンテンツ一覧を表示する
     async function initializeContent() {
-        // 動作確認用
-        await dummyFetchContentList()
+        await fetchContentList()
         const contentViewTl = await generateContentView()
         await renderContentView(contentViewTl)
         addEventToContentView()
