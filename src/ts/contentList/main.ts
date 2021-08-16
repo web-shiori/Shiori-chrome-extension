@@ -186,7 +186,7 @@ module contentList {
     function renderContentView(contentViewTl: string) {
         const contentListView = document.getElementsByClassName("content-list-view")[0]
         if (contentListView !== null) {
-            contentListView.innerHTML = contentViewTl;
+            contentListView.innerHTML = contentViewTl
         }
     }
 
