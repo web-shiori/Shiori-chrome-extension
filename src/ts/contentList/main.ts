@@ -198,10 +198,16 @@ module contentList {
                     <img src="${content.thumbnail_img_url}" class="content-thumbnail-img" width="50px" height="50px">
                 </div>
                 <div class="content-info">
-                    <div class="content-info-text-area">
+                    <span class="content-info-text-area">
                         <p class="content-title">${content.title}</p>
-                        <p class="content-sub-info">${domain}・${month}月${date}日</p>
-                    </div>
+                        <p class="content-sub-info" style="display: inline">${domain}・${month}月${date}日</p>
+                    </span>
+                    
+                    <span class="content-button-area">
+                        <span class="content-button-folder"><i class="bi-folder"></i></span>
+                        <span class="content-button-heart"><i class="bi-heart"></i></span>
+                        <span class="content-button-trash"><i class="bi-trash"></i></span>
+                    </span>
                 </div>
             </div>
             `

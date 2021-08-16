@@ -52,6 +52,14 @@ $header-height: 48px;
       .content-view {
         //消す
         background-color: bisque;
+
+        .content-info {
+
+          .content-button-area {
+            display: block;
+            text-align: right;
+          }
+        }
       }
 
       .content-view:hover {
