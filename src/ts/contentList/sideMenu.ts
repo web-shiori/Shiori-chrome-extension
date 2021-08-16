@@ -60,7 +60,8 @@ module contentList {
         for (let i = 0; i < folderVIew.length; i++) {
             folderVIew[i].addEventListener("click", function () {
                 folderVIew[i].classList.add("selected-folder-view")
-                initializeContent(i)
+                currentFolderId = folderList[i].folder_id
+                initializeContent("", currentFolderId)
             })
         }
     }

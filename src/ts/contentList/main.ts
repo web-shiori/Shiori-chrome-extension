@@ -1,10 +1,12 @@
 module contentList {
+    export let currentFolderId: number|null = null
     let contentList: Content[] = []
 
     // コンテンツ一覧を取得する
-    // function fetchContentList() {
+    // function fetchContentList(query: string) {
     //     // TODO: URLを本番APIに修正する
-    //     return fetch(`https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`, {
+    //     const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content?q=${query}`
+    //     return fetch(url, {
     //         headers: {
     //             'access-token': 'access-token',
     //             'client': 'client',
@@ -154,9 +156,9 @@ module contentList {
     }
 
     // フォルダに含まれているコンテンツ一覧を取得する
-    function fetchFolderContentList(folderId: number) {
+    function fetchFolderContentList(query: string, folderId: number) {
         // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content`
+        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content?q=${query}`
         return fetch(url, {
             headers: {
                 'access-token': 'access-token',
@@ -252,14 +254,13 @@ module contentList {
     }
 
     // main領域にコンテンツ一覧を表示する
-    export async function initializeContent(folderId: number|null) {
+    export async function initializeContent(query: string, folderId: number|null) {
         startIndicator()
-
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
-            await fetchFolderContentList(folderId)
+            await fetchFolderContentList(query, folderId)
         } else {
-            // await fetchContentList()
+            // await fetchContentList(query)
             await dummyFetchContentList()
         }
         const contentViewTl = await generateContentView()
@@ -269,5 +270,5 @@ module contentList {
         stopIndicator()
     }
 
-    initializeContent(null)
+    initializeContent("", null)
 }
