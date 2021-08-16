@@ -47,11 +47,11 @@ module contentList {
             specified_dom_id: "",
             specified_dom_tag: "",
             specified_text: "",
-            thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
             type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
+            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
@@ -71,11 +71,11 @@ module contentList {
             specified_dom_id: "",
             specified_dom_tag: "",
             specified_text: "",
-            thumbnail_img_url: "https:	//gyazo.com/f149c85d239c13b76388822357755672/thumb/400",
+            thumbnail_img_url: "https://gyazo.com/f149c85d239c13b76388822357755672/thumb/400",
             title: "アイデア",
             type: "",
             updated_at: "2020-05-12T20:48:24.000+09:00",
-            url: "https:	//qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d",
+            url: "https://qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d",
             video_playback_position: 0
         }
 
@@ -95,11 +95,11 @@ module contentList {
             specified_dom_id: "",
             specified_dom_tag: "",
             specified_text: "",
-            thumbnail_img_url: "https:	//hayabusa.io/ca/files/topics/26111_ext_24_1.jpg?version=1619512503&v=1619512503",
+            thumbnail_img_url: "https://hayabusa.io/ca/files/topics/26111_ext_24_1.jpg?version=1619512503&v=1619512503",
             title: "テクノロジーマップ",
             type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//d2utiq8et4vl56.cloudfront.net/files/user/pdf/techinfo/AIDataTechnologyMap_210520.pdf?v=1621566300",
+            url: "https://d2utiq8et4vl56.cloudfront.net/files/user/pdf/techinfo/AIDataTechnologyMap_210520.pdf?v=1621566300",
             video_playback_position: 0
         }
 
@@ -119,11 +119,11 @@ module contentList {
             specified_dom_id: "",
             specified_dom_tag: "",
             specified_text: "",
-            thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "ながああああああああああああああああああああああああああああああああああああああああああああああああああああいタイトル",
             type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
+            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
@@ -143,16 +143,16 @@ module contentList {
             specified_dom_id: "",
             specified_dom_tag: "",
             specified_text: "",
-            thumbnail_img_url: "https:	//i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
+            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
             type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https:	//www.youtube.com/watch?v=1DcjMwkmNvA",
+            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         contentList = [content1, content2, content3, content4, content5]
-        	// contentList = []
+        // contentList = []
     }
 
     // フォルダに含まれているコンテンツ一覧を取得する
@@ -178,6 +178,33 @@ module contentList {
                     // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
                     contentList = contentListJson.data.content
                 })
+            }
+        }
+    }
+
+    // コンテンツ削除リクエスト
+    function deleteContent(contentId: number) {
+        // TODO: URLを本番APIに修正する
+        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}`
+        fetch(url, {
+            method: 'delete',
+            // TODO: 認証用のヘッダを本場用に修正する
+            headers: {
+                'access-token': 'access-token',
+                'client': 'client',
+                'uid': 'uid'
+            }
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response);
+            } else {
+                // コンテンツをリロードする
+                initializeContent("", currentFolderId)
             }
         }
     }
@@ -230,8 +257,6 @@ module contentList {
         const contentView = document.getElementsByClassName('content-view')
         for (let i = 0; i < contentView.length; i++) {
             contentView[i].addEventListener("click", function (event) {
-                // openContent(i)
-                console.log(event)
                 switch ((<HTMLInputElement>event.target).id) {
                     case 'content-button-folder':
                         alert("folder!!")
@@ -240,7 +265,7 @@ module contentList {
                         alert("heart!!")
                         break
                     case 'content-button-trash':
-                        alert("trash!!")
+                        deleteContent(contentList[i].content_id)
                         break
                     default:
                         openContent(i)
@@ -277,6 +302,7 @@ module contentList {
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(query: string, folderId: number|null) {
         startIndicator()
+
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
             await fetchFolderContentList(query, folderId)

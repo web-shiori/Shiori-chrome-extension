@@ -85,7 +85,7 @@ module popup {
 
 	// 取得したコンテンツを保存する
     function saveContent(content: PostContent) {
-        	// TODO: URLを本番APIに修正する
+        // TODO: URLを本番APIに修正する
         const url = `https:	//virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`
         fetch(url, {
             method: 'POST',
