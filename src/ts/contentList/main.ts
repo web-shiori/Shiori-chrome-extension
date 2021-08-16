@@ -204,9 +204,9 @@ module contentList {
                     </span>
                     
                     <span class="content-button-area">
-                        <span class="content-button-folder"><i class="bi-folder"></i></span>
-                        <span class="content-button-heart"><i class="bi-heart"></i></span>
-                        <span class="content-button-trash"><i class="bi-trash"></i></span>
+                        <span><i id="content-button-folder" class="bi-folder content-button"></i></span>
+                        <span><i id="content-button-heart" class="bi-heart content-button"></i></span>
+                        <span><i id="content-button-trash" class="bi-trash content-button"></i></span>
                     </span>
                 </div>
             </div>
@@ -229,8 +229,23 @@ module contentList {
     function addEventToContentView() {
         const contentView = document.getElementsByClassName('content-view')
         for (let i = 0; i < contentView.length; i++) {
-            contentView[i].addEventListener("click", function () {
-                openContent(i)
+            contentView[i].addEventListener("click", function (event) {
+                // openContent(i)
+                console.log(event)
+                switch ((<HTMLInputElement>event.target).id) {
+                    case 'content-button-folder':
+                        alert("folder!!")
+                        break
+                    case 'content-button-heart':
+                        alert("heart!!")
+                        break
+                    case 'content-button-trash':
+                        alert("trash!!")
+                        break
+                    default:
+                        openContent(i)
+                        break
+                }
             }, false)
         }
     }
@@ -276,5 +291,6 @@ module contentList {
         stopIndicator()
     }
 
+    // ページを開いたときの処理
     initializeContent("", null)
 }
