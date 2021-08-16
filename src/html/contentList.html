@@ -7,10 +7,36 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <header class="header"></header>
+    <header class="header navbar fixed-top">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user-o"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </header>
+
     <div class="wrapper">
-        <div class="sidemenu">サイドメニュー</div>
-        <div class="main">メイン</div>
+        <div class="sidemenu">
+            サイドメニュー
+            フォルダ
+        </div>
+        <div class="main">
+            メイン
+            コンテンツ
+        </div>
     </div>
+
+    <script src="../js/lib/jquery-3.6.0.min.js"></script>
+    <script src="../js/lib/popper.min.js"></script>
+    <script src="../js/lib/bootstrap.min.js"></script>
 </body>
 </html>
