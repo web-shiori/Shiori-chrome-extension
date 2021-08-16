@@ -55,6 +55,7 @@ module contentList {
         const folderVIew = document.getElementsByClassName("folder-view")
         for (let i = 0; i < folderVIew.length; i++) {
             folderVIew[i].addEventListener("click", function () {
+                folderVIew[i].classList.add("selected-folder-view")
                 initializeContent(i)
             })
         }
