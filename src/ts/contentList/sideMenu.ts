@@ -28,7 +28,20 @@ module contentList {
     }
 
     function generateFolderView(): string {
-        const folderViewTl: string = ``
+        let folderViewTl: string = `
+        `
+
+        for (const folder of folderList) {
+            const viewTl = `
+            <div class="folder-view">
+                <div class="folder-text-area">
+                    <p class="folder-info">${folder.name} ${folder.content_count}</p>
+                </div>
+            </div>
+            `
+            folderViewTl += viewTl
+        }
+
         return folderViewTl
     }
 
