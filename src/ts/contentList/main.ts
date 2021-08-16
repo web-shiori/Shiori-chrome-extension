@@ -11,18 +11,18 @@ module contentList {
                 'uid': 'uid'
             }
         }).then(processFetchedResponse).catch(error => {
-            console.error(error);
-        });
+            console.error(error)
+        })
 
         function processFetchedResponse(response: any) {
             if (!response.ok) {
                 // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
+                console.error("エラーレスポンス", response)
             } else {
                 return response.json().then((contentListJson: any) => {
                     // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
                     contentList = contentListJson.data.content
-                });
+                })
             }
         }
     }
