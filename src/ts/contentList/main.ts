@@ -204,7 +204,7 @@ module contentList {
             `
             contentViewTl += viewTl
         }
-        contentViewTl += `<h6 id="saved-content-text">5コンテンツ</h6>`
+        contentViewTl += `<h6 id="saved-content-text">${contentList.length}コンテンツ</h6>`
         return contentViewTl
     }
 
