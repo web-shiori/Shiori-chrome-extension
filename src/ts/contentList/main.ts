@@ -234,8 +234,23 @@ module contentList {
         chrome.runtime.sendMessage(targetContent)
     }
 
+    function startIndicator() {
+        const contentIndicator = document.getElementById("content-list-indicator")
+        if (contentIndicator !== null) {
+            contentIndicator.style.display = "inline"
+        }
+    }
+
+    function stopIndicator() {
+        const contentIndicator = document.getElementById("content-list-indicator")
+        if (contentIndicator !== null) {
+            contentIndicator.style.display = "none"
+        }
+    }
+
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(folderId: number|null) {
+        startIndicator()
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
             await fetchFolderContentList(folderId)
@@ -246,6 +261,7 @@ module contentList {
         const contentViewTl = await generateContentView()
         await renderContentView(contentViewTl)
         addEventToContentView()
+        stopIndicator()
     }
 
     initializeContent(null)
