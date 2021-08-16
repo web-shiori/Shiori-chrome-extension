@@ -138,20 +138,21 @@ module contentList {
             const date = dateTime.getDate()
 
             const viewTl = `
-        <div class="content-view">
-            <div class="content-thumbnail-view">
-                <img src="${content.thumbnail_img_url}" class="content-thumbnail-img">
-            </div>
-            <div class="content-info">
-                <div class="content-info-text-area">
-                    <p class="content-title">${content.title}</p>
-                    <p class="content-sub-info">${domain}・${month}月${date}日</p>
+            <div class="content-view">
+                <div class="content-thumbnail-view">
+                    <img src="${content.thumbnail_img_url}" class="content-thumbnail-img" width="50px" height="50px">
+                </div>
+                <div class="content-info">
+                    <div class="content-info-text-area">
+                        <p class="content-title">${content.title}</p>
+                        <p class="content-sub-info">${domain}・${month}月${date}日</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        `
+            `
             contentViewTl += viewTl
         }
+        contentViewTl += `<h6 id="saved-content-text">5コンテンツ</h6>`
         return contentViewTl
     }
 

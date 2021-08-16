@@ -26,5 +26,16 @@ $header-height: 48px;
     width: 80%;
     height: calc(100vh - #{$header-height});
     float: right;
+
+    .content-list-view {
+      .content-view {
+        //消す
+        background-color: bisque;
+      }
+
+      .content-view:hover {
+        background-color: gainsboro;
+      }
+    }
   }
 }
