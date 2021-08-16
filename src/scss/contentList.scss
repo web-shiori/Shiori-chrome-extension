@@ -2,26 +2,29 @@
 
 $shiori-secondory-color: #08ADEC;
 
+$header-height: 48px;
+
 .header {
   background-color: $shiori-secondory-color;
   width: 100%;
-  height: 48px;
+  height: $header-height;
 }
 
 .wrapper {
+  margin-top: $header-height;
   width: 100%;
   .sidemenu {
     background-color: gray;
-    height: 1000px;
     width: 20%;
+    height: calc(100vh - #{$header-height});
     display: block;
     float: left;
   }
 
   .main {
     background-color: silver;
-    height: 1000px;
     width: 80%;
+    height: calc(100vh - #{$header-height});
     float: right;
   }
 }
