@@ -21,7 +21,6 @@ module contentList {
             } else {
                 return response.json().then((folderListJson: any) => {
                     folderList = folderListJson.data.folder
-                    console.log(folderList)
                 })
             }
         }
@@ -53,10 +52,15 @@ module contentList {
     }
 
     function addEventToFolderView() {
-
+        const folderVIew = document.getElementsByClassName("folder-view")
+        for (let i = 0; i < folderVIew.length; i++) {
+            folderVIew[i].addEventListener("click", function () {
+                initializeContent(i)
+            })
+        }
     }
 
-    async function initializeFolder() {
+    async function initializeSideMenu() {
         // フォルダ一覧取得
         await fetchFolderList()
         // html作成
@@ -67,5 +71,5 @@ module contentList {
         addEventToFolderView()
     }
 
-    initializeFolder()
+    initializeSideMenu()
 }
