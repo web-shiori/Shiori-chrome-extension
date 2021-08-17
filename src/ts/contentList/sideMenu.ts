@@ -130,10 +130,12 @@ module contentList {
 
     // サイドメニューにフォルダを表示する
     async function initializeSideMenu() {
+        startIndicator("sidemenu-indicator")
         await doGetFolderList()
         const folderViewTl = await generateFolderView()
         await renderFolderView(folderViewTl)
         addEventToFolderView()
+        stopIndicator("sidemenu-indicator")
     }
 
     // ページを開いたときの処理

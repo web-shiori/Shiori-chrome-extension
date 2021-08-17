@@ -395,15 +395,15 @@ module contentList {
         uncaught (in promise) TypeError: contentList_1.startIndicator is not a function
      */
     // インジケータを表示する
-    function startIndicator(indicatorElementId: string) {
+    export function startIndicator(indicatorElementId: string) {
         const indicator = document.getElementById(indicatorElementId)
-        if (indicator !== null) indicator.style.display = "inline"
+        if (indicator !== null) indicator.style.visibility = "visible"
     }
 
     // インジケータを非表示にする
-    function stopIndicator(indicatorElementId: string) {
+    export function stopIndicator(indicatorElementId: string) {
         const contentIndicator = document.getElementById(indicatorElementId)
-        if (contentIndicator !== null) contentIndicator.style.display = "none"
+        if (contentIndicator !== null) contentIndicator.style.visibility = "hidden"
     }
 
     // main領域にコンテンツ一覧を表示する
