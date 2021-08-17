@@ -387,28 +387,28 @@ module contentList {
         chrome.runtime.sendMessage(targetContent)
     }
 
-    // TODO: すべてのview共通で使えるようにする
-    // インジケータを表示
-    function startIndicator() {
-        const contentIndicator = document.getElementById("content-list-indicator")
-        if (contentIndicator !== null) {
-            contentIndicator.style.display = "inline"
-        }
+    /*
+    NOTE: すべてのview共通で使えるようにしたいがうまくできなかった
+        https://qiita.com/pokotyan/items/f568679cd27bbf888435
+        https://www.i-ryo.com/entry/2020/07/14/072538#exports-is-not-defined%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%AFCommonJS%E3%81%8C%E5%8E%9F%E5%9B%A0
+        https://uraway.hatenablog.com/entry/2015/11/30/require_is_not_defined%E3%82%92%E8%A7%A3%E6%B6%88%E3%81%97%E3%81%A6require%E3%82%92%E4%BD%BF%E3%81%88%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B
+        uncaught (in promise) TypeError: contentList_1.startIndicator is not a function
+     */
+    // インジケータを表示する
+    function startIndicator(indicatorElementId: string) {
+        const indicator = document.getElementById(indicatorElementId)
+        if (indicator !== null) indicator.style.display = "inline"
     }
 
-    // TODO: すべてのview共通で使えるようにする
     // インジケータを非表示にする
-    function stopIndicator() {
-        const contentIndicator = document.getElementById("content-list-indicator")
-        if (contentIndicator !== null) {
-            contentIndicator.style.display = "none"
-        }
+    function stopIndicator(indicatorElementId: string) {
+        const contentIndicator = document.getElementById(indicatorElementId)
+        if (contentIndicator !== null) contentIndicator.style.display = "none"
     }
 
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(query: string, folderId: number|null) {
-        startIndicator()
-
+        startIndicator("content-list-indicator")
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
             await doGetFolderContentList(query, folderId)
@@ -420,7 +420,7 @@ module contentList {
         await renderContentView(contentViewTl)
         addEventToContentView()
 
-        stopIndicator()
+        stopIndicator("content-list-indicator")
     }
 
     // ページを開いたときの処理
