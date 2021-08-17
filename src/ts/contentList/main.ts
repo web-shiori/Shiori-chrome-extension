@@ -260,9 +260,9 @@ module contentList {
                     </span>
                     
                     <span id="content-button-area-${i}" class="content-button-area" style="visibility: hidden">
-                        <span><i id="content-button-folder-${i}" class="bi-folder content-button content-button-folder"></i></span>
-                        <span><i id="content-button-heart-${i}" class="bi-heart content-button content-button-heart"></i></span>
-                        <span><i id="content-button-trash-${i}" class="bi-trash content-button content-button-trash"></i></span>
+                        <span><i id="content-button-folder-${i}" class="bi-folder content-button"></i></span>
+                        <span><i id="content-button-heart-${i}" class="bi-heart content-button"></i></span>
+                        <span><i id="content-button-trash-${i}" class="bi-trash content-button"></i></span>
                     </span>
                 </div>
             </div>
@@ -286,19 +286,22 @@ module contentList {
         const contentView = document.getElementsByClassName('content-view')
         for (let i = 0; i < contentView.length; i++) {
             contentView[i].addEventListener("click", function (event) {
-                switch ((<HTMLInputElement>event.target).className) {
+                switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
-                    case 'content-button-folder':
+                    case `content-button-folder-${i}`:
                         alert("folder!!")
                         break
                     // お気に入りボタンクリック
-                    case 'content-button-heart':
+                    case `content-button-heart-${i}`:
                         favoriteContent(contentList[i].content_id)
                         // お気に入りボタンをfillにする
-                        // document.getElementById('content-button-heart')
+                        const contentButtonHeart = document.getElementById(`content-button-heart-${i}`)
+                        if (contentButtonHeart !== null) {
+                            contentButtonHeart.className = "bi-heart-fill content-button content-button-heart"
+                        }
                         break
                     // 削除ボタンクリック
-                    case 'content-button-trash':
+                    case `content-button-trash-${i}`:
                         deleteContent(contentList[i].content_id)
                         break
                     // その他の場所をクリック
