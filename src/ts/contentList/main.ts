@@ -259,10 +259,10 @@ module contentList {
                         <p class="content-sub-info" style="display: inline">${domain}・${month}月${date}日</p>
                     </span>
                     
-                    <span id="content-button-area-${[i]}" class="content-button-area" style="visibility: hidden">
-                        <span><i id="content-button-folder" class="bi-folder content-button"></i></span>
-                        <span><i id="content-button-heart" class="bi-heart content-button"></i></span>
-                        <span><i id="content-button-trash" class="bi-trash content-button"></i></span>
+                    <span id="content-button-area-${i}" class="content-button-area" style="visibility: hidden">
+                        <span><i id="content-button-folder-${i}" class="bi-folder content-button content-button-folder"></i></span>
+                        <span><i id="content-button-heart-${i}" class="bi-heart content-button content-button-heart"></i></span>
+                        <span><i id="content-button-trash-${i}" class="bi-trash content-button content-button-trash"></i></span>
                     </span>
                 </div>
             </div>
@@ -286,7 +286,7 @@ module contentList {
         const contentView = document.getElementsByClassName('content-view')
         for (let i = 0; i < contentView.length; i++) {
             contentView[i].addEventListener("click", function (event) {
-                switch ((<HTMLInputElement>event.target).id) {
+                switch ((<HTMLInputElement>event.target).className) {
                     // フォルダに追加ボタンクリック
                     case 'content-button-folder':
                         alert("folder!!")
