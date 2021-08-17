@@ -277,20 +277,18 @@ module contentList {
                 }
             }, false)
 
+            // 各コンテンツのボタンにイベントを追加
+            const contentButtonAreaView = document.getElementById(`content-button-area-${i}`)
+            if (contentButtonAreaView === null) return
+
             // マウスがホバーしたらボタンを表示する
             contentView[i].addEventListener("mouseover", function () {
-                const contentButtonAreaView = document.getElementById(`content-button-area-${i}`)
-                if (contentButtonAreaView !== null) {
-                    contentButtonAreaView.style.visibility = "visible"
-                }
+                contentButtonAreaView.style.visibility = "visible"
             })
 
             // マウスが外れたらボタンを非表示にする
             contentView[i].addEventListener("mouseout", function () {
-                const contentButtonAreaView = document.getElementById(`content-button-area-${i}`)
-                if (contentButtonAreaView !== null) {
-                    contentButtonAreaView.style.visibility = "hidden"
-                }
+                contentButtonAreaView.style.visibility = "hidden"
             })
         }
     }
