@@ -213,24 +213,24 @@ module contentList {
     function generateContentView(): string {
         let contentViewTl: string = ``
 
-        for (const content of contentList) {
-            const domain = new URL(content.url).host
-            const dateTime = new Date(content.updated_at)
+        for (let i = 0; i < contentList.length; i++) {
+            const domain = new URL(contentList[i].url).host
+            const dateTime = new Date(contentList[i].updated_at)
             const month = dateTime.getMonth() + 1
             const date = dateTime.getDate()
 
             const viewTl = `
             <div class="content-view">
                 <div class="content-thumbnail-view">
-                    <img src="${content.thumbnail_img_url}" class="content-thumbnail-img" width="50px" height="50px">
+                    <img src="${contentList[i].thumbnail_img_url}" class="content-thumbnail-img" width="50px" height="50px">
                 </div>
                 <div class="content-info">
                     <span class="content-info-text-area">
-                        <p class="content-title">${content.title}</p>
+                        <p class="content-title">${contentList[i].title}</p>
                         <p class="content-sub-info" style="display: inline">${domain}・${month}月${date}日</p>
                     </span>
                     
-                    <span class="content-button-area">
+                    <span id="content-button-area-${[i]}" class="content-button-area" style="visibility: hidden">
                         <span><i id="content-button-folder" class="bi-folder content-button"></i></span>
                         <span><i id="content-button-heart" class="bi-heart content-button"></i></span>
                         <span><i id="content-button-trash" class="bi-trash content-button"></i></span>
@@ -272,6 +272,18 @@ module contentList {
                         break
                 }
             }, false)
+            contentView[i].addEventListener("mouseover", function () {
+                const contentButtonAreaView = document.getElementById(`content-button-area-${i}`)
+                if (contentButtonAreaView !== null) {
+                    contentButtonAreaView.style.visibility = "visible"
+                }
+            })
+            contentView[i].addEventListener("mouseout", function () {
+                const contentButtonAreaView = document.getElementById(`content-button-area-${i}`)
+                if (contentButtonAreaView !== null) {
+                    contentButtonAreaView.style.visibility = "hidden"
+                }
+            })
         }
     }
 
