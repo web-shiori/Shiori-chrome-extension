@@ -74,7 +74,7 @@ module contentList {
         // TODO: リファクタリング
         // フォルダを新規作成するためのviewを追加
         const folderCreateViewTl = `
-        <div class="folder-create-view folder-view">
+        <div id="folder-create-view" class="folder-create-view folder-view" style="visibility: hidden">
             <form id="folder-create-form" class="form-inline">
                 <input id="folder-name-text-field" placeholder="新しいフォルダ">
             </form>
@@ -104,7 +104,7 @@ module contentList {
             })
         }
 
-        // フォルダを新規作成するためのviewにイベントを追加
+        // フォルダ新規作成フォームviewにイベントを追加
         const folderCreateForm = document.getElementById("folder-create-form")
         if (folderCreateForm !== null) {
             folderCreateForm.onsubmit = function () {
@@ -138,16 +138,4 @@ module contentList {
 
     // ページを開いたときの処理
     initializeSideMenu()
-
-    // フォルダ追加ボタンをクリックしたときの処理
-    const addingFolderButton = document.getElementById("adding-folder-button")
-    if (addingFolderButton !== null) {
-        addingFolderButton.addEventListener("click", function () {
-            alert("folder")
-            // フォルダを追加するためのviewを表示する
-            // フォルダを新規作成する
-            // サイドメニューをリロードする
-            initializeSideMenu()
-        })
-    }
 }

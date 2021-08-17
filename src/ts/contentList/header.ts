@@ -18,4 +18,17 @@ module contentList {
             return false;
         }
     }
+
+    // フォルダ追加ボタンをクリックしたときの処理
+    const addingFolderButton = document.getElementById("adding-folder-button")
+    if (addingFolderButton !== null) {
+        addingFolderButton.addEventListener("click", function () {
+            // フォルダを追加するためのviewを表示する
+            const folderCreateView = document.getElementById("folder-create-view")
+            const folderNameTextField = document.getElementById("folder-name-text-field")
+            if (folderCreateView === null || folderNameTextField === null) return
+            folderCreateView.style.visibility = "visible"
+            folderNameTextField.focus()
+        })
+    }
 }
