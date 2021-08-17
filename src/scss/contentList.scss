@@ -9,6 +9,10 @@ $header-height: 48px;
   background-color: $shiori-secondory-color;
   width: 100%;
   height: $header-height;
+
+  .adding-folder-button {
+    color: #1DDBB5;
+  }
 }
 
 .wrapper {
