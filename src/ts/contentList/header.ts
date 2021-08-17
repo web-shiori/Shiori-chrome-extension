@@ -8,6 +8,7 @@ module contentList {
         }))
     }
 
+    // 検索フォームでsubmitしたときの処理
     const searchForm = document.getElementById("search-form")
     if (searchForm !== null) {
         searchForm.onsubmit = function () {
