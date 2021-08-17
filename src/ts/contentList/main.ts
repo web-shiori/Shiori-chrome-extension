@@ -212,6 +212,32 @@ module contentList {
         }
     }
 
+    // コンテンツをお気に入りに登録する
+    function favoriteContent(contentId: number) {
+        // TODO: URLを本番APIに修正する
+        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
+        fetch(url, {
+            method: 'post',
+            // TODO: 認証用のヘッダを本場用に修正する
+            headers: {
+                'access-token': 'access-token',
+                'client': 'client',
+                'uid': 'uid'
+            }
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response);
+            } else {
+                alert("favorite")
+            }
+        }
+    }
+
     // コンテンツviewを生成する
     function generateContentView(): string {
         let contentViewTl: string = ``
@@ -267,7 +293,9 @@ module contentList {
                         break
                     // お気に入りボタンクリック
                     case 'content-button-heart':
-                        alert("heart!!")
+                        favoriteContent(contentList[i].content_id)
+                        // お気に入りボタンをfillにする
+                        // document.getElementById('content-button-heart')
                         break
                     // 削除ボタンクリック
                     case 'content-button-trash':
@@ -304,6 +332,7 @@ module contentList {
         chrome.runtime.sendMessage(targetContent)
     }
 
+    // TODO: すべてのview共通で使えるようにする
     // インジケータを表示
     function startIndicator() {
         const contentIndicator = document.getElementById("content-list-indicator")
@@ -312,6 +341,7 @@ module contentList {
         }
     }
 
+    // TODO: すべてのview共通で使えるようにする
     // インジケータを非表示にする
     function stopIndicator() {
         const contentIndicator = document.getElementById("content-list-indicator")
