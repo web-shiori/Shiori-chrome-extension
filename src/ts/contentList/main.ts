@@ -214,7 +214,7 @@ module contentList {
 
     // TODO: 命名変える
     // コンテンツをお気に入りに登録する
-    function favoriteContent(contentId: number) {
+    function doPostFavoriteContent(contentId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
         fetch(url, {
@@ -233,12 +233,14 @@ module contentList {
             if (!response.ok) {
                 // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response);
+            } else {
+                alert("favorited")
             }
         }
     }
 
     // コンテンツのお気に入りを解除する
-    function unfavoriteContent(contentId: number) {
+    function doDeleteUnfavoriteContent(contentId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
         fetch(url, {
@@ -319,24 +321,7 @@ module contentList {
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:
-                        const contentButtonHeart = document.getElementById(`content-button-heart-${i}`)
-                        if (contentButtonHeart === null) return
-                        // TODO: 命名考える
-                        let targetContentButtonHeartClassName = ""
-                        if (targetContent.liked) {
-                            // TODO: メソッドに切り出す
-                            // お気に入り解除
-                            unfavoriteContent(targetContent.content_id)
-                            targetContentButtonHeartClassName = "bi-heart content-button"
-                            targetContent.liked = false
-                        } else {
-                            // お気に入り登録
-                            favoriteContent(targetContent.content_id)
-                            targetContentButtonHeartClassName = "bi-heart-fill content-button"
-                            targetContent.liked = true
-                        }
-                        // お気に入りボタンのスタイルを変更する
-                        contentButtonHeart.className = targetContentButtonHeartClassName
+                        targetContent.liked ? unfavoriteContent(i) : favoriteContent(i)
                         break
                     // 削除ボタンクリック
                     case `content-button-trash-${i}`:
@@ -364,6 +349,34 @@ module contentList {
                 contentButtonAreaView.style.visibility = "hidden"
             })
         }
+    }
+
+    // コンテンツをお気に入りに登録する
+    function favoriteContent(contentListIndex: number) {
+        const contentButtonHeart = document.getElementById(`content-button-heart-${contentListIndex}`)
+        if (contentButtonHeart === null) return
+
+        // お気に入り登録リクエストを送信
+        const contentId = contentList[contentListIndex].content_id
+        doPostFavoriteContent(contentId)
+        // お気に入りボタンのスタイルを変更する
+        contentButtonHeart.className = "bi-heart-fill content-button"
+        // コンテンツのプロパティを変更
+        contentList[contentListIndex].liked = true
+    }
+
+    // コンテンツをお気に入り解除する
+    function unfavoriteContent(contentListIndex: number) {
+        const contentButtonHeart = document.getElementById(`content-button-heart-${contentListIndex}`)
+        if (contentButtonHeart === null) return
+
+        // お気に入り登録リクエストを送信
+        const contentId = contentList[contentListIndex].content_id
+        doDeleteUnfavoriteContent(contentId)
+        // お気に入りボタンのスタイルを変更する
+        contentButtonHeart.className = "bi-heart content-button"
+        // コンテンツのプロパティを変更
+        contentList[contentListIndex].liked = false
     }
 
     // コンテンツを新しいタブで開く
