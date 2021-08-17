@@ -110,7 +110,7 @@ module contentList {
             delete_flag: false,
             deleted_at: "",
             file_url: "",
-            liked: false,
+            liked: true,
             max_scroll_position_x: 0,
             max_scroll_position_y: 0,
             scroll_position_x: 0,
@@ -134,7 +134,7 @@ module contentList {
             delete_flag: false,
             deleted_at: "",
             file_url: "",
-            liked: false,
+            liked: true,
             max_scroll_position_x: 0,
             max_scroll_position_y: 0,
             scroll_position_x: 0,
@@ -261,7 +261,7 @@ module contentList {
                     
                     <span id="content-button-area-${i}" class="content-button-area" style="visibility: hidden">
                         <span><i id="content-button-folder-${i}" class="bi-folder content-button"></i></span>
-                        <span><i id="content-button-heart-${i}" class="bi-heart content-button"></i></span>
+                        <span><i id="content-button-heart-${i}" class="${contentList[i].liked ? 'bi-heart-fill' : 'bi-heart'} content-button"></i></span>
                         <span><i id="content-button-trash-${i}" class="bi-trash content-button"></i></span>
                     </span>
                 </div>
