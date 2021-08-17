@@ -236,6 +236,32 @@ module contentList {
         }
     }
 
+    // コンテンツのお気に入りを解除する
+    function unfavoriteContent(contentId: number) {
+        // TODO: URLを本番APIに修正する
+        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
+        fetch(url, {
+            method: 'delete',
+            // TODO: 認証用のヘッダを本場用に修正する
+            headers: {
+                'access-token': 'access-token',
+                'client': 'client',
+                'uid': 'uid'
+            }
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response);
+            } else {
+                alert("unfavorited")
+            }
+        }
+    }
+
     // コンテンツviewを生成する
     function generateContentView(): string {
         let contentViewTl: string = ``
@@ -284,6 +310,7 @@ module contentList {
         const contentView = document.getElementsByClassName('content-view')
         for (let i = 0; i < contentView.length; i++) {
             contentView[i].addEventListener("click", function (event) {
+                const targetContent: Content = contentList[i]
                 switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
@@ -291,15 +318,28 @@ module contentList {
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:
-                        favoriteContent(contentList[i].content_id)
-                        // お気に入りボタンをfillにする
                         const contentButtonHeart = document.getElementById(`content-button-heart-${i}`)
-                        if (contentButtonHeart !== null) {
-                            contentButtonHeart.className = "bi-heart-fill content-button content-button-heart"
+                        if (contentButtonHeart === null) return
+                        // TODO: 命名考える
+                        let targetContentButtonHeartClassName = ""
+                        if (targetContent.liked) {
+                            // TODO: メソッドに切り出す
+                            // お気に入り解除
+                            unfavoriteContent(targetContent.content_id)
+                            targetContentButtonHeartClassName = "bi-heart content-button"
+                            targetContent.liked = false
+                        } else {
+                            // お気に入り登録
+                            favoriteContent(targetContent.content_id)
+                            targetContentButtonHeartClassName = "bi-heart-fill content-button"
+                            targetContent.liked = true
                         }
+                        // お気に入りボタンのスタイルを変更する
+                        contentButtonHeart.className = targetContentButtonHeartClassName
                         break
                     // 削除ボタンクリック
                     case `content-button-trash-${i}`:
+                        // TODO: リファクタリング
                         deleteContent(contentList[i].content_id)
                         break
                     // その他の場所をクリック
