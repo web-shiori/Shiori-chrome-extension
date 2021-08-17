@@ -2,7 +2,7 @@ module contentList {
     let folderList: Folder[] = []
 
     // フォルダ一覧を取得する
-    function fetchFolderList() {
+    function doGetFolderList() {
         // TODO: URLを本番APIに修正する
         const url = "https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder"
         return fetch(url, {
@@ -68,7 +68,7 @@ module contentList {
 
     // サイドメニューにフォルダを表示する
     async function initializeSideMenu() {
-        await fetchFolderList()
+        await doGetFolderList()
         const folderViewTl = await generateFolderView()
         await renderFolderView(folderViewTl)
         addEventToFolderView()

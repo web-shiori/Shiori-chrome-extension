@@ -3,7 +3,7 @@ module contentList {
     let contentList: Content[] = []
 
     // コンテンツ一覧を取得する
-    // function fetchContentList(query: string) {
+    // function doGetContentList(query: string) {
     //     // TODO: URLを本番APIに修正する
     //     const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content?q=${query}`
     //     return fetch(url, {
@@ -157,7 +157,7 @@ module contentList {
     }
 
     // フォルダに含まれているコンテンツ一覧を取得する
-    function fetchFolderContentList(query: string, folderId: number) {
+    function doGetFolderContentList(query: string, folderId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content?q=${query}`
         return fetch(url, {
@@ -185,7 +185,7 @@ module contentList {
     }
 
     // コンテンツ削除リクエスト
-    function deleteContent(contentId: number) {
+    function doDeleteContent(contentId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}`
         fetch(url, {
@@ -326,7 +326,7 @@ module contentList {
                     // 削除ボタンクリック
                     case `content-button-trash-${i}`:
                         // TODO: リファクタリング
-                        deleteContent(contentList[i].content_id)
+                        doDeleteContent(contentList[i].content_id)
                         break
                     // その他の場所をクリック
                     default:
@@ -411,9 +411,9 @@ module contentList {
 
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
-            await fetchFolderContentList(query, folderId)
+            await doGetFolderContentList(query, folderId)
         } else {
-            // await fetchContentList(query)
+            // await doGetContentList(query)
             await dummyFetchContentList()
         }
         const contentViewTl = await generateContentView()

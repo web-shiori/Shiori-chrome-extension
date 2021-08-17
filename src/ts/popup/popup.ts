@@ -84,7 +84,7 @@ module popup {
     }
 
 	// 取得したコンテンツを保存する
-    function saveContent(content: PostContent) {
+    function doPostContent(content: PostContent) {
         // TODO: URLを本番APIに修正する
         const url = `https:	//virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`
         fetch(url, {
@@ -122,7 +122,7 @@ module popup {
     if (saveButton !== null) {
         saveButton.addEventListener('click', async function () {
             getContent().then(content => {
-                saveContent(content)
+                doPostContent(content)
             }).catch((error) => {
                 console.error("エラー", error)
             })
