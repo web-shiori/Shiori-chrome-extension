@@ -101,10 +101,10 @@ module popup {
 
         function processResponse(response: any) {
             if (!response.ok) {
-                	// TODO: エラー時の処理を実装する
+                // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response);
             } else {
-                	// 保存完了画面表示
+                // 保存完了画面表示
                 const defaultPopup = document.getElementById("default-popup");
                 const contentSavedPopup = document.getElementById("content-saved-popup");
                 if (defaultPopup !== null) {
