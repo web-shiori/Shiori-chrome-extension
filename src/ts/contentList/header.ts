@@ -18,12 +18,4 @@ module contentList {
             return false;
         }
     }
-
-    // フォルダ追加ボタンをクリックしたときの処理
-    const addingFolderButton = document.getElementById("adding-folder-button")
-    if (addingFolderButton !== null) {
-        addingFolderButton.addEventListener("click", function () {
-            alert("folder")
-        })
-    }
 }
