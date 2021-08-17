@@ -258,26 +258,34 @@ module contentList {
         for (let i = 0; i < contentView.length; i++) {
             contentView[i].addEventListener("click", function (event) {
                 switch ((<HTMLInputElement>event.target).id) {
+                    // フォルダに追加ボタンクリック
                     case 'content-button-folder':
                         alert("folder!!")
                         break
+                    // お気に入りボタンクリック
                     case 'content-button-heart':
                         alert("heart!!")
                         break
+                    // 削除ボタンクリック
                     case 'content-button-trash':
                         deleteContent(contentList[i].content_id)
                         break
+                    // その他の場所をクリック
                     default:
                         openContent(i)
                         break
                 }
             }, false)
+
+            // マウスがホバーしたらボタンを表示する
             contentView[i].addEventListener("mouseover", function () {
                 const contentButtonAreaView = document.getElementById(`content-button-area-${i}`)
                 if (contentButtonAreaView !== null) {
                     contentButtonAreaView.style.visibility = "visible"
                 }
             })
+
+            // マウスが外れたらボタンを非表示にする
             contentView[i].addEventListener("mouseout", function () {
                 const contentButtonAreaView = document.getElementById(`content-button-area-${i}`)
                 if (contentButtonAreaView !== null) {
