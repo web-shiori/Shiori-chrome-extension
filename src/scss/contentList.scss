@@ -60,13 +60,13 @@ $header-height: 48px;
             display: block;
             text-align: right;
 
-            #content-button:hover {
+            .content-button {
+              font-size: 30px;
+            }
+
+            .content-button:hover {
               color: aqua;
             }
-          }
-
-          .content-button-area:hover {
-            background-color: chartreuse;
           }
         }
       }
