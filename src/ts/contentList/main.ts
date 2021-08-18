@@ -188,7 +188,7 @@ module contentList {
     function doDeleteContent(contentId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}`
-        fetch(url, {
+        return fetch(url, {
             method: 'delete',
             // TODO: 認証用のヘッダを本場用に修正する
             headers: {
@@ -216,7 +216,7 @@ module contentList {
     function doPostFavoriteContent(contentId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
-        fetch(url, {
+        return fetch(url, {
             method: 'post',
             // TODO: 認証用のヘッダを本場用に修正する
             headers: {
@@ -240,7 +240,7 @@ module contentList {
     function doDeleteUnfavoriteContent(contentId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
-        fetch(url, {
+        return fetch(url, {
             method: 'delete',
             // TODO: 認証用のヘッダを本場用に修正する
             headers: {
@@ -264,7 +264,7 @@ module contentList {
     function doPostContentToFolder(contentId: number, folderId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content/${contentId}`
-        fetch(url, {
+        return fetch(url, {
             method: 'post',
             // TODO: 認証用のヘッダを本場用に修正する
             headers: {

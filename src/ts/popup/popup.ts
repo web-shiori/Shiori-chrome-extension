@@ -87,7 +87,7 @@ module popup {
     function doPostContent(content: PostContent) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`
-        fetch(url, {
+        return fetch(url, {
             method: 'POST',
             headers: {
                 'access-token': 'access-token',

@@ -2,10 +2,10 @@ module contentList {
     let folderList: Folder[] = []
 
     // フォルダ一覧を取得する
-    function doGetFolderList(): Promise {
+    function doGetFolderList() {
         // TODO: URLを本番APIに修正する
         const url = "https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder"
-        fetch(url, {
+        return fetch(url, {
             headers: {
                 'access-token': 'access-token',
                 'client': 'client',
@@ -20,7 +20,6 @@ module contentList {
                 // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response)
             } else {
-                console.log("成功")
                 return response.json().then((folderListJson: any) => {
                     folderList = folderListJson.data.folder
                 })
@@ -32,7 +31,7 @@ module contentList {
     function doPostFolder(folder: PostFolder) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder`
-        fetch(url, {
+        return fetch(url, {
             method: 'POST',
             headers: {
                 'access-token': 'access-token',
