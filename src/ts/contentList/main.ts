@@ -212,7 +212,6 @@ module contentList {
         }
     }
 
-    // TODO: 命名変える
     // コンテンツをお気に入りに登録する
     function doPostFavoriteContent(contentId: number) {
         // TODO: URLを本番APIに修正する
