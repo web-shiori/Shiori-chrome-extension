@@ -233,8 +233,6 @@ module contentList {
             if (!response.ok) {
                 // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response);
-            } else {
-                alert("favorited")
             }
         }
     }
@@ -259,8 +257,6 @@ module contentList {
             if (!response.ok) {
                 // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response);
-            } else {
-                alert("unfavorited")
             }
         }
     }
