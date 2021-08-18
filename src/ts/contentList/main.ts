@@ -33,7 +33,7 @@ module contentList {
     // 動作確認用コンテンツ一覧取得
     function dummyFetchContentList() {
         const content1: Content = {
-            content_id: 0,
+            content_id: 1,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -57,7 +57,7 @@ module contentList {
         }
 
         const content2: Content = {
-            content_id: 0,
+            content_id: 2,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -81,7 +81,7 @@ module contentList {
         }
 
         const content3: Content = {
-            content_id: 0,
+            content_id: 3,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -105,7 +105,7 @@ module contentList {
         }
 
         const content4: Content = {
-            content_id: 0,
+            content_id: 4,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -129,7 +129,7 @@ module contentList {
         }
 
         const content5: Content = {
-            content_id: 0,
+            content_id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -261,7 +261,7 @@ module contentList {
     }
 
     // コンテンツをフォルダに追加する
-    function doPostContentToFolder(contentId: number, folderId: number) {
+    export function doPostContentToFolder(contentId: number, folderId: number) {
         // TODO: URLを本番APIに修正する
         const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content/${contentId}`
         return fetch(url, {
@@ -282,7 +282,17 @@ module contentList {
                 console.error("エラーレスポンス", response);
             } else {
                 // 保存完了時の処理
-                alert("コンテンツをフォルダに追加しました")
+                alert(`${contentId}, ${folderId}`)
+                // イベント削除
+                let selectFolderModalView = document.getElementsByClassName("folder-view-select-folder-modal")
+                for (let i = 0; i < selectFolderModalView.length; i++) {
+                    selectFolderModalView[i].removeEventListener('click', function () {
+                        doPostContentToFolder(contentId, folderList[i].folder_id)
+                    })
+
+                }
+                // モーダル非表示にする
+
             }
         }
     }
@@ -339,10 +349,9 @@ module contentList {
                 switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
+                        // モーダルにイベント追加
+                        addEventToFolderViewForSelectedModal(targetContent.content_id)
                         // モーダル表示
-                        // TODO: フォルダを選べるようにする
-                        // const targetFolder: Folder = folderList[i]
-                        doPostContentToFolder(1, targetContent.content_id)
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:

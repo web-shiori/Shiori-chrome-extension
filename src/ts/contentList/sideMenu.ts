@@ -1,5 +1,5 @@
 module contentList {
-    let folderList: Folder[] = []
+    export let folderList: Folder[] = []
 
     // フォルダ一覧を取得する
     function doGetFolderList() {
@@ -65,19 +65,18 @@ module contentList {
 
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewを生成する
     function generateFolderViewForSelectedModal(): Promise<string> {
-        let selectFolderModalViewTl: string = ``
-        for (const folder of folderList) {
-            const viewTl = `
-            <div class="folder-view">
-                <div class="folder-text-area">
-                    <p class="folder-info"><i class="bi-gear-fill"></i>${folder.name} ${folder.content_count}</p>
-                </div>
-            </div>
-            `
-            selectFolderModalViewTl += viewTl
-        }
-
         return new Promise<string>((resolve => {
+            let selectFolderModalViewTl: string = ``
+            for (let i = 0; i < folderList.length; i++) {
+                const viewTl = `
+                <div id="folder-view-select-folder-modal-${i}" class="folder-view-select-folder-modal">
+                    <div class="folder-text-area-select-folder-modal">
+                        <p class="folder-info-select-folder-modal"><i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}</p>
+                    </div>
+                </div>
+                `
+                selectFolderModalViewTl += viewTl
+            }
             resolve(selectFolderModalViewTl)
         }))
     }
@@ -89,16 +88,12 @@ module contentList {
             let folderListViewTl = ``
             for (const folder of folderList) {
                 const viewTl = `
-            <div class="folder-view">
-                <div class="folder-text-area">
-                    <p class="folder-info"><i class="bi-gear-fill"></i>${folder.name} ${folder.content_count}</p>
+                <div class="folder-view">
+                    <div class="folder-text-area">
+                        <p class="folder-info"><i class="bi-gear-fill"></i>${folder.name} ${folder.content_count}</p>
+                    </div>
                 </div>
-            </div>
             `
-                console.log("viewTl")
-                console.log(viewTl)
-                console.log("folderListviewTl")
-                console.log(folderListViewTl)
                 folderListViewTl += viewTl
             }
             resolve(folderListViewTl)
@@ -164,8 +159,14 @@ module contentList {
     }
 
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewにイベントを追加する
-    function addEventToFolderViewForSelectedModal() {
-
+    // TODO: 登録したイベントを消さないと複数回フォルダに追加したときに何回も発動してしまう。直す
+    export function addEventToFolderViewForSelectedModal(contentId: number) {
+        const selectFolderModalView = document.getElementsByClassName("folder-view-select-folder-modal")
+        for (let i = 0; i < selectFolderModalView.length; i++) {
+            selectFolderModalView[i].addEventListener("click", function () {
+                doPostContentToFolder(contentId, folderList[i].folder_id)
+            })
+        }
     }
 
     // フォルダ新規作成フォームに入力されたフォルダ名を取得する
@@ -180,18 +181,10 @@ module contentList {
     async function initializeSideMenu() {
         startIndicator("sidemenu-indicator")
         await doGetFolderList()
-        console.log("folderListj")
-        console.log(folderList)
         const folderViewTl = await generateFolderView()
-        console.log(folderViewTl)
         const folderViewForSelectedModalTl = await generateFolderViewForSelectedModal()
-        console.log(folderViewForSelectedModalTl)
         await renderFolderView(folderViewTl, folderViewForSelectedModalTl)
-        console.log("render")
         addEventToFolderView()
-        console.log("addEventToFolderView")
-        addEventToFolderViewForSelectedModal()
-        console.log("addEventToFolderViewForSelectedModal")
         stopIndicator("sidemenu-indicator")
     }
 

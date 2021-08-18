@@ -97,4 +97,8 @@ $header-height: 48px;
   bottom: 0;
   margin: auto;
   z-index: 100000;
+
+  .folder-view-select-folder-modal:hover {
+    background-color: gainsboro;
+  }
 }
