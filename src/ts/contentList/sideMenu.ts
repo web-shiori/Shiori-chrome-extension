@@ -5,7 +5,7 @@ module contentList {
     function doGetFolderList() {
         // TODO: URLを本番APIに修正する
         const url = "https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder"
-        return fetch(url, {
+        fetch(url, {
             headers: {
                 'access-token': 'access-token',
                 'client': 'client',

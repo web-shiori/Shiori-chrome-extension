@@ -314,6 +314,7 @@ module contentList {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
                         alert("folder!!")
+
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:
