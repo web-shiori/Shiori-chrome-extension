@@ -339,9 +339,10 @@ module contentList {
                 switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
+                        // モーダル表示
                         // TODO: フォルダを選べるようにする
-                        const targetFolder: Folder = folderList[i]
-                        doPostContentToFolder(targetFolder.folder_id, targetContent.content_id)
+                        // const targetFolder: Folder = folderList[i]
+                        doPostContentToFolder(1, targetContent.content_id)
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:

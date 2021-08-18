@@ -1,8 +1,8 @@
 module contentList {
-    export let folderList: Folder[] = []
+    let folderList: Folder[] = []
 
     // フォルダ一覧を取得する
-    function doGetFolderList() {
+    function doGetFolderList(): Promise {
         // TODO: URLを本番APIに修正する
         const url = "https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder"
         fetch(url, {
@@ -20,6 +20,7 @@ module contentList {
                 // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response)
             } else {
+                console.log("成功")
                 return response.json().then((folderListJson: any) => {
                     folderList = folderListJson.data.folder
                 })
@@ -53,16 +54,19 @@ module contentList {
         }
     }
 
+    // TODO: これPromiseを返さないとawaitの意味ない
     // フォルダviewを生成する
-    function generateFolderView(): string {
-        let folderViewTl: string = generateFolderListViewTl()
+    async function generateFolderView(): Promise<string> {
+        let folderViewTl = await generateFolderListViewTl()
+        console.log("generateFolderView")
+        console.log(folderViewTl)
         folderViewTl += generateFolderCreateViewTl()
         return folderViewTl
     }
 
-    // フォルダリストviewを生成
-    function generateFolderListViewTl(): string {
-        let folderListViewTl = ``
+    // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewを生成する
+    function generateFolderViewForSelectedModal(): Promise<string> {
+        let selectFolderModalViewTl: string = ``
         for (const folder of folderList) {
             const viewTl = `
             <div class="folder-view">
@@ -71,9 +75,35 @@ module contentList {
                 </div>
             </div>
             `
-            folderListViewTl += viewTl
+            selectFolderModalViewTl += viewTl
         }
-        return folderListViewTl
+
+        return new Promise<string>((resolve => {
+            resolve(selectFolderModalViewTl)
+        }))
+    }
+
+    // フォルダリストviewを生成
+    function generateFolderListViewTl(): Promise<string> {
+        return new Promise((resolve => {
+            console.log("generateFolderListViewTl")
+            let folderListViewTl = ``
+            for (const folder of folderList) {
+                const viewTl = `
+            <div class="folder-view">
+                <div class="folder-text-area">
+                    <p class="folder-info"><i class="bi-gear-fill"></i>${folder.name} ${folder.content_count}</p>
+                </div>
+            </div>
+            `
+                console.log("viewTl")
+                console.log(viewTl)
+                console.log("folderListviewTl")
+                console.log(folderListViewTl)
+                folderListViewTl += viewTl
+            }
+            resolve(folderListViewTl)
+        }))
     }
 
     // フォルダ新規作成フォームのviewを生成
@@ -88,12 +118,18 @@ module contentList {
         return folderCreateViewTl
     }
 
+    // TODO: これPromiseを返さないとawaitの意味ない
     // フォルダのviewを表示する
-    function renderFolderView(folderViewTl: string) {
+    function renderFolderView(folderViewTl: string, folderViewForSelectedModalTl: string) {
         const folderListView = document.getElementsByClassName("folder-list-view")[0]
-        if (folderListView !== null) {
-            folderListView.innerHTML = folderViewTl
-        }
+        const selectFolderModalView = document.getElementById("select-folder-modal")
+        const selectFolderListModalView = document.getElementsByClassName("select-folder-list-view")[0]
+
+        if (selectFolderModalView === null) return
+
+        folderListView.innerHTML = folderViewTl
+        selectFolderListModalView.innerHTML = folderViewForSelectedModalTl
+        selectFolderModalView.style.visibility = "visible"
     }
 
     // フォルダにイベントを登録する
@@ -128,6 +164,11 @@ module contentList {
         }
     }
 
+    // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewにイベントを追加する
+    function addEventToFolderViewForSelectedModal() {
+
+    }
+
     // フォルダ新規作成フォームに入力されたフォルダ名を取得する
     function getInputedFolderName(): Promise<string> {
         const inputedFolderName = (<HTMLInputElement>document.getElementById("folder-name-text-field")).value || ""
@@ -140,9 +181,18 @@ module contentList {
     async function initializeSideMenu() {
         startIndicator("sidemenu-indicator")
         await doGetFolderList()
+        console.log("folderListj")
+        console.log(folderList)
         const folderViewTl = await generateFolderView()
-        await renderFolderView(folderViewTl)
+        console.log(folderViewTl)
+        const folderViewForSelectedModalTl = await generateFolderViewForSelectedModal()
+        console.log(folderViewForSelectedModalTl)
+        await renderFolderView(folderViewTl, folderViewForSelectedModalTl)
+        console.log("render")
         addEventToFolderView()
+        console.log("addEventToFolderView")
+        addEventToFolderViewForSelectedModal()
+        console.log("addEventToFolderViewForSelectedModal")
         stopIndicator("sidemenu-indicator")
     }
 
