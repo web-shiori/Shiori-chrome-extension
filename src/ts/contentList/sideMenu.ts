@@ -48,8 +48,6 @@ module contentList {
                 // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response);
             } else {
-                // 保存完了時の処理
-                alert("新しいフォルダ作成done")
                 initializeSideMenu()
             }
         }
@@ -57,9 +55,14 @@ module contentList {
 
     // フォルダviewを生成する
     function generateFolderView(): string {
-        let folderViewTl: string = `
-        `
+        let folderViewTl: string = generateFolderListViewTl()
+        folderViewTl += generateFolderCreateViewTl()
+        return folderViewTl
+    }
 
+    // フォルダリストviewを生成
+    function generateFolderListViewTl(): string {
+        let folderListViewTl = ``
         for (const folder of folderList) {
             const viewTl = `
             <div class="folder-view">
@@ -68,11 +71,13 @@ module contentList {
                 </div>
             </div>
             `
-            folderViewTl += viewTl
+            folderListViewTl += viewTl
         }
+        return folderListViewTl
+    }
 
-        // TODO: リファクタリング
-        // フォルダを新規作成するためのviewを追加
+    // フォルダ新規作成フォームのviewを生成
+    function generateFolderCreateViewTl(): string {
         const folderCreateViewTl = `
         <div id="folder-create-view" class="folder-create-view folder-view" style="visibility: hidden">
             <form id="folder-create-form" class="form-inline">
@@ -80,9 +85,7 @@ module contentList {
             </form>
         </div>
         `
-        folderViewTl += folderCreateViewTl
-
-        return folderViewTl
+        return folderCreateViewTl
     }
 
     // フォルダのviewを表示する
@@ -95,6 +98,12 @@ module contentList {
 
     // フォルダにイベントを登録する
     function addEventToFolderView() {
+        addClickEventToFolderView()
+        addSubmitEventToFolderCreateFormView()
+    }
+
+    // フォルダにクリックイベントを追加
+    function addClickEventToFolderView() {
         const folderVIew = document.getElementsByClassName("folder-view")
         for (let i = 0; i < folderVIew.length; i++) {
             folderVIew[i].addEventListener("click", function () {
@@ -103,20 +112,19 @@ module contentList {
                 initializeContent("", currentFolderId)
             })
         }
+    }
 
-        // フォルダ新規作成フォームviewにイベントを追加
+    // フォルダ新規作成フォームviewにサブミットイベントを追加
+    function addSubmitEventToFolderCreateFormView() {
         const folderCreateForm = document.getElementById("folder-create-form")
-        if (folderCreateForm !== null) {
-            folderCreateForm.onsubmit = function () {
-                getInputedFolderName().then((inputedFolderName => {
-                    const postFolder: PostFolder = {
-                        name: inputedFolderName
-                    }
-                    doPostFolder(postFolder)
-                }))
-                // ページのリロードを防ぐ
-                return false;
-            }
+        if (folderCreateForm === null) return
+        folderCreateForm.onsubmit = function () {
+            getInputedFolderName().then((inputedFolderName => {
+                const postFolder: PostFolder = { name: inputedFolderName }
+                doPostFolder(postFolder)
+            }))
+            // ページのリロードを防ぐ
+            return false;
         }
     }
 
