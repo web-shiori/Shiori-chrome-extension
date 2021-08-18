@@ -1,5 +1,5 @@
 module contentList {
-    let folderList: Folder[] = []
+    export let folderList: Folder[] = []
 
     // フォルダ一覧を取得する
     function doGetFolderList() {

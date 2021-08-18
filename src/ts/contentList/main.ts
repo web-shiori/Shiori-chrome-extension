@@ -260,6 +260,33 @@ module contentList {
         }
     }
 
+    // コンテンツをフォルダに追加する
+    function doPostContentToFolder(contentId: number, folderId: number) {
+        // TODO: URLを本番APIに修正する
+        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content/${contentId}`
+        fetch(url, {
+            method: 'post',
+            // TODO: 認証用のヘッダを本場用に修正する
+            headers: {
+                'access-token': 'access-token',
+                'client': 'client',
+                'uid': 'uid'
+            }
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response);
+            } else {
+                // 保存完了時の処理
+                alert("コンテンツをフォルダに追加しました")
+            }
+        }
+    }
+
     // コンテンツviewを生成する
     function generateContentView(): string {
         let contentViewTl: string = ``
@@ -312,8 +339,9 @@ module contentList {
                 switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
-                        alert("folder!!")
-
+                        // TODO: フォルダを選べるようにする
+                        const targetFolder: Folder = folderList[i]
+                        doPostContentToFolder(targetFolder.folder_id, targetContent.content_id)
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:
