@@ -53,7 +53,6 @@ module contentList {
         }
     }
 
-    // TODO: これPromiseを返さないとawaitの意味ない
     // フォルダviewを生成する
     async function generateFolderView(): Promise<string> {
         let folderViewTl = await generateFolderListViewTl()
@@ -63,6 +62,7 @@ module contentList {
         return folderViewTl
     }
 
+    // TODO: これとgenerateFolderListViewTlほぼ一緒だからコード共有できる
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewを生成する
     function generateFolderViewForSelectedModal(): Promise<string> {
         return new Promise<string>((resolve => {
