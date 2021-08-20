@@ -281,9 +281,9 @@ module contentList {
                 // TODO: エラー時の処理を実装する
                 console.error("エラーレスポンス", response);
             } else {
-                // 保存完了時の処理
-                alert(`${contentId}, ${folderId}`)
                 // モーダル非表示にする
+                const selectFolderModal = document.getElementById("select-folder-modal")
+                if (selectFolderModal !== null) selectFolderModal.style.visibility = "hidden"
             }
         }
     }
@@ -343,6 +343,8 @@ module contentList {
                         // モーダルにイベント追加
                         addEventToFolderViewForSelectedModal(targetContent.content_id)
                         // モーダル表示
+                        const selectFolderModal = document.getElementById("select-folder-modal")
+                        if (selectFolderModal !== null) selectFolderModal.style.visibility = "visible"
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:

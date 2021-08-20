@@ -123,7 +123,6 @@ module contentList {
 
         folderListView.innerHTML = folderViewTl
         selectFolderListModalView.innerHTML = folderViewForSelectedModalTl
-        selectFolderModalView.style.visibility = "visible"
     }
 
     // フォルダにイベントを登録する
