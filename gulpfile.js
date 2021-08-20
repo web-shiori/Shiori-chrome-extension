@@ -15,11 +15,18 @@ function clean(cb) {
 // ファイルコピー
 function copy() {
     return gulp.src([
-        './src/**/*.*', '!src/scss/**/*.scss', '!src/ts/**/*.ts'
+        './src/**/*.*', '!src/scss/**/*.scss', '!src/ts/**/*.ts', '!src/ts/lib/*'
     ], {
         base: './src'
     })
         .pipe(gulp.dest('./dist'));
+}
+
+function copyLibs() {
+    return gulp.src([
+        'src/ts/lib/*.js'
+    ])
+        .pipe(gulp.dest('./dist/js/lib'));
 }
 
 // sassのコンパイル
@@ -45,6 +52,7 @@ const build = gulp.series (
     clean,
     gulp.parallel(
         copy,
+        copyLibs,
         sass,
         script,
     ),
@@ -52,6 +60,7 @@ const build = gulp.series (
 
 exports.clean = clean;
 exports.copy = copy;
+exports.copyLibs = copyLibs;
 exports.sass = sass;
 exports.script = script;
 exports.build = build;

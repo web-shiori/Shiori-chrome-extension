@@ -1,0 +1,106 @@
+@charset "utf-8";
+
+$shiori-secondory-color: #08ADEC;
+$shiori-gray: gainsboro;
+
+$header-height: 48px;
+
+.header {
+  background-color: $shiori-secondory-color;
+  width: 100%;
+  height: $header-height;
+
+  .adding-folder-button {
+    color: #1DDBB5;
+  }
+}
+
+.wrapper {
+  margin-top: $header-height;
+  width: 100%;
+  .sidemenu {
+    background-color: gray;
+    width: 20%;
+    height: calc(100vh - #{$header-height});
+    display: block;
+    float: left;
+
+    .folder-list-view {
+      .folder-view {
+        //消す
+        background-color: azure;
+      }
+
+      .folder-view:hover {
+        background-color: gainsboro;
+      }
+
+
+
+      .selected-folder-view {
+        //いい感じの色に直す
+        background-color: #1DDBB5;
+      }
+    }
+  }
+
+  .main {
+    background-color: silver;
+    width: 80%;
+    height: calc(100vh - #{$header-height});
+    float: right;
+
+    #content-list-indicator {
+      color: $shiori-gray;
+    }
+
+    .content-list-view {
+      .content-view {
+        //消す
+        background-color: bisque;
+        position: relative;
+
+        .content-info {
+
+          .content-button-area {
+            display: block;
+            text-align: right;
+
+            .content-button {
+              font-size: 30px;
+            }
+
+            .content-button:hover {
+              color: aqua;
+            }
+          }
+        }
+      }
+
+      .content-view:hover {
+        background-color: gainsboro;
+      }
+    }
+
+    #saved-content-text {
+      text-align: center;
+    }
+  }
+}
+
+.select-folder-modal {
+  background-color: chartreuse;
+  height: 500px;
+  width: 500px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 100000;
+
+  .folder-view-select-folder-modal:hover {
+    background-color: gainsboro;
+  }
+}

@@ -1,11 +1,12 @@
 @charset "utf-8";
 
 $shiori-primary-color: #1DDBB5;
+$shiori-gray: gainsboro;
 
 #popup-body {
   width: 300px;
   // どれがいいかわからない
-  border: 3px solid gainsboro;
+  border: 3px solid $shiori-gray;
   //border: 3px solid #08ADEC;
   /* border: 3px solid #1DDBB5; */
 
