@@ -340,11 +340,7 @@ module contentList {
                 switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
-                        // モーダルにイベント追加
-                        addEventToFolderViewForSelectedModal(targetContent.content_id)
-                        // モーダル表示
-                        const selectFolderModal = document.getElementById("select-folder-modal")
-                        if (selectFolderModal !== null) selectFolderModal.style.visibility = "visible"
+                        addContentToFolder(targetContent.content_id)
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:
@@ -376,6 +372,15 @@ module contentList {
                 contentButtonAreaView.style.visibility = "hidden"
             })
         }
+    }
+
+    // コンテンツをフォルダに追加する
+    function addContentToFolder(contentId: number) {
+        // モーダルにイベント追加
+        addEventToFolderViewForSelectedModal(contentId)
+        // モーダル表示
+        const selectFolderModal = document.getElementById("select-folder-modal")
+        if (selectFolderModal !== null) selectFolderModal.style.visibility = "visible"
     }
 
     // コンテンツをお気に入りに登録する
