@@ -165,9 +165,10 @@ module contentList {
         for (let i = 0; i < selectFolderModalView.length; i++) {
             selectFolderModalView[i].addEventListener("click", function () {
                 doPostContentToFolder(contentId, folderList[i].folder_id)
-            })
+            }, { once: true })
         }
     }
+
 
     // フォルダ新規作成フォームに入力されたフォルダ名を取得する
     function getInputedFolderName(): Promise<string> {

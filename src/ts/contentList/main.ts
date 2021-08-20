@@ -283,16 +283,7 @@ module contentList {
             } else {
                 // 保存完了時の処理
                 alert(`${contentId}, ${folderId}`)
-                // イベント削除
-                let selectFolderModalView = document.getElementsByClassName("folder-view-select-folder-modal")
-                for (let i = 0; i < selectFolderModalView.length; i++) {
-                    selectFolderModalView[i].removeEventListener('click', function () {
-                        doPostContentToFolder(contentId, folderList[i].folder_id)
-                    })
-
-                }
                 // モーダル非表示にする
-
             }
         }
     }
