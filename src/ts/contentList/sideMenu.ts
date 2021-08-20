@@ -53,11 +53,36 @@ module contentList {
         }
     }
 
+    // フォルダを削除するリクエストを送る
+    function doDeleteFolder(folderId: number) {
+        // TODO: URLを本番APIに修正する
+        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}`
+        return fetch(url, {
+            method: 'delete',
+            // TODO: 認証用のヘッダを本場用に修正する
+            headers: {
+                'access-token': 'access-token',
+                'client': 'client',
+                'uid': 'uid'
+            }
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response);
+            } else {
+                // サイドメニューをリロードする
+                initializeSideMenu()
+            }
+        }
+    }
+
     // フォルダviewを生成する
     async function generateFolderView(): Promise<string> {
         let folderViewTl = await generateFolderListViewTl()
-        console.log("generateFolderView")
-        console.log(folderViewTl)
         folderViewTl += generateFolderCreateViewTl()
         return folderViewTl
     }
@@ -86,11 +111,14 @@ module contentList {
         return new Promise((resolve => {
             console.log("generateFolderListViewTl")
             let folderListViewTl = ``
-            for (const folder of folderList) {
+            for (let i = 0; i < folderList.length; i++) {
                 const viewTl = `
                 <div class="folder-view">
                     <div class="folder-text-area">
-                        <p class="folder-info"><i class="bi-gear-fill"></i>${folder.name} ${folder.content_count}</p>
+                        <p class="folder-info">
+                            <i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}
+                            <i class="bi bi-x" id="folder-delete-button-${i}" style="visibility: hidden"></i>
+                        </p>
                     </div>
                 </div>
             `
@@ -125,20 +153,42 @@ module contentList {
         selectFolderListModalView.innerHTML = folderViewForSelectedModalTl
     }
 
-    // フォルダにイベントを登録する
-    function addEventToFolderView() {
-        addClickEventToFolderView()
+    // サイドメニューのviewにイベントを登録する
+    function addEventToSideMenuView() {
+        addEventToFolderView()
         addSubmitEventToFolderCreateFormView()
     }
 
-    // フォルダにクリックイベントを追加
-    function addClickEventToFolderView() {
+    // フォルダviewにクリックイベントを追加
+    function addEventToFolderView() {
         const folderVIew = document.getElementsByClassName("folder-view")
         for (let i = 0; i < folderVIew.length; i++) {
-            folderVIew[i].addEventListener("click", function () {
-                folderVIew[i].classList.add("selected-folder-view")
-                currentFolderId = folderList[i].folder_id
-                initializeContent("", currentFolderId)
+            // クリックイベントを追加
+            folderVIew[i].addEventListener("click", function (event) {
+                /*
+                    NOTE: 本当は・・・ボタンを表示して、クリックしたらドロップダウンメニューを表示し、
+                    そこで削除ボタンを選ばせたかった。ただinnerHTMLでpopper.jsを読み込む方法がわからず、
+                    断念した。妥協策として削除ボタンを表示してクリックしたらフォルダを削除するようにした。
+                 */
+                // フォルダ削除ボタンをクリックした場合
+                if ((<HTMLInputElement>event.target).id === `folder-delete-button-${i}`) {
+                    doDeleteFolder(folderList[i].folder_id)
+                } else {
+                    // その他をクリックした場合、そのフォルダ内のコンテンツを表示する
+                    folderVIew[i].classList.add("selected-folder-view")
+                    currentFolderId = folderList[i].folder_id
+                    initializeContent("", currentFolderId)
+                }
+            })
+            // マウスオーバーイベントを追加
+            folderVIew[i].addEventListener("mouseover", function () {
+                const folderEditButtonView = document.getElementById(`folder-delete-button-${i}`)
+                if (folderEditButtonView !== null) folderEditButtonView.style.visibility = "visible"
+            })
+            // マウスリーブイベントを追加
+            folderVIew[i].addEventListener("mouseleave", function () {
+                const folderEditButtonView = document.getElementById(`folder-delete-button-${i}`)
+                if (folderEditButtonView !== null) folderEditButtonView.style.visibility = "hidden"
             })
         }
     }
@@ -184,7 +234,7 @@ module contentList {
         const folderViewTl = await generateFolderView()
         const folderViewForSelectedModalTl = await generateFolderViewForSelectedModal()
         await renderFolderView(folderViewTl, folderViewForSelectedModalTl)
-        addEventToFolderView()
+        addEventToSideMenuView()
         stopIndicator("sidemenu-indicator")
     }
 
