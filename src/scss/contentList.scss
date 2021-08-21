@@ -22,7 +22,7 @@ $header-height: 48px;
   .sidemenu {
     background-color: gray;
     width: 20%;
-    height: calc(100vh - #{$header-height});
+    //height: calc(100vh - #{$header-height});
     display: block;
     float: left;
     border-right: 1px solid rgba(0,0,0,.1);
@@ -56,7 +56,7 @@ $header-height: 48px;
   .main {
     //background-color: silver;
     width: 80%;
-    height: calc(100vh - #{$header-height});
+    //height: calc(100vh - #{$header-height});
     float: right;
 
     #content-list-indicator {
@@ -69,13 +69,14 @@ $header-height: 48px;
     .content-list-view {
       .content-view {
         //消す
-        background-color: bisque;
+        //background-color: bisque;
         position: relative;
         height: 80px;
         width: 100%;
         border-bottom: 1px solid rgba(0,0,0,.1);
+        cursor: pointer;
         .content-thumbnail-view {
-          background-color: brown;
+          //background-color: brown;
           float: left;
           width: 80px;
           height: 100%;
@@ -95,7 +96,7 @@ $header-height: 48px;
 
         .content-info {
           // 消す
-          background-color: blueviolet;
+          //background-color: blueviolet;
           height: 100%;
           //width: 90%;
           float: left;
@@ -157,6 +158,8 @@ $header-height: 48px;
     }
 
     #saved-content-text {
+      margin-top: 10px;
+      margin-bottom: 40px;
       text-align: center;
     }
   }
