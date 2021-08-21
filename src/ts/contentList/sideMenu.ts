@@ -88,6 +88,7 @@ module contentList {
     }
 
     // TODO: これとgenerateFolderListViewTlほぼ一緒だからコード共有できる
+    // TODO: メイン画面に表示されるのにsideMenuに実装されているのはおかしい
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewを生成する
     function generateFolderViewForSelectedModal(): Promise<string> {
         return new Promise<string>((resolve => {
