@@ -5,6 +5,14 @@ $shiori-gray: gainsboro;
 
 $header-height: 48px;
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
 .header {
   background-color: $shiori-secondory-color;
   width: 100%;
