@@ -95,7 +95,8 @@ module contentList {
             let selectFolderModalViewTl: string = ``
             for (let i = 0; i < folderList.length; i++) {
                 const viewTl = `
-                <h6>フォルダを選択</h6><i class="bi bi-x" id="select-folder-view-close-button"></i>
+                <h6 id="select-folder-h6" >フォルダを選択</h6ud>
+                <i class="bi bi-x" id="select-folder-view-close-button"></i>
                 <div id="folder-view-select-folder-modal-${i}" class="folder-view-select-folder-modal">
                     <div class="folder-text-area-select-folder-modal">
                         <p class="folder-info-select-folder-modal"><i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}</p>

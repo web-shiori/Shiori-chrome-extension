@@ -183,8 +183,8 @@ body {
 
 .select-folder-modal {
   background-color: chartreuse;
-  height: 500px;
-  width: 500px;
+  height: 50%;
+  width: 15%;
   position: absolute;
   top: 0;
   left: 0;
@@ -195,5 +195,14 @@ body {
 
   .folder-view-select-folder-modal:hover {
     background-color: gainsboro;
+  }
+
+  #select-folder-h6 {
+    //display: inline-flex;
+  }
+
+  #select-folder-view-close-button {
+    display: inline;
+    float: right;
   }
 }
