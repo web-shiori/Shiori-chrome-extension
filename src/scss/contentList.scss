@@ -18,12 +18,20 @@ $header-height: 48px;
 .wrapper {
   margin-top: $header-height;
   width: 100%;
+  // TODO: CSSファイルを分割する
   .sidemenu {
     background-color: gray;
     width: 20%;
     height: calc(100vh - #{$header-height});
     display: block;
     float: left;
+
+    #sidemenu-indicator {
+      color: $shiori-gray;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     .folder-list-view {
       .folder-view {
@@ -52,6 +60,9 @@ $header-height: 48px;
 
     #content-list-indicator {
       color: $shiori-gray;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .content-list-view {
@@ -59,8 +70,57 @@ $header-height: 48px;
         //消す
         background-color: bisque;
         position: relative;
+        height: 100px;
+        .content-thumbnail-view {
+          float: left;
+          position: relative;
+          .content-thumbnail-img {
+            width: 70px;
+            height: 50px;
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+          }
+        }
 
         .content-info {
+          // 消す
+          background-color: blueviolet;
+          height: 100%;
+          width: 100%;
+          float: left;
+          font-size: small;
+          position: relative;
+          .content-info-text-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            height: 80%;
+            .content-title {
+              margin-top: 10px;
+              margin-bottom: 0px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              margin-right: 10px;
+            }
+
+            .content-sub-info {
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              margin-right: 10px;
+              margin-top: 0px;
+              margin-bottom: 0px;
+            }
+          }
 
           .content-button-area {
             display: block;

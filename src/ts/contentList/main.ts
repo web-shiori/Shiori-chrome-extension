@@ -301,7 +301,7 @@ module contentList {
             const viewTl = `
             <div class="content-view">
                 <div class="content-thumbnail-view">
-                    <img src="${contentList[i].thumbnail_img_url}" class="content-thumbnail-img" width="50px" height="50px">
+                    <img src="${contentList[i].thumbnail_img_url}" class="content-thumbnail-img">
                 </div>
                 <div class="content-info">
                     <span class="content-info-text-area">
@@ -429,18 +429,18 @@ module contentList {
     // インジケータを表示する
     export function startIndicator(indicatorElementId: string) {
         const indicator = document.getElementById(indicatorElementId)
-        if (indicator !== null) indicator.style.visibility = "visible"
+        if (indicator !== null) indicator.style.display = "flex"
     }
 
     // インジケータを非表示にする
     export function stopIndicator(indicatorElementId: string) {
         const contentIndicator = document.getElementById(indicatorElementId)
-        if (contentIndicator !== null) contentIndicator.style.visibility = "hidden"
+        if (contentIndicator !== null) contentIndicator.style.display = "none"
     }
 
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(query: string, folderId: number|null) {
-        startIndicator("content-list-indicator")
+        startIndicator("content-list-indicator-area")
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
             await doGetFolderContentList(query, folderId)
@@ -452,7 +452,7 @@ module contentList {
         await renderContentView(contentViewTl)
         addEventToContentView()
 
-        stopIndicator("content-list-indicator")
+        stopIndicator("content-list-indicator-area")
     }
 
     // ページを開いたときの処理
