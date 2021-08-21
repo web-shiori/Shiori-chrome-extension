@@ -17,6 +17,36 @@ body {
   width: 100%;
   height: $header-height;
 
+  .dropdown {
+    display: flex;
+    justify-content: center;
+    height: 48px;
+    width: 100px;
+    margin: -15px -50px;
+    position: relative;
+    left: 10px;
+    top: -3px;
+  }
+
+  #dropdownMenuButton {
+    color: white;
+  }
+
+  #dropdownMenuButton:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .dropdown-menu {
+    left: 33px;
+    padding: 0;
+    border: 1px solid rgba(0,0,0,.1);
+  }
+
+  .dropdown-item {
+    padding-left: 5px;
+  }
+
   .adding-folder-button {
     color: #1DDBB5;
   }
