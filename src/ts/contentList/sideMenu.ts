@@ -121,8 +121,13 @@ module contentList {
                         <p class="folder-info">
                             <i class="bi bi-folder2"></i>
                             <p class="folder-view-name">${folderList[i].name}</p>
-                            <p id="folder-view-content-count-${i}" class="folder-view-content-count">${folderList[i].content_count}</p>
-                            <i class="bi bi-x folder-delete-button" id="folder-delete-button-${i}" style="visibility: hidden"></i>
+                            <span class="folder-view-right-area">
+                                <p id="folder-view-content-count-${i}" class="folder-view-content-count">
+                                    ${folderList[i].content_count}
+                                </p>
+                                <i class="bi bi-x folder-delete-button" id="folder-delete-button-${i}" style="visibility: hidden"></i>
+                            </span>
+                            
                         </p>
                     </div>
                 </div>
@@ -188,18 +193,14 @@ module contentList {
             // マウスオーバーイベントを追加
             folderVIew[i].addEventListener("mouseover", function () {
                 const folderEditButtonView = document.getElementById(`folder-delete-button-${i}`)
-                const folderViewContentCount = document.getElementById(`folder-view-content-count-${i}`)
-                if (folderEditButtonView === null || folderViewContentCount === null) return
+                if (folderEditButtonView === null) return
                 folderEditButtonView.style.visibility = "visible"
-                folderViewContentCount.style.visibility = "collapse"
             })
             // マウスリーブイベントを追加
             folderVIew[i].addEventListener("mouseleave", function () {
                 const folderEditButtonView = document.getElementById(`folder-delete-button-${i}`)
-                const folderViewContentCount = document.getElementById(`folder-view-content-count-${i}`)
-                if (folderEditButtonView === null || folderViewContentCount === null) return
+                if (folderEditButtonView === null) return
                 folderEditButtonView.style.visibility = "hidden"
-                folderViewContentCount.style.visibility = "visible"
             })
         }
     }

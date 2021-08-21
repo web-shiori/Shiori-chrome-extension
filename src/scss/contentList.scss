@@ -64,6 +64,13 @@ body {
 
           .folder-info {
             display: inline;
+
+
+          }
+
+          .folder-view-right-area {
+            float: right;
+            display: flex;
           }
 
           .i.bi.bi-folder2 {
@@ -78,8 +85,9 @@ body {
           }
 
           .folder-view-content-count {
-            text-align: right;
-            float: right;
+            //text-align: right;
+            //float: right;
+            margin-right: 10px;
           }
         }
 
@@ -91,8 +99,9 @@ body {
       }
 
       .folder-delete-button {
-        float: right;
-        font-size: larger;
+        //float: right;
+        font-size: large;
+        height: 25px;
       }
 
       .folder-delete-button:hover {
