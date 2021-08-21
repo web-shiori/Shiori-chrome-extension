@@ -47,14 +47,52 @@ body {
     .folder-list-view {
       .folder-view {
         //消す
-        background-color: azure;
+        //background-color: azure;
+        height: 32px;
+        width: 100%;
+        position: relative;
+
+        .folder-text-area {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 10px;
+          right: 10px;
+          bottom: 0;
+          margin: auto;
+          height: 78%;
+
+          .folder-info {
+            display: inline;
+          }
+
+          .i.bi.bi-folder2 {
+            font-size: larger;
+            float: left;
+          }
+
+          .folder-view-name {
+            //margin-left: 5px;
+            display: inline;
+            text-align: left;
+          }
+
+          .folder-view-content-count {
+            text-align: right;
+            float: right;
+          }
+        }
+
       }
 
       .folder-view:hover {
         background-color: gainsboro;
       }
 
-
+      .folder-delete-button {
+        float: right;
+        font-size: larger;
+      }
 
       .selected-folder-view {
         //いい感じの色に直す
@@ -91,6 +129,7 @@ body {
           width: 80px;
           height: 100%;
           position: relative;
+          margin-left: 5px;
           .content-thumbnail-img {
             width: 70px;
             height: 50px;

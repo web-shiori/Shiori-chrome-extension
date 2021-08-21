@@ -119,8 +119,10 @@ module contentList {
                 <div class="folder-view">
                     <div class="folder-text-area">
                         <p class="folder-info">
-                            <i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}
-                            <i class="bi bi-x" id="folder-delete-button-${i}" style="visibility: hidden"></i>
+                            <i class="bi bi-folder2"></i>
+                            <p class="folder-view-name">${folderList[i].name}</p>
+                            <p class="folder-view-content-count">${folderList[i].content_count}</p>
+                            <i class="bi bi-x folder-delete-button" id="folder-delete-button-${i}" style="visibility: hidden"></i>
                         </p>
                     </div>
                 </div>
