@@ -2,7 +2,6 @@
 
 $shiori-secondory-color: #08ADEC;
 $shiori-gray: gainsboro;
-
 $header-height: 48px;
 
 html {
@@ -30,9 +29,7 @@ body {
   display: flex;
   // TODO: CSSファイルを分割する
   .sidemenu {
-    //background-color: gray;
     width: 20%;
-    //height: calc(100vh - #{$header-height});
     display: block;
     float: left;
     border-right: 1px solid rgba(0,0,0,.1);
@@ -46,8 +43,6 @@ body {
 
     .folder-list-view {
       .folder-view {
-        //消す
-        //background-color: azure;
         height: 32px;
         width: 100%;
         position: relative;
@@ -78,7 +73,6 @@ body {
           }
 
           .folder-view-name {
-            //margin-left: 5px;
             display: inline;
             text-align: left;
           }
@@ -87,16 +81,13 @@ body {
             margin-right: 5px;
           }
         }
-
       }
 
       .folder-view:hover {
-        //background-color: gainsboro;
         background-color: aliceblue;
       }
 
       .folder-delete-button {
-        //float: right;
         font-size: large;
         height: 25px;
         margin-right: -5px;
@@ -113,9 +104,7 @@ body {
   }
 
   .main {
-    //background-color: aqua;
     width: 80%;
-    //height: calc(100vh - #{$header-height});
     float: right;
 
     #content-list-indicator {
@@ -127,15 +116,12 @@ body {
 
     .content-list-view {
       .content-view {
-        //消す
-        //background-color: bisque;
         position: relative;
         height: 80px;
         width: 100%;
         border: 1px solid rgba(0,0,0,.1);
         cursor: pointer;
         .content-thumbnail-view {
-          //background-color: brown;
           float: left;
           width: 80px;
           height: 100%;
@@ -153,12 +139,8 @@ body {
             margin: auto;
           }
         }
-
         .content-info {
-          // 消す
-          //background-color: blueviolet;
           height: 100%;
-          //width: 90%;
           float: left;
           font-size: small;
           position: relative;
@@ -170,7 +152,6 @@ body {
             bottom: 0;
             margin: auto;
             height: 80%;
-            //width: 100%;
             .content-title {
               margin-top: 10px;
               margin-right: 10px;
@@ -182,7 +163,6 @@ body {
               display: inline-block;
               max-width: 60vw;
             }
-
             .content-sub-info {
               text-overflow: ellipsis;
               white-space: nowrap;
@@ -219,8 +199,6 @@ body {
       .content-view:hover {
         background-color: gainsboro;
       }
-
-
     }
 
     #saved-content-text {
@@ -248,7 +226,6 @@ body {
   }
 
   #select-folder-h6 {
-    //display: inline-flex;
   }
 
   #select-folder-view-close-button {
