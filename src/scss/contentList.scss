@@ -82,7 +82,7 @@ body {
         position: relative;
         height: 80px;
         width: 100%;
-        border-bottom: 1px solid rgba(0,0,0,.1);
+        border: 1px solid rgba(0,0,0,.1);
         cursor: pointer;
         .content-thumbnail-view {
           //background-color: brown;
@@ -129,6 +129,7 @@ body {
               white-space: nowrap;
               overflow: hidden;
               display: inline-block;
+              max-width: 60vw;
             }
 
             .content-sub-info {
