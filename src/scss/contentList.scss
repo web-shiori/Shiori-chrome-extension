@@ -109,7 +109,7 @@ $header-height: 48px;
             bottom: 0;
             margin: auto;
             height: 80%;
-            width: 100%;
+            //width: 100%;
             .content-title {
               margin-top: 10px;
               margin-right: 10px;
@@ -118,6 +118,7 @@ $header-height: 48px;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
+              display: inline-block;
             }
 
             .content-sub-info {
@@ -135,6 +136,8 @@ $header-height: 48px;
         .content-button-area {
           display: block;
           text-align: right;
+          position: absolute;
+          right: 20px;
 
           .content-button {
             font-size: 30px;
