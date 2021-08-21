@@ -95,6 +95,7 @@ module contentList {
             let selectFolderModalViewTl: string = ``
             for (let i = 0; i < folderList.length; i++) {
                 const viewTl = `
+                <h6>フォルダを選択</h6><i class="bi bi-x" id="select-folder-view-close-button"></i>
                 <div id="folder-view-select-folder-modal-${i}" class="folder-view-select-folder-modal">
                     <div class="folder-text-area-select-folder-modal">
                         <p class="folder-info-select-folder-modal"><i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}</p>
@@ -206,6 +207,7 @@ module contentList {
             // ページのリロードを防ぐ
             return false;
         }
+
     }
 
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewにイベントを追加する
@@ -217,6 +219,13 @@ module contentList {
                 doPostContentToFolder(contentId, folderList[i].folder_id)
             }, { once: true })
         }
+        // TODO: リファクタリング
+        const selectFolderViewCloseButton = document.getElementById("select-folder-view-close-button")
+        if (selectFolderViewCloseButton === null) return
+        selectFolderViewCloseButton.addEventListener('click', function () {
+            const selectFolderModal = document.getElementById("select-folder-modal")
+            if (selectFolderModal !== null) selectFolderModal.style.visibility = "hidden"
+        })
     }
 
 
