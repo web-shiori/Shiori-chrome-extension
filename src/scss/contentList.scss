@@ -18,6 +18,7 @@ $header-height: 48px;
 .wrapper {
   margin-top: $header-height;
   width: 100%;
+  display: flex;
   // TODO: CSSファイルを分割する
   .sidemenu {
     background-color: gray;
@@ -139,9 +140,14 @@ $header-height: 48px;
           text-align: right;
           position: absolute;
           right: 20px;
+          top: 10px;
 
           .content-button {
-            font-size: 30px;
+            font-size: large;
+            margin-left: 10px;
+            border: 1px solid rgba(0,0,0,.1);
+            padding: 5px;
+            border-radius: 5px;
           }
 
           .content-button:hover {
