@@ -308,13 +308,12 @@ module contentList {
                         <p class="content-title">${contentList[i].title}</p>
                         <p class="content-sub-info" style="display: inline">${domain}・${month}月${date}日</p>
                     </span>
-                    
-                    <span id="content-button-area-${i}" class="content-button-area" style="visibility: hidden">
-                        <span><i id="content-button-folder-${i}" class="bi-folder content-button"></i></span>
-                        <span><i id="content-button-heart-${i}" class="${contentList[i].liked ? 'bi-heart-fill' : 'bi-heart'} content-button"></i></span>
-                        <span><i id="content-button-trash-${i}" class="bi-trash content-button"></i></span>
-                    </span>
                 </div>
+                <span id="content-button-area-${i}" class="content-button-area" style="visibility: hidden">
+                    <span><i id="content-button-folder-${i}" class="bi-folder content-button"></i></span>
+                    <span><i id="content-button-heart-${i}" class="${contentList[i].liked ? 'bi-heart-fill' : 'bi-heart'} content-button"></i></span>
+                    <span><i id="content-button-trash-${i}" class="bi-trash content-button"></i></span>
+                </span>
             </div>
             `
             contentViewTl += viewTl

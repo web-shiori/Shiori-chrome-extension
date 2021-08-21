@@ -69,18 +69,17 @@ $header-height: 48px;
     .content-list-view {
       .content-view {
         //消す
-        //background-color: bisque;
+        background-color: bisque;
         position: relative;
         height: 80px;
         width: 100%;
         border-bottom: 1px solid rgba(0,0,0,.1);
         .content-thumbnail-view {
+          background-color: brown;
           float: left;
-          width: 5%;
+          width: 80px;
           height: 100%;
           position: relative;
-          margin-left: 5px;
-          margin-right: 5px;
           .content-thumbnail-img {
             width: 70px;
             height: 50px;
@@ -96,9 +95,9 @@ $header-height: 48px;
 
         .content-info {
           // 消す
-          //background-color: blueviolet;
+          background-color: blueviolet;
           height: 100%;
-          width: 90%;
+          //width: 90%;
           float: left;
           font-size: small;
           position: relative;
