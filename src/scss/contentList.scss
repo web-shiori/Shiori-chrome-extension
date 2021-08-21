@@ -51,6 +51,7 @@ body {
         height: 32px;
         width: 100%;
         position: relative;
+        cursor: pointer;
 
         .folder-text-area {
           display: block;
@@ -85,9 +86,7 @@ body {
           }
 
           .folder-view-content-count {
-            //text-align: right;
-            //float: right;
-            margin-right: 10px;
+            margin-right: 5px;
           }
         }
 
@@ -102,6 +101,7 @@ body {
         //float: right;
         font-size: large;
         height: 25px;
+        margin-right: -5px;
       }
 
       .folder-delete-button:hover {

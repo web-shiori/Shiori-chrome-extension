@@ -346,7 +346,7 @@ module contentList {
 
         contentList = [content1, content2, content3, content4, content5, content6, content7, content8,content9,content10,content11,content12, content13]
         // contentList = []
-        // contentList = [content1, content2, content3, content4, content5]
+        contentList = [content1, content2, content3, content4, content5]
     }
 
     // フォルダに含まれているコンテンツ一覧を取得する
