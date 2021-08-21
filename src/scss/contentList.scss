@@ -28,6 +28,10 @@ body {
     top: -3px;
   }
 
+  //.dropdown:hover {
+  //  background-color: $shiori-secondory-color;
+  //}
+
   #dropdownMenuButton {
     color: white;
   }
@@ -44,7 +48,13 @@ body {
   }
 
   .dropdown-item {
-    padding-left: 5px;
+    padding: 1rem 0.5rem;
+    font-size: small;
+  }
+
+  .dropdown-item:hover {
+    background-color: #08ADEC;
+    color: white;
   }
 
   .adding-folder-button {
