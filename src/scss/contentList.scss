@@ -130,18 +130,18 @@ $header-height: 48px;
               margin-left: 10px;
             }
           }
+        }
 
-          .content-button-area {
-            display: block;
-            text-align: right;
+        .content-button-area {
+          display: block;
+          text-align: right;
 
-            .content-button {
-              font-size: 30px;
-            }
+          .content-button {
+            font-size: 30px;
+          }
 
-            .content-button:hover {
-              color: aqua;
-            }
+          .content-button:hover {
+            color: aqua;
           }
         }
       }
@@ -149,6 +149,8 @@ $header-height: 48px;
       .content-view:hover {
         background-color: gainsboro;
       }
+
+
     }
 
     #saved-content-text {
