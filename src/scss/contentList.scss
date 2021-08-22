@@ -55,6 +55,15 @@ body {
 
   .adding-folder-button {
     color: white;
+    font-size: small;
+    width: 39px;
+    left: calc(20% - 39px);
+    position: absolute;
+  }
+
+  .adding-folder-button:hover {
+    color: white;
+    background-color: #0096ff;
   }
 }
 
