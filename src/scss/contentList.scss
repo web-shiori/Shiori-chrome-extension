@@ -93,6 +93,7 @@ body {
         width: 100%;
         position: relative;
         cursor: pointer;
+        margin-top: 5px;
 
         .folder-text-area {
           display: block;
@@ -146,6 +147,22 @@ body {
       .selected-folder-view {
         background-color: gainsboro;
       }
+    }
+
+    .folder-create-view {
+      margin-left: 10px;
+
+      #folder-name-text-field {
+        width: calc(100% - 20px);
+      }
+
+      #folder-name-text-field:focus {
+        outline: 3px solid white;
+      }
+    }
+
+    .folder-create-view:hover {
+      background-color: white;
     }
   }
 
