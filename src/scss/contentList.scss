@@ -290,7 +290,7 @@ body {
 }
 
 .select-folder-modal {
-  background-color: chartreuse;
+  background-color: white;
   height: 50%;
   width: 15%;
   position: absolute;
@@ -300,16 +300,66 @@ body {
   bottom: 0;
   margin: auto;
   z-index: 100000;
+  border: 1px solid rgba(0,0,0,.1);
+
+  .select-folder-modal-header {
+    
+    #select-folder-heading {
+      background-color: $shiori-secondory-color;
+      padding: 10px;
+    }
+
+    #select-folder-view-close-button {
+      display: inline;
+      float: right;
+      position: absolute;
+      top: -2px;
+      right: 2px;
+      font-size: xx-large;
+      cursor: pointer;
+    }
+
+    #select-folder-view-close-button:hover {
+      color: gainsboro;
+    }
+  }
+
+  .folder-view-select-folder-modal {
+    height: 32px;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    margin-top: -16px;
+    border-top: 1px solid rgba(0,0,0,.1);
+  }
 
   .folder-view-select-folder-modal:hover {
     background-color: gainsboro;
   }
 
-  #select-folder-h6 {
-  }
+  .folder-text-area-select-folder-modal {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+    margin: auto;
+    margin-top: 5px;
+    height: 78%;
 
-  #select-folder-view-close-button {
-    display: inline;
-    float: right;
+    .folder-info-select-folder-modal {
+      display: inline;
+    }
+
+    .folder-view-name-select-folder-modal {
+      display: inline;
+      text-align: left;
+    }
+
+    .folder-view-right-area-select-folder-modal {
+      float: right;
+      display: flex;
+    }
   }
 }

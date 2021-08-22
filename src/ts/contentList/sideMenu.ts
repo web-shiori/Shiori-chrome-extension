@@ -89,17 +89,24 @@ module contentList {
 
     // TODO: これとgenerateFolderListViewTlほぼ一緒だからコード共有できる
     // TODO: メイン画面に表示されるのにsideMenuに実装されているのはおかしい
+    // TODO: CSSのクラス名・id名を修正
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewを生成する
     function generateFolderViewForSelectedModal(): Promise<string> {
         return new Promise<string>((resolve => {
             let selectFolderModalViewTl: string = ``
             for (let i = 0; i < folderList.length; i++) {
                 const viewTl = `
-                <h6 id="select-folder-h6" >フォルダを選択</h6ud>
-                <i class="bi bi-x" id="select-folder-view-close-button"></i>
                 <div id="folder-view-select-folder-modal-${i}" class="folder-view-select-folder-modal">
                     <div class="folder-text-area-select-folder-modal">
-                        <p class="folder-info-select-folder-modal"><i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}</p>
+                        <p class="folder-info-select-folder-modal">
+                            <i class="bi bi-folder2"></i>
+                            <p class="folder-view-name-select-folder-modal">${folderList[i].name}</p>
+                            <span class="folder-view-right-area-select-folder-modal">
+                                <p id="folder-view-content-count-${i}" class="folder-view-content-count-select-folder-modal">
+                                    ${folderList[i].content_count}
+                                </p>
+                            </span>
+                        </p>
                     </div>
                 </div>
                 `
