@@ -66,6 +66,23 @@ body {
     color: white;
     background-color: #0096ff;
   }
+
+  #search-text-field {
+    height: 25px;
+    width: 268px;
+    left: calc(20% + 10px);
+    position: absolute;
+    top: 11px;
+    font-size: small;
+    border-radius: 1px;
+    background-color: #87ccff;;
+    color: white;
+    border: none;
+  }
+
+  #search-text-field::placeholder {
+    color: white;
+  }
 }
 
 .wrapper {
