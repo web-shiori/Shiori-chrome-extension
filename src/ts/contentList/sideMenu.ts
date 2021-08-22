@@ -88,6 +88,8 @@ module contentList {
     }
 
     // TODO: これとgenerateFolderListViewTlほぼ一緒だからコード共有できる
+    // TODO: メイン画面に表示されるのにsideMenuに実装されているのはおかしい
+    // TODO: CSSのクラス名・id名を修正
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewを生成する
     function generateFolderViewForSelectedModal(): Promise<string> {
         return new Promise<string>((resolve => {
@@ -96,7 +98,15 @@ module contentList {
                 const viewTl = `
                 <div id="folder-view-select-folder-modal-${i}" class="folder-view-select-folder-modal">
                     <div class="folder-text-area-select-folder-modal">
-                        <p class="folder-info-select-folder-modal"><i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}</p>
+                        <p class="folder-info-select-folder-modal">
+                            <i class="bi bi-folder2"></i>
+                            <p class="folder-view-name-select-folder-modal">${folderList[i].name}</p>
+                            <span class="folder-view-right-area-select-folder-modal">
+                                <p id="folder-view-content-count-${i}" class="folder-view-content-count-select-folder-modal">
+                                    ${folderList[i].content_count}
+                                </p>
+                            </span>
+                        </p>
                     </div>
                 </div>
                 `
@@ -116,8 +126,15 @@ module contentList {
                 <div class="folder-view">
                     <div class="folder-text-area">
                         <p class="folder-info">
-                            <i class="bi-gear-fill"></i>${folderList[i].name} ${folderList[i].content_count}
-                            <i class="bi bi-x" id="folder-delete-button-${i}" style="visibility: hidden"></i>
+                            <i class="bi bi-folder2"></i>
+                            <p class="folder-view-name">${folderList[i].name}</p>
+                            <span class="folder-view-right-area">
+                                <p id="folder-view-content-count-${i}" class="folder-view-content-count">
+                                    ${folderList[i].content_count}
+                                </p>
+                                <i class="bi bi-x folder-delete-button" id="folder-delete-button-${i}" style="visibility: hidden"></i>
+                            </span>
+                            
                         </p>
                     </div>
                 </div>
@@ -183,12 +200,14 @@ module contentList {
             // マウスオーバーイベントを追加
             folderVIew[i].addEventListener("mouseover", function () {
                 const folderEditButtonView = document.getElementById(`folder-delete-button-${i}`)
-                if (folderEditButtonView !== null) folderEditButtonView.style.visibility = "visible"
+                if (folderEditButtonView === null) return
+                folderEditButtonView.style.visibility = "visible"
             })
             // マウスリーブイベントを追加
             folderVIew[i].addEventListener("mouseleave", function () {
                 const folderEditButtonView = document.getElementById(`folder-delete-button-${i}`)
-                if (folderEditButtonView !== null) folderEditButtonView.style.visibility = "hidden"
+                if (folderEditButtonView === null) return
+                folderEditButtonView.style.visibility = "hidden"
             })
         }
     }
@@ -205,6 +224,7 @@ module contentList {
             // ページのリロードを防ぐ
             return false;
         }
+
     }
 
     // フォルダにコンテンツを追加する時にフォルダを選択するモーダルviewにイベントを追加する
@@ -216,6 +236,13 @@ module contentList {
                 doPostContentToFolder(contentId, folderList[i].folder_id)
             }, { once: true })
         }
+        // TODO: リファクタリング
+        const selectFolderViewCloseButton = document.getElementById("select-folder-view-close-button")
+        if (selectFolderViewCloseButton === null) return
+        selectFolderViewCloseButton.addEventListener('click', function () {
+            const selectFolderModal = document.getElementById("select-folder-modal")
+            if (selectFolderModal !== null) selectFolderModal.style.visibility = "hidden"
+        })
     }
 
 

@@ -1,78 +1,277 @@
 @charset "utf-8";
 
+$shiori-primary-color: #1DDBB5;
 $shiori-secondory-color: #08ADEC;
 $shiori-gray: gainsboro;
-
 $header-height: 48px;
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
 
 .header {
   background-color: $shiori-secondory-color;
   width: 100%;
   height: $header-height;
 
+  .dropdown {
+    display: flex;
+    justify-content: center;
+    height: 48px;
+    width: 100px;
+    margin: -15px -50px;
+    position: relative;
+    left: 10px;
+    top: -3px;
+  }
+
+  #dropdownMenuButton {
+    color: white;
+  }
+
+  #dropdownMenuButton:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .dropdown-menu {
+    left: 33px;
+    padding: 0;
+    border: 1px solid rgba(0,0,0,.1);
+  }
+
+  .dropdown-item {
+    padding: 1rem 0.5rem;
+    font-size: small;
+  }
+
+  .dropdown-item:hover {
+    background-color: #08ADEC;
+    color: white;
+  }
+
   .adding-folder-button {
-    color: #1DDBB5;
+    color: white;
+    font-size: small;
+    width: 39px;
+    left: calc(20% - 39px);
+    position: absolute;
+  }
+
+  .adding-folder-button:hover {
+    color: white;
+    background-color: #0096ff;
+  }
+
+  #search-text-field {
+    height: 25px;
+    width: 268px;
+    left: calc(20% + 10px);
+    position: absolute;
+    top: 11px;
+    font-size: small;
+    border-radius: 1px;
+    background-color: #87ccff;;
+    color: white;
+    border: none;
+  }
+
+  #search-text-field::placeholder {
+    color: white;
   }
 }
 
 .wrapper {
   margin-top: $header-height;
+  min-height: 100%;
   width: 100%;
+  display: flex;
+  // TODO: CSSファイルを分割する
   .sidemenu {
-    background-color: gray;
     width: 20%;
-    height: calc(100vh - #{$header-height});
     display: block;
     float: left;
+    border-right: 1px solid rgba(0,0,0,.1);
+
+    #sidemenu-indicator {
+      color: $shiori-gray;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     .folder-list-view {
       .folder-view {
-        //消す
-        background-color: azure;
+        height: 32px;
+        width: 100%;
+        position: relative;
+        cursor: pointer;
+        margin-top: 5px;
+
+        .folder-text-area {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 10px;
+          right: 10px;
+          bottom: 0;
+          margin: auto;
+          height: 78%;
+
+          .folder-info {
+            display: inline;
+          }
+
+          .folder-view-right-area {
+            float: right;
+            display: flex;
+          }
+
+          .i.bi.bi-folder2 {
+            font-size: larger;
+            float: left;
+          }
+
+          .folder-view-name {
+            display: inline;
+            text-align: left;
+          }
+
+          .folder-view-content-count {
+            margin-right: 5px;
+          }
+        }
       }
 
       .folder-view:hover {
+        background-color: aliceblue;
+      }
+
+      .folder-delete-button {
+        font-size: large;
+        height: 25px;
+        margin-right: -5px;
+      }
+
+      .folder-delete-button:hover {
         background-color: gainsboro;
       }
 
-
-
       .selected-folder-view {
-        //いい感じの色に直す
-        background-color: #1DDBB5;
+        background-color: gainsboro;
       }
+    }
+
+    .folder-create-view {
+      margin-left: 10px;
+
+      #folder-name-text-field {
+        width: calc(100% - 20px);
+      }
+
+      #folder-name-text-field:focus {
+        outline: 3px solid white;
+      }
+    }
+
+    .folder-create-view:hover {
+      background-color: white;
     }
   }
 
   .main {
-    background-color: silver;
     width: 80%;
-    height: calc(100vh - #{$header-height});
     float: right;
 
     #content-list-indicator {
       color: $shiori-gray;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .content-list-view {
       .content-view {
-        //消す
-        background-color: bisque;
         position: relative;
-
+        height: 80px;
+        width: 100%;
+        border: 1px solid rgba(0,0,0,.1);
+        cursor: pointer;
+        .content-thumbnail-view {
+          float: left;
+          width: 80px;
+          height: 100%;
+          position: relative;
+          margin-left: 5px;
+          .content-thumbnail-img {
+            width: 70px;
+            height: 50px;
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+          }
+        }
         .content-info {
-
-          .content-button-area {
-            display: block;
-            text-align: right;
-
-            .content-button {
-              font-size: 30px;
+          height: 100%;
+          float: left;
+          font-size: small;
+          position: relative;
+          .content-info-text-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            height: 80%;
+            .content-title {
+              margin-top: 10px;
+              margin-right: 10px;
+              margin-bottom: 0px;
+              margin-left: 10px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              display: inline-block;
+              max-width: 60vw;
             }
-
-            .content-button:hover {
-              color: aqua;
+            .content-sub-info {
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              margin-right: 10px;
+              margin-top: 0px;
+              margin-bottom: 0px;
+              margin-left: 10px;
             }
+          }
+        }
+
+        .content-button-area {
+          display: block;
+          text-align: right;
+          position: absolute;
+          right: 20px;
+          top: 10px;
+
+          .content-button {
+            font-size: large;
+            margin-left: 10px;
+            border: 1px solid rgba(0,0,0,.1);
+            padding: 5px;
+            border-radius: 5px;
+          }
+
+          .content-button:hover {
+            color: $shiori-primary-color;
           }
         }
       }
@@ -83,15 +282,17 @@ $header-height: 48px;
     }
 
     #saved-content-text {
+      margin-top: 10px;
+      margin-bottom: 40px;
       text-align: center;
     }
   }
 }
 
 .select-folder-modal {
-  background-color: chartreuse;
-  height: 500px;
-  width: 500px;
+  background-color: white;
+  height: 50%;
+  width: 15%;
   position: absolute;
   top: 0;
   left: 0;
@@ -99,8 +300,66 @@ $header-height: 48px;
   bottom: 0;
   margin: auto;
   z-index: 100000;
+  border: 1px solid rgba(0,0,0,.1);
+
+  .select-folder-modal-header {
+    
+    #select-folder-heading {
+      background-color: $shiori-secondory-color;
+      padding: 10px;
+    }
+
+    #select-folder-view-close-button {
+      display: inline;
+      float: right;
+      position: absolute;
+      top: -2px;
+      right: 2px;
+      font-size: xx-large;
+      cursor: pointer;
+    }
+
+    #select-folder-view-close-button:hover {
+      color: gainsboro;
+    }
+  }
+
+  .folder-view-select-folder-modal {
+    height: 32px;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    margin-top: -16px;
+    border-top: 1px solid rgba(0,0,0,.1);
+  }
 
   .folder-view-select-folder-modal:hover {
     background-color: gainsboro;
+  }
+
+  .folder-text-area-select-folder-modal {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+    margin: auto;
+    margin-top: 5px;
+    height: 78%;
+
+    .folder-info-select-folder-modal {
+      display: inline;
+    }
+
+    .folder-view-name-select-folder-modal {
+      display: inline;
+      text-align: left;
+    }
+
+    .folder-view-right-area-select-folder-modal {
+      float: right;
+      display: flex;
+    }
   }
 }
