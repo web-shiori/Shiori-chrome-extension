@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+$shiori-primary-color: #1DDBB5;
 $shiori-secondory-color: #08ADEC;
 $shiori-gray: gainsboro;
 $header-height: 48px;
@@ -236,7 +237,7 @@ body {
           }
 
           .content-button:hover {
-            color: aqua;
+            color: $shiori-primary-color;
           }
         }
       }
