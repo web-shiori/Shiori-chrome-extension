@@ -3,8 +3,7 @@ module contentList {
 
     // フォルダ一覧を取得する
     function doGetFolderList() {
-        // TODO: URLを本番APIに修正する
-        const url = "https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder"
+        const url = "https://web-shiori.herokuapp.com/v1/folder"
         return fetch(url, {
             headers: {
                 'access-token': 'access-token',
@@ -29,8 +28,8 @@ module contentList {
 
     // フォルダを新規作成する
     function doPostFolder(folder: PostFolder) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder`
+
+        const url = `https://web-shiori.herokuapp.com/v1/folder`
         return fetch(url, {
             method: 'POST',
             headers: {
@@ -55,8 +54,8 @@ module contentList {
 
     // フォルダを削除するリクエストを送る
     function doDeleteFolder(folderId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}`
+
+        const url = `https://web-shiori.herokuapp.com/v1/folder/${folderId}`
         return fetch(url, {
             method: 'delete',
             // TODO: 認証用のヘッダを本場用に修正する

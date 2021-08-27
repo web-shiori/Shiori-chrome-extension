@@ -5,7 +5,7 @@ module contentList {
     // コンテンツ一覧を取得する
     // function doGetContentList(query: string) {
     //     // TODO: URLを本番APIに修正する
-    //     const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content?q=${query}`
+    //     const url = `https://web-shiori.herokuapp.com/v1/content?q=${query}`
     //     return fetch(url, {
     //         // TODO: 認証用のヘッダを本場用に修正する
     //         headers: {
@@ -351,8 +351,8 @@ module contentList {
 
     // フォルダに含まれているコンテンツ一覧を取得する
     function doGetFolderContentList(query: string, folderId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content?q=${query}`
+
+        const url = `https://web-shiori.herokuapp.com/v1/folder/${folderId}/content?q=${query}`
         return fetch(url, {
             // TODO: 認証用のヘッダを本場用に修正する
             headers: {
@@ -379,8 +379,8 @@ module contentList {
 
     // コンテンツ削除リクエスト
     function doDeleteContent(contentId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}`
+
+        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}`
         return fetch(url, {
             method: 'delete',
             // TODO: 認証用のヘッダを本場用に修正する
@@ -407,8 +407,8 @@ module contentList {
 
     // コンテンツをお気に入りに登録する
     function doPostFavoriteContent(contentId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
+
+        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}/like`
         return fetch(url, {
             method: 'post',
             // TODO: 認証用のヘッダを本場用に修正する
@@ -431,8 +431,8 @@ module contentList {
 
     // コンテンツのお気に入りを解除する
     function doDeleteUnfavoriteContent(contentId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
+
+        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}/like`
         return fetch(url, {
             method: 'delete',
             // TODO: 認証用のヘッダを本場用に修正する
@@ -455,8 +455,8 @@ module contentList {
 
     // コンテンツをフォルダに追加する
     export function doPostContentToFolder(contentId: number, folderId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content/${contentId}`
+
+        const url = `https://web-shiori.herokuapp.com/v1/folder/${folderId}/content/${contentId}`
         return fetch(url, {
             method: 'post',
             // TODO: 認証用のヘッダを本場用に修正する
