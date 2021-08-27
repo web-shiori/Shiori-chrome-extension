@@ -97,7 +97,7 @@ module popup {
         return new Promise<string>((resolve) => {
             chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
                 chrome.tabs.executeScript(<number>tabs[0].id, {
-                    // TODO: サムネイル画像取得方法を改善したい
+                    // TODO: サムネイル画像取得方法を改善したい: これとかを使う？(https://github.com/gottfrois/link_thumbnailer)
                     // TODO: youtubeの場合工夫する必要がある
                     code: `document.images[0].src;`
                 }, (result) => {
