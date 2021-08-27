@@ -80,6 +80,30 @@ module contentList {
         }
     }
 
+    // コンテンツを更新するリクエスト
+    function doPutContent(contentId: number, liked: boolean) {
+        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}`
+        return fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
+                'client': 'iXFWJAgK28eBDNeFfXSpWA',
+                'uid': 'unko@gmail.com'
+            },
+            body: JSON.stringify({ "liked": liked })
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response.json());
+            }
+        }
+    }
+
     // コンテンツ削除リクエスト
     function doDeleteContent(contentId: number) {
         const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}`
@@ -103,52 +127,6 @@ module contentList {
                 // TODO: コンテンツをリロードしないで削除したコンテンツだけ画面から消すように変える
                 // コンテンツをリロードする
                 initializeContent("", currentFolderId)
-            }
-        }
-    }
-
-    // コンテンツをお気に入りに登録する
-    function doPostFavoriteContent(contentId: number) {
-        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}/like`
-        return fetch(url, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'access-token': currentUser!.accessToken,
-                'client': currentUser!.client,
-                'uid': currentUser!.uid
-            }
-        }).then(processResponse).catch(error => {
-            console.error(error);
-        });
-
-        function processResponse(response: any) {
-            if (!response.ok) {
-                // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
-            }
-        }
-    }
-
-    // コンテンツのお気に入りを解除する
-    function doDeleteUnfavoriteContent(contentId: number) {
-        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}/like`
-        return fetch(url, {
-            method: 'delete',
-            headers: {
-                'Content-Type': 'application/json',
-                'access-token': currentUser!.accessToken,
-                'client': currentUser!.client,
-                'uid': currentUser!.uid
-            }
-        }).then(processResponse).catch(error => {
-            console.error(error);
-        });
-
-        function processResponse(response: any) {
-            if (!response.ok) {
-                // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
             }
         }
     }
@@ -281,7 +259,7 @@ module contentList {
 
         // お気に入り登録リクエストを送信
         const contentId = contentList[contentListIndex].id
-        doPostFavoriteContent(contentId)
+        doPutContent(contentId, true)
         // お気に入りボタンのスタイルを変更する
         contentButtonHeart.className = "bi-heart-fill content-button"
         // コンテンツのプロパティを変更
@@ -295,7 +273,7 @@ module contentList {
 
         // お気に入り登録リクエストを送信
         const contentId = contentList[contentListIndex].id
-        doDeleteUnfavoriteContent(contentId)
+        doPutContent(contentId, false)
         // お気に入りボタンのスタイルを変更する
         contentButtonHeart.className = "bi-heart content-button"
         // コンテンツのプロパティを変更

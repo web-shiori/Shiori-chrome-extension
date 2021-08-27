@@ -134,7 +134,6 @@ module popup {
 
 	// 取得したコンテンツを保存する
     function doPostContent(content: PostContent) {
-        console.log(JSON.stringify(content))
         const url = `https://web-shiori.herokuapp.com/v1/content`
         return fetch(url, {
             method: 'POST',
