@@ -1,4 +1,28 @@
 module popup {
+
+    /**
+     * 認証関連のコード
+     * 本当はリファクタリングしたいが、jsにトランスパイルした後でエラーが出るので暫定で個別に実装する
+     */
+    export let currentUser: User|undefined = undefined
+
+    // currentUserにユーザをセットする
+    // TODO: ストレージからユーザ情報を取得する
+    export function setCurrentUser(): Promise<User> {
+        console.log("setCurrentUser")
+        return new Promise((resolve) => {
+            currentUser = {
+                uid: "unko@gmail.com",
+                client: "iXFWJAgK28eBDNeFfXSpWA",
+                accessToken: "_wngFEvVAn1X5hTZ1mbiew"
+            }
+            resolve(currentUser!)
+        })
+    }
+
+    /**
+     * ポップアップのコード
+     */
 	// 現在開いているタブのコンテンツを取得する
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData()
@@ -173,7 +197,9 @@ module popup {
     }
 
     // 拡張機能アイコンをクリックしたときの処理
-    setCurrentUser()
+    // TODO: currentUserがundefindだったら↑のメソッド全部実行できないようにする
+    // TODO: initializeContentに入れる。同期的に実行するようにする
+    // setCurrentUser()
     // if (isLoggedInUser()) {
     //     // ユーザデータをセットする
     // } else {

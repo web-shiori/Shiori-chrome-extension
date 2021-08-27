@@ -9,9 +9,9 @@ module popup {
         return fetch(`https://web-shiori.herokuapp.com/v1/content?per_page=${per_page}?page=1`, {
             // headersの値も修正する
             headers: {
-                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
-                'client': 'iXFWJAgK28eBDNeFfXSpWA',
-                'uid': 'unko@gmail.com'
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processFetchedResponse).catch(error => {
             console.error(error);
@@ -105,6 +105,7 @@ module popup {
 
     // ポップアップviewにコンテンツを表示する
     async function initializeContent() {
+        currentUser = await setCurrentUser()
         // NOTE: 表示にちょっと時間がかかる(仕方ない？)
         await fetchContentList()
         const contentViewTl = await generateContentView()

@@ -1,4 +1,28 @@
 module contentList {
+
+    /**
+     * 認証関連のコード
+     * 本当はリファクタリングしたいが、jsにトランスパイルした後でエラーが出るので暫定で個別に実装する
+     */
+    export let currentUser: User|undefined = undefined
+
+    // currentUserにユーザをセットする
+    // TODO: ストレージからユーザ情報を取得する
+    function setCurrentUser(): Promise<User> {
+        console.log("setCurrentUser")
+        return new Promise((resolve) => {
+            currentUser = {
+                uid: "unko@gmail.com",
+                client: "iXFWJAgK28eBDNeFfXSpWA",
+                accessToken: "_wngFEvVAn1X5hTZ1mbiew"
+            }
+            resolve(currentUser!)
+        })
+    }
+
+    /**
+     * コンテンツ一覧画面のコード
+     */
     export let currentFolderId: number|null = null
     let contentList: Content[] = []
 
@@ -301,6 +325,9 @@ module contentList {
 
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(query: string, folderId: number|null) {
+        console.log(currentUser)
+        currentUser = await setCurrentUser()
+        console.log(JSON.stringify(currentUser))
         startIndicator("content-list-indicator-area")
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
@@ -316,6 +343,7 @@ module contentList {
     }
 
     // ページを開いたときの処理
+    // TODO: currentUserがundefindだったら(というかログインしてなかったら)↑のメソッド全部実行できないようにする
+    // TODO: initializeContentに入れる。同期的に実行するようにする
     initializeContent("", null)
-    // TODO: currentUserがundefindだったら↑のメソッド全部実行できないようにする
 }
