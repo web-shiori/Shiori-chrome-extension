@@ -103,9 +103,21 @@ module popup {
         chrome.runtime.sendMessage(targetContent)
     }
 
+    // ログイン画面を開く
+    function openSignInView() {
+        chrome.windows.create({
+            url: '../html/signIn.html',
+            type: "popup"
+        })
+    }
+
     // ポップアップviewにコンテンツを表示する
     async function initializeContent() {
-        await setCurrentUser()
+        const isLoggedInUser = await setCurrentUser()
+        if (!isLoggedInUser) {
+            openSignInView()
+            return
+        }
         // NOTE: 表示にちょっと時間がかかる(仕方ない？)
         await fetchContentList()
         const contentViewTl = await generateContentView()
