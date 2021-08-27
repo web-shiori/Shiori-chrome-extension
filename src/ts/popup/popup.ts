@@ -171,4 +171,9 @@ module popup {
             chrome.tabs.create({url: '../html/options.html'})
         })
     }
+
+    chrome.windows.create({
+        url: '../html/signIn.html',
+        type: "popup"
+    })
 }
