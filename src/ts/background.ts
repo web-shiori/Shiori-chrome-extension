@@ -49,8 +49,13 @@ module background {
             chrome.storage.sync.set({'accessToken': accessToken}, function() {
                 console.log('accessToken saved');
             });
+
+            // ログイン画面を閉じる
+            // const windows = chrome.extension.getViews({type: "popup"})
+            // console.log(windows)
+            // windows.map(w => w.close())
         },
-        { urls: ['https://web-shiori.herokuapp.com/v1/auth/*/callback'] },
+        { urls: ['https://web-shiori.herokuapp.com/*'] },
         ['responseHeaders']
     )
 }
