@@ -6,7 +6,6 @@ module popup {
     // コンテンツ一覧を取得する(上限5個)
     function fetchContentList() {
         const per_page = 5
-
         return fetch(`https://web-shiori.herokuapp.com/v1/content?per_page=${per_page}?page=1`, {
             // headersの値も修正する
             headers: {

@@ -6,9 +6,9 @@ module contentList {
         const url = "https://web-shiori.herokuapp.com/v1/folder"
         return fetch(url, {
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processFetchedResponse).catch(error => {
             console.error(error)
@@ -28,14 +28,13 @@ module contentList {
 
     // フォルダを新規作成する
     function doPostFolder(folder: PostFolder) {
-
         const url = `https://web-shiori.herokuapp.com/v1/folder`
         return fetch(url, {
             method: 'POST',
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             },
             body: JSON.stringify(folder)
         }).then(processResponse).catch(error => {
@@ -54,15 +53,13 @@ module contentList {
 
     // フォルダを削除するリクエストを送る
     function doDeleteFolder(folderId: number) {
-
         const url = `https://web-shiori.herokuapp.com/v1/folder/${folderId}`
         return fetch(url, {
             method: 'delete',
-            // TODO: 認証用のヘッダを本場用に修正する
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processResponse).catch(error => {
             console.error(error);
