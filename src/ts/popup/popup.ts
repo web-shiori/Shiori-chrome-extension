@@ -14,6 +14,7 @@ module popup {
             const postContent: PostContent = {
                 title: metaData.title,
                 url: metaData.url,
+                thumbnail_img_url: "",
                 scroll_position_x: scrollPositionX,
                 scroll_position_y: scrollPositionY,
                 max_scroll_position_x: metaData.max_scroll_position_x,
@@ -22,7 +23,8 @@ module popup {
                 specified_text: null,
                 specified_dom_id: null,
                 specified_dom_class: null,
-                specified_dom_tag: null
+                specified_dom_tag: null,
+                liked: null
             }
             resolve(postContent)
         }))
