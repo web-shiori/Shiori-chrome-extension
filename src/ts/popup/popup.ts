@@ -5,8 +5,15 @@ module popup {
         const videoPlayBackPositionPromise = getVideoPlayBackPosition()
         const scrollPositionXPromise = getScrollPositionX()
         const scrollPositionYPromise = getScrollPositionY()
-        const [metaData, videoPlayBackPosition, scrollPositionX, scrollPositionY] = await Promise.all(
-            [metaDataPromise, videoPlayBackPositionPromise, scrollPositionXPromise, scrollPositionYPromise]
+        const thumbnailImgUrlPromise = getThumbnailImgUrl()
+        const [metaData, videoPlayBackPosition, scrollPositionX, scrollPositionY, thumbnailImgUrl] = await Promise.all(
+    [
+                metaDataPromise,
+                videoPlayBackPositionPromise,
+                scrollPositionXPromise,
+                scrollPositionYPromise,
+                thumbnailImgUrlPromise
+            ]
         )
 
         	// TODO: エラー起きたときの処理も書く
@@ -14,7 +21,7 @@ module popup {
             const postContent: PostContent = {
                 title: metaData.title,
                 url: metaData.url,
-                thumbnail_img_url: "",
+                thumbnail_img_url: thumbnailImgUrl,
                 scroll_position_x: scrollPositionX,
                 scroll_position_y: scrollPositionY,
                 max_scroll_position_x: metaData.max_scroll_position_x,
@@ -80,6 +87,22 @@ module popup {
                 }, (result) => {
                     const scrollPositionY: number = Number(result[0])
                     resolve(scrollPositionY)
+                })
+            })
+        })
+    }
+
+    // 現在開いているタブのコンテンツのサムネイル画像を取得する
+    function getThumbnailImgUrl(): Promise<string> {
+        return new Promise<string>((resolve) => {
+            chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+                chrome.tabs.executeScript(<number>tabs[0].id, {
+                    // TODO: サムネイル画像取得方法を改善したい
+                    // TODO: youtubeの場合工夫する必要がある
+                    code: `document.images[0].src;`
+                }, (result) => {
+                    const thumbnailImgUrl: string = String(result[0])
+                    resolve(thumbnailImgUrl)
                 })
             })
         })
