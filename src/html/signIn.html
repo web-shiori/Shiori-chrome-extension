@@ -2,9 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../scss/signin.css">
     <title>Web Shiori</title>
 </head>
 <body>
-  Sign In
+    <div class="header-sign-in-view">
+
+    </div>
+    Web-Shiori
+    <h1>ログイン</h1>
+    <div class="sign-in-with-omniauth-button-view">
+        <button id="sign-in-with-google-button">Googleで続ける</button>
+        <button id="sign-in-with-twitter-button">Twitterで続ける</button>
+        <button id="sign-in-with-github-button">Githubで続ける</button>
+    </div>
+    または
+    <div class="sign-in-with-password-button-viwe">
+        <form>
+            <input placeholder="メールアドレス">
+            <input placeholder="メールアドレス">
+            <button id="sign-in-with-password-button">ログイン</button>
+        </form>
+    </div>
+    <div class="footer-signin-view">
+        アカウントをお持ちではありませんか？
+        <p id="move-to-sign-up-view-button">アカウントを作成</p>
+    </div>
+
+    <script type="text/javascript" src="../js/signIn.js"></script>
 </body>
 </html>

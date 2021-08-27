@@ -20,6 +20,11 @@ module popup {
         })
     }
 
+    function isLoggedInUser(): boolean {
+        // TODO: 実装
+        return false
+    }
+
     /**
      * ポップアップのコード
      */
@@ -198,14 +203,13 @@ module popup {
     // 拡張機能アイコンをクリックしたときの処理
     // TODO: currentUserがundefindだったら↑のメソッド全部実行できないようにする
     // TODO: initializeContentに入れる。同期的に実行するようにする
-    // setCurrentUser()
-    // if (isLoggedInUser()) {
-    //     // ユーザデータをセットする
-    // } else {
-    //     // ログイン画面を開く
-    //     chrome.windows.create({
-    //         url: '../html/signIn.html',
-    //         type: "popup"
-    //     })
-    // }
+    if (isLoggedInUser()) {
+        // ユーザデータをセットする
+    } else {
+        // ログイン画面を開く
+        chrome.windows.create({
+            url: '../html/signIn.html',
+            type: "popup"
+        })
+    }
 }
