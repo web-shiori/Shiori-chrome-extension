@@ -31,6 +31,7 @@ module contentList {
         const url = `https://web-shiori.herokuapp.com/v1/content?q=${query}`
         return fetch(url, {
             headers: {
+                'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
                 'client': currentUser!.client,
                 'uid': currentUser!.uid
@@ -57,6 +58,7 @@ module contentList {
         const url = `https://web-shiori.herokuapp.com/v1/folder/${folderId}/content?q=${query}`
         return fetch(url, {
             headers: {
+                'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
                 'client': currentUser!.client,
                 'uid': currentUser!.uid
@@ -84,6 +86,7 @@ module contentList {
         return fetch(url, {
             method: 'delete',
             headers: {
+                'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
                 'client': currentUser!.client,
                 'uid': currentUser!.uid
@@ -110,6 +113,7 @@ module contentList {
         return fetch(url, {
             method: 'post',
             headers: {
+                'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
                 'client': currentUser!.client,
                 'uid': currentUser!.uid
@@ -132,6 +136,7 @@ module contentList {
         return fetch(url, {
             method: 'delete',
             headers: {
+                'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
                 'client': currentUser!.client,
                 'uid': currentUser!.uid
@@ -154,6 +159,7 @@ module contentList {
         return fetch(url, {
             method: 'post',
             headers: {
+                'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
                 'client': currentUser!.client,
                 'uid': currentUser!.uid
