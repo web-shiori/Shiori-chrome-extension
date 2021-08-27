@@ -49,12 +49,6 @@ module background {
             chrome.storage.sync.set({'accessToken': accessToken}, function() {
                 console.log('accessToken saved');
             });
-            chrome.storage.sync.get(["uid", "client", "accessToken"], function (value) {
-                console.log(value)
-                console.log(value["uid"])
-                console.log(value.client)
-                console.log(value.accessToken)
-            });
         },
         { urls: ['https://web-shiori.herokuapp.com/v1/auth/*/callback'] },
         ['responseHeaders']

@@ -7,22 +7,25 @@ module popup {
     export let currentUser: User|undefined = undefined
 
     // currentUserにユーザをセットする
-    // TODO: ストレージからユーザ情報を取得する
-    export function setCurrentUser(): Promise<User> {
+    export function setCurrentUser(): Promise<boolean> {
         console.log("setCurrentUser")
         return new Promise((resolve) => {
-            currentUser = {
-                uid: "unko@gmail.com",
-                client: "iXFWJAgK28eBDNeFfXSpWA",
-                accessToken: "_wngFEvVAn1X5hTZ1mbiew"
-            }
-            resolve(currentUser!)
+            chrome.storage.sync.get(["uid", "client", "accessToken"], function (value) {
+                console.log(value.uid)
+                console.log(value.client)
+                console.log(value.accessToken)
+                if (value.uid && value.client && value.accessToken) {
+                    currentUser = {
+                        uid: value.uid,
+                        client: value.client,
+                        accessToken: value.accessToken
+                    }
+                    resolve(true)
+                } else {
+                    resolve(false)
+                }
+            });
         })
-    }
-
-    function isLoggedInUser(): boolean {
-        // TODO: 実装
-        return false
     }
 
     /**
@@ -205,9 +208,7 @@ module popup {
     // 拡張機能アイコンをクリックしたときの処理
     // TODO: currentUserがundefindだったら↑のメソッド全部実行できないようにする
     // TODO: initializeContentに入れる。同期的に実行するようにする
-    if (isLoggedInUser()) {
-        // ユーザデータをセットする
-    } else {
+    if (!setCurrentUser()) {
         // ログイン画面を開く
         chrome.windows.create({
             url: '../html/signIn.html',

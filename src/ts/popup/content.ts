@@ -105,7 +105,7 @@ module popup {
 
     // ポップアップviewにコンテンツを表示する
     async function initializeContent() {
-        currentUser = await setCurrentUser()
+        await setCurrentUser()
         // NOTE: 表示にちょっと時間がかかる(仕方ない？)
         await fetchContentList()
         const contentViewTl = await generateContentView()
