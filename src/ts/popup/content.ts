@@ -115,8 +115,8 @@ module popup {
     async function initializeContent() {
         const isLoggedInUser = await setCurrentUser()
         if (!isLoggedInUser) {
+            window.close()
             openSignInView()
-            return
         }
         // NOTE: 表示にちょっと時間がかかる(仕方ない？)
         await fetchContentList()
