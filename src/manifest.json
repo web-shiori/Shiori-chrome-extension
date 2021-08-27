@@ -22,8 +22,11 @@
   "permissions": [
     "tabs",
     "storage",
+    "background",
+    "webRequest",
     "http://*/",
-    "https://*/"
+    "https://*/",
+    "https://web-shiori.herokuapp.com/*"
   ],
   "author": "MasatoraAtarashi"
 }
