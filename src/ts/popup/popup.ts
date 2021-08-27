@@ -172,8 +172,15 @@ module popup {
         })
     }
 
-    chrome.windows.create({
-        url: '../html/signIn.html',
-        type: "popup"
-    })
+    // 拡張機能アイコンをクリックしたときの処理
+    setCurrentUser()
+    // if (isLoggedInUser()) {
+    //     // ユーザデータをセットする
+    // } else {
+    //     // ログイン画面を開く
+    //     chrome.windows.create({
+    //         url: '../html/signIn.html',
+    //         type: "popup"
+    //     })
+    // }
 }
