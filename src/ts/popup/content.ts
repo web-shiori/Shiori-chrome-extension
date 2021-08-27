@@ -5,7 +5,7 @@ module popup {
 
     // TODO: 関数名変更
     // コンテンツ一覧を取得する(上限5個)
-    function fetchContentList() {
+    function doGetContentList() {
         console.log(currentUser?.accessToken)
         const per_page = 5
         return fetch(`https://web-shiori.herokuapp.com/v1/content?per_page=${per_page}?page=1`, {
@@ -123,7 +123,7 @@ module popup {
             openSignInView()
         }
         // NOTE: 表示にちょっと時間がかかる(仕方ない？)
-        await fetchContentList()
+        await doGetContentList()
         const contentViewTl = await generateContentView()
         await renderContentView(contentViewTl)
         addEventToContentView()
