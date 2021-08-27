@@ -28,6 +28,8 @@ module popup {
     /**
      * ポップアップのコード
      */
+    const baseUrl: string = "https://web-shiori.herokuapp.com"
+
 	// 現在開いているタブのコンテンツを取得する
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData()
@@ -139,7 +141,7 @@ module popup {
 
 	// 取得したコンテンツを保存する
     function doPostContent(content: PostContent) {
-        const url = `https://web-shiori.herokuapp.com/v1/content`
+        const url = `${baseUrl}/v1/content`
         return fetch(url, {
             method: 'POST',
             // TODO: ヘッダをちゃんとする

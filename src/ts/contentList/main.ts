@@ -25,10 +25,14 @@ module contentList {
      */
     export let currentFolderId: number|null = null
     let contentList: Content[] = []
+    // TODO: リファクタリング
+    // NOTE: これも本当はリファクタリングしたい
+    export const baseUrl: string = "https://web-shiori.herokuapp.com"
 
     // コンテンツ一覧を取得する
     function doGetContentList(query: string) {
-        const url = `https://web-shiori.herokuapp.com/v1/content?q=${query}`
+        // TODO:
+        const url = `${baseUrl}/v1/content?q=${query}`
         return fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +59,7 @@ module contentList {
 
     // フォルダに含まれているコンテンツ一覧を取得する
     function doGetFolderContentList(query: string, folderId: number) {
-        const url = `https://web-shiori.herokuapp.com/v1/folder/${folderId}/content?q=${query}`
+        const url = `${baseUrl}/v1/folder/${folderId}/content?q=${query}`
         return fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
@@ -82,7 +86,7 @@ module contentList {
 
     // コンテンツを更新するリクエスト
     function doPutContent(contentId: number, liked: boolean) {
-        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}`
+        const url = `${baseUrl}/v1/content/${contentId}`
         return fetch(url, {
             method: 'PUT',
             headers: {
@@ -106,7 +110,7 @@ module contentList {
 
     // コンテンツ削除リクエスト
     function doDeleteContent(contentId: number) {
-        const url = `https://web-shiori.herokuapp.com/v1/content/${contentId}`
+        const url = `${baseUrl}/v1/content/${contentId}`
         return fetch(url, {
             method: 'delete',
             headers: {
@@ -133,7 +137,7 @@ module contentList {
 
     // コンテンツをフォルダに追加する
     export function doPostContentToFolder(contentId: number, folderId: number) {
-        const url = `https://web-shiori.herokuapp.com/v1/folder/${folderId}/content/${contentId}`
+        const url = `${baseUrl}/v1/folder/${folderId}/content/${contentId}`
         return fetch(url, {
             method: 'post',
             headers: {
