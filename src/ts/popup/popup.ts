@@ -85,14 +85,16 @@ module popup {
 
 	// 取得したコンテンツを保存する
     function doPostContent(content: PostContent) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`
+        console.log(JSON.stringify(content))
+        const url = `https://web-shiori.herokuapp.com/v1/content`
         return fetch(url, {
             method: 'POST',
+            // TODO: ヘッダをちゃんとする
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'Content-Type': 'application/json',
+                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
+                'client': 'iXFWJAgK28eBDNeFfXSpWA',
+                'uid': 'unko@gmail.com'
             },
             body: JSON.stringify(content)
         }).then(processResponse).catch(error => {
@@ -102,7 +104,7 @@ module popup {
         function processResponse(response: any) {
             if (!response.ok) {
                 // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
+                console.error("エラーレスポンス", response.json());
             } else {
                 // 保存完了画面表示
                 const defaultPopup = document.getElementById("default-popup");

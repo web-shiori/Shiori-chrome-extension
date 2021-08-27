@@ -33,7 +33,7 @@ module contentList {
     // 動作確認用コンテンツ一覧取得
     function dummyFetchContentList() {
         const content1: Content = {
-            content_id: 1,
+            id: 1,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -50,14 +50,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content2: Content = {
-            content_id: 2,
+            id: 2,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -74,14 +74,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://gyazo.com/f149c85d239c13b76388822357755672/thumb/400",
             title: "アイデア",
-            type: "",
+            content_type: "",
             updated_at: "2020-05-12T20:48:24.000+09:00",
             url: "https://qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d",
             video_playback_position: 0
         }
 
         const content3: Content = {
-            content_id: 3,
+            id: 3,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -98,14 +98,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://hayabusa.io/ca/files/topics/26111_ext_24_1.jpg?version=1619512503&v=1619512503",
             title: "テクノロジーマップ",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://d2utiq8et4vl56.cloudfront.net/files/user/pdf/techinfo/AIDataTechnologyMap_210520.pdf?v=1621566300",
             video_playback_position: 0
         }
 
         const content4: Content = {
-            content_id: 4,
+            id: 4,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -122,14 +122,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "ながああああああああああああああああああああああああああああああああああああああああああああああああああああいタイトル",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content5: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -146,14 +146,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content6: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -170,14 +170,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content13: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -194,14 +194,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content7: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -218,14 +218,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content8: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -242,14 +242,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content9: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -266,14 +266,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content10: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -290,14 +290,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content11: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -314,14 +314,14 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
         }
 
         const content12: Content = {
-            content_id: 5,
+            id: 5,
             created_at: "",
             delete_flag: false,
             deleted_at: "",
@@ -338,7 +338,7 @@ module contentList {
             specified_text: "",
             thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
             title: "Web-Shioriデモ動画",
-            type: "",
+            content_type: "",
             updated_at: "2019-05-12T20:48:24.000+09:00",
             url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
             video_playback_position: 30
@@ -532,7 +532,7 @@ module contentList {
                 switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
-                        addContentToFolder(targetContent.content_id)
+                        addContentToFolder(targetContent.id)
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:
@@ -541,7 +541,7 @@ module contentList {
                     // 削除ボタンクリック
                     case `content-button-trash-${i}`:
                         // TODO: リファクタリング
-                        doDeleteContent(contentList[i].content_id)
+                        doDeleteContent(contentList[i].id)
                         break
                     // その他の場所をクリック
                     default:
@@ -581,7 +581,7 @@ module contentList {
         if (contentButtonHeart === null) return
 
         // お気に入り登録リクエストを送信
-        const contentId = contentList[contentListIndex].content_id
+        const contentId = contentList[contentListIndex].id
         doPostFavoriteContent(contentId)
         // お気に入りボタンのスタイルを変更する
         contentButtonHeart.className = "bi-heart-fill content-button"
@@ -595,7 +595,7 @@ module contentList {
         if (contentButtonHeart === null) return
 
         // お気に入り登録リクエストを送信
-        const contentId = contentList[contentListIndex].content_id
+        const contentId = contentList[contentListIndex].id
         doDeleteUnfavoriteContent(contentId)
         // お気に入りボタンのスタイルを変更する
         contentButtonHeart.className = "bi-heart content-button"
