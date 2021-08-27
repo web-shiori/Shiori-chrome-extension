@@ -16,9 +16,9 @@ module popup {
                 console.log(value.accessToken)
                 if (value.uid && value.client && value.accessToken) {
                     currentUser = {
-                        uid: value.uid,
-                        client: value.client,
-                        accessToken: value.accessToken
+                        uid: value.uid.value,
+                        client: value.client.value,
+                        accessToken: value.accessToken.value
                     }
                     console.log("user is logged in")
                     resolve(true)
@@ -43,9 +43,9 @@ module popup {
             // TODO: ヘッダをちゃんとする
             headers: {
                 'Content-Type': 'application/json',
-                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
-                'client': 'iXFWJAgK28eBDNeFfXSpWA',
-                'uid': 'unko@gmail.com'
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             },
             body: JSON.stringify(content)
         }).then(processResponse).catch(error => {

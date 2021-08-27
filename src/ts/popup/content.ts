@@ -3,8 +3,10 @@
 module popup {
     let contentList: Content[] = []
 
+    // TODO: 関数名変更
     // コンテンツ一覧を取得する(上限5個)
     function fetchContentList() {
+        console.log(currentUser?.accessToken)
         const per_page = 5
         return fetch(`https://web-shiori.herokuapp.com/v1/content?per_page=${per_page}?page=1`, {
             // headersの値も修正する
@@ -25,6 +27,8 @@ module popup {
                 return response.json().then((contentListJson: any) => {
                     // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
                     contentList = contentListJson.data.content
+                    console.log(response.status)
+                    console.log(contentList.length)
                     console.log(JSON.stringify(contentList[0]))
                 });
             }
