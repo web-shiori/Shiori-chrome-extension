@@ -30,6 +30,41 @@ module popup {
      */
     const baseUrl: string = "https://web-shiori.herokuapp.com"
 
+    // 取得したコンテンツを保存する
+    function doPostContent(content: PostContent) {
+        const url = `${baseUrl}/v1/content`
+        return fetch(url, {
+            method: 'POST',
+            // TODO: ヘッダをちゃんとする
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
+                'client': 'iXFWJAgK28eBDNeFfXSpWA',
+                'uid': 'unko@gmail.com'
+            },
+            body: JSON.stringify(content)
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response.json());
+            } else {
+                // 保存完了画面表示
+                const defaultPopup = document.getElementById("default-popup");
+                const contentSavedPopup = document.getElementById("content-saved-popup");
+                if (defaultPopup !== null) {
+                    defaultPopup.style.display = "none"
+                }
+                if (contentSavedPopup !== null) {
+                    contentSavedPopup.style.display = "block"
+                }
+            }
+        }
+    }
+
 	// 現在開いているタブのコンテンツを取得する
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData()
@@ -137,41 +172,6 @@ module popup {
                 })
             })
         })
-    }
-
-	// 取得したコンテンツを保存する
-    function doPostContent(content: PostContent) {
-        const url = `${baseUrl}/v1/content`
-        return fetch(url, {
-            method: 'POST',
-            // TODO: ヘッダをちゃんとする
-            headers: {
-                'Content-Type': 'application/json',
-                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
-                'client': 'iXFWJAgK28eBDNeFfXSpWA',
-                'uid': 'unko@gmail.com'
-            },
-            body: JSON.stringify(content)
-        }).then(processResponse).catch(error => {
-            console.error(error);
-        });
-
-        function processResponse(response: any) {
-            if (!response.ok) {
-                // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response.json());
-            } else {
-                // 保存完了画面表示
-                const defaultPopup = document.getElementById("default-popup");
-                const contentSavedPopup = document.getElementById("content-saved-popup");
-                if (defaultPopup !== null) {
-                    defaultPopup.style.display = "none"
-                }
-                if (contentSavedPopup !== null) {
-                    contentSavedPopup.style.display = "block"
-                }
-            }
-        }
     }
 
 	// `保存する`ボタンをクリックしたときの処理
