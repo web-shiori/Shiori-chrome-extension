@@ -3,7 +3,6 @@
 module popup {
     let contentList: Content[] = []
 
-    // TODO: 関数名変更
     // コンテンツ一覧を取得する(上限5個)
     function doGetContentList() {
         console.log(currentUser?.accessToken)
