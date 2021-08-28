@@ -110,19 +110,39 @@ module background {
         contexts: ['all'],
     });
 
-    let clickedEl: MouseEvent | null;
-    // コンテキストメニュー表示時の処理
-    document.addEventListener(
-        'contextmenu',
-        function (event) {
-            clickedEl = event;
-        },
-        true
-    );
+    // let clickedEl: MouseEvent | null;
+    // // コンテキストメニュー表示時の処理
+    // document.addEventListener(
+    //     'contextmenu',
+    //     function (event) {
+    //         clickedEl = event;
+    //     },
+    //     true
+    // );
 
     // コンテキストメニュークリック時の処理
-    chrome.contextMenus.onClicked.addListener((item) => {
-        console.log(JSON.stringify(item));
-        alert(clickedEl?.target);
+    //     chrome.contextMenus.onClicked.addListener(function (info, tab) {
+    //         console.log(info);
+    //         chrome.tabs.executeScript(
+    //             <number>tab?.id,
+    //             {
+    //                 code: `document.body`,
+    //             },
+    //             (result) => {
+    //                 console.log(result[0]);
+    //             }
+    //         );
+    //     });
+
+    chrome.contextMenus.onClicked.addListener(function (info, tab) {
+        if (tab === undefined) return;
+        chrome.tabs.sendMessage(
+            <number>tab.id,
+            { method: 'getSelection' },
+            (response) => {
+                console.log(info);
+                console.log(response.data);
+            }
+        );
     });
 }
