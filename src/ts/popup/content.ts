@@ -1,35 +1,40 @@
 module popup {
-    let contentList: Content[] = []
+    let contentList: Content[] = [];
 
     // コンテンツ一覧を取得する(上限5個)
     function doGetContentList() {
-        console.log(currentUser?.accessToken)
-        const per_page = 5
-        return fetch(`https://web-shiori.herokuapp.com/v1/content?per_page=${per_page}?page=1`, {
-            // headersの値も修正する
-            headers: {
-                'access-token': currentUser!.accessToken,
-                'client': currentUser!.client,
-                'uid': currentUser!.uid
+        console.log(currentUser?.accessToken);
+        const per_page = 5;
+        return fetch(
+            `https://web-shiori.herokuapp.com/v1/content?per_page=${per_page}?page=1`,
+            {
+                // headersの値も修正する
+                headers: {
+                    'access-token': currentUser!.accessToken,
+                    client: currentUser!.client,
+                    uid: currentUser!.uid,
+                },
             }
-        }).then(processFetchedResponse).catch(error => {
-            console.error(error);
-        });
+        )
+            .then(processFetchedResponse)
+            .catch((error) => {
+                console.error(error);
+            });
 
         function processFetchedResponse(response: any) {
             if (!response.ok) {
                 // 認証エラーの場合ログイン画面を表示する
                 if (response.status === 401) {
-                    window.close()
-                    openSignInView()
+                    window.close();
+                    openSignInView();
                 } else {
                     // TODO: エラー時の処理を実装する
-                    console.error("エラーレスポンス", response);
+                    console.error('エラーレスポンス', response);
                 }
             } else {
                 return response.json().then((contentListJson: any) => {
                     // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
-                    contentList = contentListJson.data.content
+                    contentList = contentListJson.data.content;
                 });
             }
         }
@@ -39,29 +44,32 @@ module popup {
     function generateContentView() {
         let contentViewTl = `
     <h6 id="saved-content-text">保存済みのコンテンツ</h6>
-    `
+    `;
 
         // 保存済みのコンテンツが無い時の表示
         if (contentList.length === 0) {
-            const contentListView = document.getElementById("content-list-view");
-            const showContentListViewButtonView = document.getElementById("show-content-list-view-button");
-            const footerView = document.getElementById("footer-view");
+            const contentListView =
+                document.getElementById('content-list-view');
+            const showContentListViewButtonView = document.getElementById(
+                'show-content-list-view-button'
+            );
+            const footerView = document.getElementById('footer-view');
             if (contentListView !== null) {
-                contentListView.style.display = "none"
+                contentListView.style.display = 'none';
             }
             if (showContentListViewButtonView !== null) {
-                showContentListViewButtonView.style.display = "none"
+                showContentListViewButtonView.style.display = 'none';
             }
             if (footerView !== null) {
-                footerView.style.marginTop = "0"
+                footerView.style.marginTop = '0';
             }
         }
 
         for (const content of contentList) {
-            const domain = new URL(content.url).host
-            const dateTime = new Date(content.updated_at)
-            const month = dateTime.getMonth() + 1
-            const date = dateTime.getDate()
+            const domain = new URL(content.url).host;
+            const dateTime = new Date(content.updated_at);
+            const month = dateTime.getMonth() + 1;
+            const date = dateTime.getDate();
 
             const viewTl = `
         <div class="content-view">
@@ -75,15 +83,15 @@ module popup {
                 </div>
             </div>
         </div>
-        `
-            contentViewTl += viewTl
+        `;
+            contentViewTl += viewTl;
         }
-        return contentViewTl
+        return contentViewTl;
     }
 
     // コンテンツのviewを表示する
     function renderContentView(contentViewTl: string) {
-        const contentListView = document.getElementById("content-list-view");
+        const contentListView = document.getElementById('content-list-view');
         if (contentListView !== null) {
             contentListView.innerHTML = contentViewTl;
         }
@@ -93,34 +101,37 @@ module popup {
     function addEventToContentView() {
         const contentView = document.getElementsByClassName('content-view');
         for (let i = 0; i < contentView.length; i++) {
-            contentView[i].addEventListener("click", function () {
-                openContent(i)
-            }, false)
+            contentView[i].addEventListener(
+                'click',
+                function () {
+                    openContent(i);
+                },
+                false
+            );
         }
     }
 
     // コンテンツを新しいタブで開く
     async function openContent(index: number) {
-        const targetContent: Content = contentList[index]
-        const url: string = targetContent.url
-        await chrome.tabs.create({url})
-        chrome.runtime.sendMessage(targetContent)
+        const targetContent: Content = contentList[index];
+        const url: string = targetContent.url;
+        await chrome.tabs.create({ url });
+        chrome.runtime.sendMessage(targetContent);
     }
 
     // ポップアップviewにコンテンツを表示する
     async function initializeContent() {
-        const isLoggedInUser = await setCurrentUser()
+        const isLoggedInUser = await setCurrentUser();
         if (!isLoggedInUser) {
-            window.close()
-            openSignInView()
+            window.close();
+            openSignInView();
         }
         // NOTE: 表示にちょっと時間がかかる(仕方ない？)
-        await doGetContentList()
-        const contentViewTl = await generateContentView()
-        await renderContentView(contentViewTl)
-        addEventToContentView()
+        await doGetContentList();
+        const contentViewTl = await generateContentView();
+        await renderContentView(contentViewTl);
+        addEventToContentView();
     }
 
-    initializeContent()
-
+    initializeContent();
 }
