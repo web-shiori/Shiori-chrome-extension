@@ -104,11 +104,25 @@ module background {
      * コンテキストメニュー
      */
     // 親メニュー追加
-    let parentProperties = <chrome.contextMenus.CreateProperties>{
+    chrome.contextMenus.create({
         id: 'parent',
-        title: '親メニュー',
+        title: 'Web-Shioriに保存',
         contexts: ['all'],
-    };
-    const parentId = chrome.contextMenus.create(parentProperties);
-    console.log(parentId);
+    });
+
+    let clickedEl: MouseEvent | null;
+    // コンテキストメニュー表示時の処理
+    document.addEventListener(
+        'contextmenu',
+        function (event) {
+            clickedEl = event;
+        },
+        true
+    );
+
+    // コンテキストメニュークリック時の処理
+    chrome.contextMenus.onClicked.addListener((item) => {
+        console.log(JSON.stringify(item));
+        alert(clickedEl?.target);
+    });
 }
