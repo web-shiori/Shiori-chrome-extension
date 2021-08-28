@@ -94,7 +94,7 @@ module background {
                 }
             );
         },
-        { urls: ['https://web-shiori.herokuapp.com/*'] },
+        { urls: ['https://web-shiori.herokuapp.com/v1/auth/*'] },
         ['responseHeaders']
     );
 }
