@@ -7,8 +7,8 @@
     "default_title": "Web Shiori",
     "default_icon": {
       "16": "img/icons/icon16.png",
-      "24": "img/icons/icon16.png",
-      "32": "img/icons/icon16.png"
+      "24": "img/icons/icon24.png",
+      "32": "img/icons/icon32.png"
     },
     "default_popup": "html/popup.html"
   },
