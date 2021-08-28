@@ -29,5 +29,10 @@
     "https://*/",
     "https://web-shiori.herokuapp.com/*"
   ],
+  "icons": {
+    "16": "img/icons/icon16.png",
+    "48": "img/icons/icon48.png",
+    "128": "img/icons/icon128.png"
+  },
   "author": "MasatoraAtarashi"
 }
