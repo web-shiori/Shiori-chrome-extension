@@ -1,5 +1,3 @@
-// TODO: デフォルトのサムネイルurlを定数で持っておく
-
 module popup {
     let contentList: Content[] = []
 

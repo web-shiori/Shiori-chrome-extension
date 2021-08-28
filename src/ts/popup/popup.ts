@@ -73,7 +73,7 @@ module popup {
         }
     }
 
-	// 現在開いているタブのコンテンツを取得する
+    // 現在開いているタブのコンテンツを取得する
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData()
         const videoPlayBackPositionPromise = getVideoPlayBackPosition()
@@ -81,7 +81,7 @@ module popup {
         const scrollPositionYPromise = getScrollPositionY()
         const thumbnailImgUrlPromise = getThumbnailImgUrl()
         const [metaData, videoPlayBackPosition, scrollPositionX, scrollPositionY, thumbnailImgUrl] = await Promise.all(
-    [
+            [
                 metaDataPromise,
                 videoPlayBackPositionPromise,
                 scrollPositionXPromise,
@@ -111,7 +111,7 @@ module popup {
         }))
     }
 
-	// 現在開いているタブのメタデータ(title,url,height,width)を取得する
+    // 現在開いているタブのメタデータ(title,url,height,width)を取得する
     function getMetaData() {
         return new Promise<MetaData>((resolve) => {
             chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
@@ -130,7 +130,7 @@ module popup {
         })
     }
 
-	// 現在開いているタブの動画の再生位置を取得する
+    // 現在開いているタブの動画の再生位置を取得する
     function getVideoPlayBackPosition(): Promise<number> {
         return new Promise<number>((resolve) => {
             chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
@@ -144,15 +144,15 @@ module popup {
         })
     }
 
-	// 現在開いているタブのコンテンツのスクロール位置(横)を取得する
+    // 現在開いているタブのコンテンツのスクロール位置(横)を取得する
     function getScrollPositionX(): Promise<number> {
-        	// NOTE: 横方向のスクロールを保存したい人なんていないと思うので0を返す
+        // NOTE: 横方向のスクロールを保存したい人なんていないと思うので0を返す
         return new Promise((resolve => {
             resolve(0)
         }))
     }
 
-	// 現在開いているタブのコンテンツのスクロール位置(横)を取得する
+    // 現在開いているタブのコンテンツのスクロール位置(横)を取得する
     function getScrollPositionY(): Promise<number> {
         return new Promise<number>((resolve) => {
             chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
@@ -182,7 +182,7 @@ module popup {
         })
     }
 
-	// `保存する`ボタンをクリックしたときの処理
+    // `保存する`ボタンをクリックしたときの処理
     const saveButton = document.getElementById("save-button");
     if (saveButton !== null) {
         saveButton.addEventListener('click', async function () {
@@ -194,7 +194,7 @@ module popup {
         })
     }
 
-	// `コンテンツ一覧`ボタンをクリックしたときの処理
+    // `コンテンツ一覧`ボタンをクリックしたときの処理
     const showContentListViewButton = document.getElementById("show-content-list-view-button")
     if (showContentListViewButton !== null) {
         showContentListViewButton.addEventListener('click', function () {
@@ -202,7 +202,7 @@ module popup {
         })
     }
 
-	// ⚙ボタンをクリックしたときの処理
+    // ⚙ボタンをクリックしたときの処理
     const showOptionViewButton = document.getElementById("show-option-view-button")
     if (showOptionViewButton !== null) {
         showOptionViewButton.addEventListener('click', function () {
