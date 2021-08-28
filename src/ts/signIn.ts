@@ -66,7 +66,4 @@ module auth {
             return false;
         }
     }
-
-
-
 }
