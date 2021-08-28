@@ -325,7 +325,6 @@ module contentList {
 
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(query: string, folderId: number|null) {
-        // TODO: リファクタリング
         // currentUserセット
         const isLoggedInUser = await setCurrentUser()
         if (!isLoggedInUser) {
