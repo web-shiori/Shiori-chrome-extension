@@ -27,9 +27,6 @@ module popup {
                 return response.json().then((contentListJson: any) => {
                     // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
                     contentList = contentListJson.data.content
-                    console.log(response.status)
-                    console.log(contentList.length)
-                    console.log(JSON.stringify(contentList[0]))
                 });
             }
         }

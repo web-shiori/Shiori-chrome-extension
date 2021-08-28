@@ -117,7 +117,6 @@ module contentList {
     // フォルダリストviewを生成
     function generateFolderListViewTl(): Promise<string> {
         return new Promise((resolve => {
-            console.log("generateFolderListViewTl")
             let folderListViewTl = ``
             for (let i = 0; i < folderList.length; i++) {
                 const viewTl = `

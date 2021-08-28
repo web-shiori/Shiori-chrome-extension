@@ -8,22 +8,16 @@ module contentList {
 
     // currentUserにユーザをセットする
     export function setCurrentUser(): Promise<boolean> {
-        console.log("setCurrentUser")
         return new Promise((resolve) => {
             chrome.storage.sync.get(["uid", "client", "accessToken"], function (value) {
-                console.log(value.uid)
-                console.log(value.client)
-                console.log(value.accessToken)
                 if (value.uid && value.client && value.accessToken) {
                     currentUser = {
                         uid: value.uid.value,
                         client: value.client.value,
                         accessToken: value.accessToken.value
                     }
-                    console.log("user is logged in")
                     resolve(true)
                 } else {
-                    console.log("user is NOT logged in")
                     resolve(false)
                 }
             });
