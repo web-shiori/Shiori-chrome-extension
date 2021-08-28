@@ -1,4 +1,7 @@
 module auth {
+    // NOTE: signInと共有したいけど。。
+    const baseUrl: string = "https://web-shiori.herokuapp.com"
+
     // 会員登録リクエスト
     function doPostSignUp(email: string, password: string) {
         const url = `${baseUrl}/v1/auth/`

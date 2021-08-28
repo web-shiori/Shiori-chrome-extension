@@ -1,5 +1,5 @@
 module auth {
-    export const baseUrl: string = "https://web-shiori.herokuapp.com"
+    const baseUrl: string = "https://web-shiori.herokuapp.com"
 
     // ログインリクエスト
     function doPostSignIn(email: string, password: string) {
