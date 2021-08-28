@@ -206,27 +206,4 @@ module popup {
             chrome.tabs.create({url: '../html/options.html'})
         })
     }
-
-    // // 拡張機能アイコンをクリックしたときの処理
-    // // TODO: currentUserがundefindだったら↑のメソッド全部実行できないようにする
-    // // TODO: initializeContentに入れる。同期的に実行するようにする
-    // if (!setCurrentUser()) {
-    //     console.log("ログイン画面を開く！！！！！")
-    //     console.log("ログイン画面を開く！！！！！")
-    //     console.log("ログイン画面を開く！！！！！")
-    //     console.log("ログイン画面を開く！！！！！")
-    //     console.log("ログイン画面を開く！！！！！")
-    //     // ログイン画面を開く
-    //     chrome.windows.create({
-    //         url: '../html/signIn.html',
-    //         type: "popup"
-    //     })
-    // } else {
-    //     console.log("ログイン画面を開かない！！！")
-    //     console.log("ログイン画面を開かない！！！")
-    //     console.log("ログイン画面を開かない！！！")
-    //     console.log("ログイン画面を開かない！！！")
-    //     console.log("ログイン画面を開かない！！！")
-    //     console.log("ログイン画面を開かない！！！")
-    // }
 }
