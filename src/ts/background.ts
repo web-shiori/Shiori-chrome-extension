@@ -1,5 +1,7 @@
 module background {
-    // メッセージが送られてきたときの処理
+    /**
+     *  メッセージが送られてきたときの処理
+     */
     chrome.runtime.onMessage.addListener((content: Content) => {
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
         setVideoPlayBackPosition(content.video_playback_position);
@@ -97,4 +99,16 @@ module background {
         { urls: ['https://web-shiori.herokuapp.com/v1/auth/*'] },
         ['responseHeaders']
     );
+
+    /**
+     * コンテキストメニュー
+     */
+    // 親メニュー追加
+    let parentProperties = <chrome.contextMenus.CreateProperties>{
+        id: 'parent',
+        title: '親メニュー',
+        contexts: ['all'],
+    };
+    const parentId = chrome.contextMenus.create(parentProperties);
+    console.log(parentId);
 }

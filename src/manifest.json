@@ -24,6 +24,7 @@
     "storage",
     "background",
     "webRequest",
+    "contextMenus",
     "http://*/",
     "https://*/",
     "https://web-shiori.herokuapp.com/*"
