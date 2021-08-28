@@ -35,6 +35,7 @@ module background {
         })
     }
 
+    // 外部サービスログイン後、認証情報をストレージに保存する
     chrome.webRequest.onHeadersReceived.addListener(
         function (details) {
             const uid = details.responseHeaders?.find(header => header.name.toLowerCase() === "uid")
