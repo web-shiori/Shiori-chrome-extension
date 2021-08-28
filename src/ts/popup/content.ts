@@ -20,8 +20,14 @@ module popup {
 
         function processFetchedResponse(response: any) {
             if (!response.ok) {
-                // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
+                // 認証エラーの場合ログイン画面を表示する
+                if (response.status === 401) {
+                    window.close()
+                    openSignInView()
+                } else {
+                    // TODO: エラー時の処理を実装する
+                    console.error("エラーレスポンス", response);
+                }
             } else {
                 return response.json().then((contentListJson: any) => {
                     // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
