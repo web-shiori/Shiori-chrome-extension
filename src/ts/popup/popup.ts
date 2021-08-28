@@ -232,6 +232,12 @@ module popup {
     const saveButton = document.getElementById('save-button');
     if (saveButton !== null) {
         saveButton.addEventListener('click', async function () {
+            // 保存中インジケータ表示
+            saveButton.innerHTML = `
+            <div class="spinner-border spinner-border-sm" role="status" id="sidemenu-indicator">
+                <span class="sr-only">Loading...</span>
+            </div>
+            `;
             getContent()
                 .then((content) => {
                     doPostContent(content);
