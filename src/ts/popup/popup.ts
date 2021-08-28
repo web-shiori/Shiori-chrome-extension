@@ -30,6 +30,14 @@ module popup {
         })
     }
 
+    // ログイン画面を開く
+    export function openSignInView() {
+        chrome.windows.create({
+            url: '../html/signIn.html',
+            type: "popup"
+        })
+    }
+
     /**
      * ポップアップのコード
      */

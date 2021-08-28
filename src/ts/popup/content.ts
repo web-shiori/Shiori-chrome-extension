@@ -107,20 +107,10 @@ module popup {
         chrome.runtime.sendMessage(targetContent)
     }
 
-    // ログイン画面を開く
-    function openSignInView() {
-        chrome.windows.create({
-            url: '../html/signIn.html',
-            type: "popup"
-        })
-    }
-
     // ポップアップviewにコンテンツを表示する
     async function initializeContent() {
         const isLoggedInUser = await setCurrentUser()
         if (!isLoggedInUser) {
-            console.log("ログインしてない")
-            console.log(JSON.stringify(currentUser))
             window.close()
             openSignInView()
         }
