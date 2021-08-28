@@ -89,7 +89,7 @@ module popup {
             ]
         )
 
-        	// TODO: エラー起きたときの処理も書く
+        // TODO: エラー起きたときの処理も書く
         return new Promise((resolve => {
             const postContent: PostContent = {
                 title: metaData.title,

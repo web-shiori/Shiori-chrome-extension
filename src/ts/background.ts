@@ -6,6 +6,7 @@ module background {
     })
 
 	// TODO: loadedmetadataイベントが発生した後に再生位置を設定する
+    // 動画再生位置を復元する
     function setVideoPlayBackPosition(videoPlayBackPosition: number) {
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
             chrome.tabs.executeScript(<number>tabs[0].id, {
@@ -18,6 +19,7 @@ module background {
         })
     }
 
+    // スクロール位置を復元する
     function setScrollPosition(scrollPositionX: number, scrollPositionY: number) {
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
             chrome.tabs.executeScript(<number>tabs[0].id, {
@@ -58,11 +60,8 @@ module background {
                     chrome.tabs.remove(<number>tabs[0].id)
                 }
             })
-
         },
         { urls: ['https://web-shiori.herokuapp.com/*'] },
         ['responseHeaders']
     )
-
-
 }
