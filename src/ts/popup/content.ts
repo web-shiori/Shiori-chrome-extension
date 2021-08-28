@@ -109,6 +109,7 @@ module popup {
 
     // ポップアップviewにコンテンツを表示する
     async function initializeContent() {
+        // TODO: リファクタリング
         const isLoggedInUser = await setCurrentUser()
         if (!isLoggedInUser) {
             window.close()
