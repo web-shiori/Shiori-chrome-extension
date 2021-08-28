@@ -133,7 +133,18 @@ $shiori-gray: gainsboro;
     }
   }
 
-  #content-saved-popup {
+  .after-save-content-popup {
+    padding: 5px;
+    #content-saved-icon {
+      color: $shiori-primary-color;
+    }
 
+    #content-save-failed-icon {
+      color: red;
+    }
+
+    .content-saved-text {
+      display: inline;
+    }
   }
 }

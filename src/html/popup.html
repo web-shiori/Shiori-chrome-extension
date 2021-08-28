@@ -9,7 +9,9 @@
 <body id="popup-body">
     <div id="default-popup">
         <div id="save-button-view">
-            <button id="save-button">保存する</button>
+            <button id="save-button">
+                保存する
+            </button>
         </div>
 
         <div id="content-list-view">
@@ -22,8 +24,14 @@
         </div>
     </div>
 
-    <div id="content-saved-popup" style="display: none">
-        保存完了
+    <div id="content-saved-popup" class="after-save-content-popup" style="display: none">
+        <i id="content-saved-icon" class="bi bi-check-circle"></i>
+        <p class="content-saved-text">保存完了</p>
+    </div>
+
+    <div id="content-save-failed-popup" class="after-save-content-popup" style="display: none">
+        <i id="content-save-failed-icon" class="bi bi-exclamation-circle"></i>
+        <p class="content-saved-text">Error</p>
     </div>
 
     <script type="text/javascript" src="../js/popup/popup.js"></script>

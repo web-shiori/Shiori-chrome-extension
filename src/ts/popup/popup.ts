@@ -45,7 +45,6 @@ module popup {
         const url = `${baseUrl}/v1/content`;
         return fetch(url, {
             method: 'POST',
-            // TODO: ヘッダをちゃんとする
             headers: {
                 'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
@@ -61,8 +60,18 @@ module popup {
 
         function processResponse(response: any) {
             if (!response.ok) {
-                // TODO: エラー時の処理を実装する
                 console.error('エラーレスポンス', response.json());
+                // コンテンツ保存失敗画面表示
+                const defaultPopup = document.getElementById('default-popup');
+                const contentSaveFailedPopup = document.getElementById(
+                    'content-save-failed-popup'
+                );
+                if (defaultPopup !== null) {
+                    defaultPopup.style.display = 'none';
+                }
+                if (contentSaveFailedPopup !== null) {
+                    contentSaveFailedPopup.style.display = 'block';
+                }
             } else {
                 // 保存完了画面表示
                 const defaultPopup = document.getElementById('default-popup');
@@ -206,6 +215,7 @@ module popup {
                         {
                             // TODO: サムネイル画像取得方法を改善したい: これとかを使う？(https://github.com/gottfrois/link_thumbnailer)
                             // TODO: youtubeの場合工夫する必要がある
+                            // NOTE: 取得できなかったらファビコンで良いかもしれない
                             code: `document.images[0].src;`,
                         },
                         (result) => {
@@ -222,6 +232,13 @@ module popup {
     const saveButton = document.getElementById('save-button');
     if (saveButton !== null) {
         saveButton.addEventListener('click', async function () {
+            // 保存中インジケータ表示
+            saveButton.innerHTML = `
+            <div class="spinner-border spinner-border-sm" role="status" id="content-save-indicator">
+                <span class="sr-only">Loading...</span>
+            </div>
+            `;
+
             getContent()
                 .then((content) => {
                     doPostContent(content);

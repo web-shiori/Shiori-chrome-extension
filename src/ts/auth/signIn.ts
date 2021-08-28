@@ -6,7 +6,6 @@ module auth {
         const url = `${baseUrl}/v1/auth/sign_in`;
         return fetch(url, {
             method: 'POST',
-            // TODO: ヘッダをちゃんとする
             headers: {
                 'Content-Type': 'application/json',
             },
