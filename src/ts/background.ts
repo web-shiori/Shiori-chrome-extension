@@ -56,7 +56,11 @@ module background {
         );
     }
 
-    // 外部サービスログイン後、認証情報をストレージに保存する
+    /**
+     * 外部サービスログイン後、認証情報をストレージに保存する
+     * chromeのHTTPリクエストを監視し、ログイン後のレスポンスヘッダから認証トークンを取得する
+     * それをストレージに保存する
+     */
     chrome.webRequest.onHeadersReceived.addListener(
         function (details) {
             const uid = details.responseHeaders?.find(
