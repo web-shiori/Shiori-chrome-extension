@@ -32,7 +32,6 @@ module auth {
         }
     }
 
-
     // ログインフォームに入力されたメールアドレスを取得
     function getEmail(): Promise<string> {
         const email = (<HTMLInputElement>document.getElementById("sign-in-with-password-form-email")).value || ""

@@ -49,8 +49,19 @@ module background {
             chrome.storage.sync.set({'accessToken': accessToken}, function() {
                 console.log('accessToken saved');
             });
+
+            // 外部サービスログイン後、ログイン画面を閉じる
+            chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+                const regex = /https:\/\/web-shiori.herokuapp.com\/v1\/auth\/.*\/callback/g
+                if ((<string>tabs[0].url).match(regex)) {
+                    chrome.tabs.remove(<number>tabs[0].id)
+                }
+            })
+
         },
         { urls: ['https://web-shiori.herokuapp.com/*'] },
         ['responseHeaders']
     )
+
+
 }
