@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../scss/signin.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <title>Web Shiori</title>
+</head>
+<body>
+    <div class="header-sign-in-view">
+
+    </div>
+    Web-Shiori
+    <h1>ログイン</h1>
+    <div class="sign-in-with-omniauth-button-view">
+        <a id="sign-in-with-google-button" href="https://web-shiori.herokuapp.com/v1/auth/google">
+            <i class="bi bi-google"></i>Googleで続ける
+        </a>
+        <a id="sign-in-with-twitter-button" href="https://web-shiori.herokuapp.com/v1/auth/twitter">
+            <i class="bi bi-twitter"></i>Twitterで続ける
+        </a>
+        <a id="sign-in-with-github-button" href="https://web-shiori.herokuapp.com/v1/auth/github">
+            <i class="bi bi-github"></i>Githubで続ける
+        </a>
+    </div>
+    または
+    <div class="sign-in-with-password-button-viwe">
+        <form id="sign-in-with-password-form">
+            <input id="sign-in-with-password-form-email" type="email" placeholder="メールアドレス">
+            <input id="sign-in-with-password-form-password" type="password" placeholder="パスワード">
+            <button id="sign-in-with-password-button">ログイン</button>
+        </form>
+    </div>
+    <div class="footer-signin-view">
+        アカウントをお持ちではありませんか？
+        <a id="move-to-sign-up-view-button" href="../html/signUp.html">アカウントを作成</a>
+    </div>
+
+    <script type="text/javascript" src="../js/auth/signIn.js"></script>
+</body>
+</html>

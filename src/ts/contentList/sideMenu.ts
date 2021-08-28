@@ -3,13 +3,13 @@ module contentList {
 
     // フォルダ一覧を取得する
     function doGetFolderList() {
-        // TODO: URLを本番APIに修正する
-        const url = "https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder"
+        const url = `${baseUrl}/v1/folder`
         return fetch(url, {
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'Content-Type': 'application/json',
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processFetchedResponse).catch(error => {
             console.error(error)
@@ -29,14 +29,14 @@ module contentList {
 
     // フォルダを新規作成する
     function doPostFolder(folder: PostFolder) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder`
+        const url = `${baseUrl}/v1/folder`
         return fetch(url, {
             method: 'POST',
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'Content-Type': 'application/json',
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             },
             body: JSON.stringify(folder)
         }).then(processResponse).catch(error => {
@@ -46,7 +46,7 @@ module contentList {
         function processResponse(response: any) {
             if (!response.ok) {
                 // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
+                console.error("エラーレスポンス", response.json());
             } else {
                 initializeSideMenu()
             }
@@ -55,15 +55,13 @@ module contentList {
 
     // フォルダを削除するリクエストを送る
     function doDeleteFolder(folderId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}`
+        const url = `${baseUrl}/v1/folder/${folderId}`
         return fetch(url, {
             method: 'delete',
-            // TODO: 認証用のヘッダを本場用に修正する
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processResponse).catch(error => {
             console.error(error);
@@ -119,7 +117,6 @@ module contentList {
     // フォルダリストviewを生成
     function generateFolderListViewTl(): Promise<string> {
         return new Promise((resolve => {
-            console.log("generateFolderListViewTl")
             let folderListViewTl = ``
             for (let i = 0; i < folderList.length; i++) {
                 const viewTl = `
@@ -256,6 +253,13 @@ module contentList {
 
     // サイドメニューにフォルダを表示する
     async function initializeSideMenu() {
+        // TODO: リファクタリング
+        // currentUserセット
+        const isLoggedInUser = await setCurrentUser()
+        if (!isLoggedInUser) {
+            window.close()
+            openSignInView()
+        }
         startIndicator("sidemenu-indicator")
         await doGetFolderList()
         const folderViewTl = await generateFolderView()

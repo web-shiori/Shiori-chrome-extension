@@ -1,4 +1,14 @@
 module contentList {
+    // ログアウトボタンを押したときの処理
+    const contentListSignOutButton = document.getElementById("content-list-sign-out-button")
+    if (contentListSignOutButton !== null) {
+        contentListSignOutButton.addEventListener('click', function () {
+            chrome.storage.sync.remove(["uid", "client", "accessToken"], function() {
+                console.log('removed');
+            });
+            window.close()
+        })
+    }
 
     // 入力された検索ワードを取得
     function getSearchQuery(): Promise<string> {

@@ -1,19 +1,101 @@
 module popup {
+
+    /**
+     * 認証関連のコード
+     * 本当はリファクタリングしたいが、jsにトランスパイルした後でエラーが出るので暫定で個別に実装する
+     * contentList/main.tsにも同じコードを定義している
+     */
+    export let currentUser: User|undefined = undefined
+
+    // currentUserにユーザをセットする
+    export function setCurrentUser(): Promise<boolean> {
+        return new Promise((resolve) => {
+            chrome.storage.sync.get(["uid", "client", "accessToken"], function (value) {
+                if (value.uid && value.client && value.accessToken) {
+                    currentUser = {
+                        uid: value.uid.value,
+                        client: value.client.value,
+                        accessToken: value.accessToken.value
+                    }
+                    resolve(true)
+                } else {
+                    resolve(false)
+                }
+            });
+        })
+    }
+
+    // ログイン画面を開く
+    export function openSignInView() {
+        chrome.windows.create({
+            url: '../html/signIn.html',
+            type: "popup"
+        })
+    }
+
+    /**
+     * ポップアップのコード
+     */
+    const baseUrl: string = "https://web-shiori.herokuapp.com"
+
+    // 取得したコンテンツを保存する
+    function doPostContent(content: PostContent) {
+        const url = `${baseUrl}/v1/content`
+        return fetch(url, {
+            method: 'POST',
+            // TODO: ヘッダをちゃんとする
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
+            },
+            body: JSON.stringify(content)
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response.json());
+            } else {
+                // 保存完了画面表示
+                const defaultPopup = document.getElementById("default-popup");
+                const contentSavedPopup = document.getElementById("content-saved-popup");
+                if (defaultPopup !== null) {
+                    defaultPopup.style.display = "none"
+                }
+                if (contentSavedPopup !== null) {
+                    contentSavedPopup.style.display = "block"
+                }
+            }
+        }
+    }
+
 	// 現在開いているタブのコンテンツを取得する
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData()
         const videoPlayBackPositionPromise = getVideoPlayBackPosition()
         const scrollPositionXPromise = getScrollPositionX()
         const scrollPositionYPromise = getScrollPositionY()
-        const [metaData, videoPlayBackPosition, scrollPositionX, scrollPositionY] = await Promise.all(
-            [metaDataPromise, videoPlayBackPositionPromise, scrollPositionXPromise, scrollPositionYPromise]
+        const thumbnailImgUrlPromise = getThumbnailImgUrl()
+        const [metaData, videoPlayBackPosition, scrollPositionX, scrollPositionY, thumbnailImgUrl] = await Promise.all(
+    [
+                metaDataPromise,
+                videoPlayBackPositionPromise,
+                scrollPositionXPromise,
+                scrollPositionYPromise,
+                thumbnailImgUrlPromise
+            ]
         )
 
-        	// TODO: エラー起きたときの処理も書く
+        // TODO: エラー起きたときの処理も書く
         return new Promise((resolve => {
             const postContent: PostContent = {
                 title: metaData.title,
                 url: metaData.url,
+                thumbnail_img_url: thumbnailImgUrl,
                 scroll_position_x: scrollPositionX,
                 scroll_position_y: scrollPositionY,
                 max_scroll_position_x: metaData.max_scroll_position_x,
@@ -22,7 +104,8 @@ module popup {
                 specified_text: null,
                 specified_dom_id: null,
                 specified_dom_class: null,
-                specified_dom_tag: null
+                specified_dom_tag: null,
+                liked: null
             }
             resolve(postContent)
         }))
@@ -83,38 +166,20 @@ module popup {
         })
     }
 
-	// 取得したコンテンツを保存する
-    function doPostContent(content: PostContent) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content`
-        return fetch(url, {
-            method: 'POST',
-            headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
-            },
-            body: JSON.stringify(content)
-        }).then(processResponse).catch(error => {
-            console.error(error);
-        });
-
-        function processResponse(response: any) {
-            if (!response.ok) {
-                // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
-            } else {
-                // 保存完了画面表示
-                const defaultPopup = document.getElementById("default-popup");
-                const contentSavedPopup = document.getElementById("content-saved-popup");
-                if (defaultPopup !== null) {
-                    defaultPopup.style.display = "none"
-                }
-                if (contentSavedPopup !== null) {
-                    contentSavedPopup.style.display = "block"
-                }
-            }
-        }
+    // 現在開いているタブのコンテンツのサムネイル画像を取得する
+    function getThumbnailImgUrl(): Promise<string> {
+        return new Promise<string>((resolve) => {
+            chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+                chrome.tabs.executeScript(<number>tabs[0].id, {
+                    // TODO: サムネイル画像取得方法を改善したい: これとかを使う？(https://github.com/gottfrois/link_thumbnailer)
+                    // TODO: youtubeの場合工夫する必要がある
+                    code: `document.images[0].src;`
+                }, (result) => {
+                    const thumbnailImgUrl: string = String(result[0])
+                    resolve(thumbnailImgUrl)
+                })
+            })
+        })
     }
 
 	// `保存する`ボタンをクリックしたときの処理

@@ -1,364 +1,56 @@
 module contentList {
-    export let currentFolderId: number|null = null
-    let contentList: Content[] = []
 
-    // コンテンツ一覧を取得する
-    // function doGetContentList(query: string) {
-    //     // TODO: URLを本番APIに修正する
-    //     const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content?q=${query}`
-    //     return fetch(url, {
-    //         // TODO: 認証用のヘッダを本場用に修正する
-    //         headers: {
-    //             'access-token': 'access-token',
-    //             'client': 'client',
-    //             'uid': 'uid'
-    //         }
-    //     }).then(processFetchedResponse).catch(error => {
-    //         console.error(error)
-    //     })
-    //
-    //     function processFetchedResponse(response: any) {
-    //         if (!response.ok) {
-    //             // TODO: エラー時の処理を実装する
-    //             console.error("エラーレスポンス", response)
-    //         } else {
-    //             return response.json().then((contentListJson: any) => {
-    //                 // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
-    //                 contentList = contentListJson.data.content
-    //             })
-    //         }
-    //     }
-    // }
-
-    // 動作確認用コンテンツ一覧取得
-    function dummyFetchContentList() {
-        const content1: Content = {
-            content_id: 1,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content2: Content = {
-            content_id: 2,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 500,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://gyazo.com/f149c85d239c13b76388822357755672/thumb/400",
-            title: "アイデア",
-            type: "",
-            updated_at: "2020-05-12T20:48:24.000+09:00",
-            url: "https://qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d",
-            video_playback_position: 0
-        }
-
-        const content3: Content = {
-            content_id: 3,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: false,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 500,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://hayabusa.io/ca/files/topics/26111_ext_24_1.jpg?version=1619512503&v=1619512503",
-            title: "テクノロジーマップ",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://d2utiq8et4vl56.cloudfront.net/files/user/pdf/techinfo/AIDataTechnologyMap_210520.pdf?v=1621566300",
-            video_playback_position: 0
-        }
-
-        const content4: Content = {
-            content_id: 4,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "ながああああああああああああああああああああああああああああああああああああああああああああああああああああいタイトル",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content5: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content6: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content13: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content7: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content8: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content9: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content10: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content11: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        const content12: Content = {
-            content_id: 5,
-            created_at: "",
-            delete_flag: false,
-            deleted_at: "",
-            file_url: "",
-            liked: true,
-            max_scroll_position_x: 0,
-            max_scroll_position_y: 0,
-            scroll_position_x: 0,
-            scroll_position_y: 0,
-            sharing_url: "",
-            specified_dom_class: "",
-            specified_dom_id: "",
-            specified_dom_tag: "",
-            specified_text: "",
-            thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg",
-            title: "Web-Shioriデモ動画",
-            type: "",
-            updated_at: "2019-05-12T20:48:24.000+09:00",
-            url: "https://www.youtube.com/watch?v=1DcjMwkmNvA",
-            video_playback_position: 30
-        }
-
-        contentList = [content1, content2, content3, content4, content5, content6, content7, content8,content9,content10,content11,content12, content13]
-        // contentList = []
-        contentList = [content1, content2, content3, content4, content5]
+    /**
+     * 認証関連のコード
+     * 本当はリファクタリングしたいが、jsにトランスパイルした後でエラーが出るので暫定で個別に実装する
+     * popup/popup.tsにも同じコードを定義している
+     */
+    export let currentUser: User|undefined = undefined
+    // currentUserにユーザをセットする
+    export function setCurrentUser(): Promise<boolean> {
+        return new Promise((resolve) => {
+            chrome.storage.sync.get(["uid", "client", "accessToken"], function (value) {
+                if (value.uid && value.client && value.accessToken) {
+                    currentUser = {
+                        uid: value.uid.value,
+                        client: value.client.value,
+                        accessToken: value.accessToken.value
+                    }
+                    resolve(true)
+                } else {
+                    resolve(false)
+                }
+            });
+        })
     }
 
-    // フォルダに含まれているコンテンツ一覧を取得する
-    function doGetFolderContentList(query: string, folderId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content?q=${query}`
+    // ログイン画面を開く
+    export function openSignInView() {
+        chrome.windows.create({
+            url: '../html/signIn.html',
+            type: "popup"
+        })
+    }
+
+    /**
+     * コンテンツ一覧画面のコード
+     */
+    export let currentFolderId: number|null = null
+    let contentList: Content[] = []
+    // TODO: リファクタリング
+    // NOTE: これも本当はリファクタリングしたい
+    export const baseUrl: string = "https://web-shiori.herokuapp.com"
+
+    // コンテンツ一覧を取得する
+    function doGetContentList(query: string) {
+        // TODO:
+        const url = `${baseUrl}/v1/content?q=${query}`
         return fetch(url, {
-            // TODO: 認証用のヘッダを本場用に修正する
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'Content-Type': 'application/json',
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processFetchedResponse).catch(error => {
             console.error(error)
@@ -377,17 +69,67 @@ module contentList {
         }
     }
 
+    // フォルダに含まれているコンテンツ一覧を取得する
+    function doGetFolderContentList(query: string, folderId: number) {
+        const url = `${baseUrl}/v1/folder/${folderId}/content?q=${query}`
+        return fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
+            }
+        }).then(processFetchedResponse).catch(error => {
+            console.error(error)
+        })
+
+        function processFetchedResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response)
+            } else {
+                return response.json().then((contentListJson: any) => {
+                    // TODO: JSONにバリデーションをかけたい(参考: https://zenn.dev/uzimaru0000/articles/json-type-validation)
+                    contentList = contentListJson.data.content
+                })
+            }
+        }
+    }
+
+    // コンテンツを更新するリクエスト
+    function doPutContent(contentId: number, liked: boolean) {
+        const url = `${baseUrl}/v1/content/${contentId}`
+        return fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
+                'client': 'iXFWJAgK28eBDNeFfXSpWA',
+                'uid': 'unko@gmail.com'
+            },
+            body: JSON.stringify({ "liked": liked })
+        }).then(processResponse).catch(error => {
+            console.error(error);
+        });
+
+        function processResponse(response: any) {
+            if (!response.ok) {
+                // TODO: エラー時の処理を実装する
+                console.error("エラーレスポンス", response.json());
+            }
+        }
+    }
+
     // コンテンツ削除リクエスト
     function doDeleteContent(contentId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}`
+        const url = `${baseUrl}/v1/content/${contentId}`
         return fetch(url, {
             method: 'delete',
-            // TODO: 認証用のヘッダを本場用に修正する
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'Content-Type': 'application/json',
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processResponse).catch(error => {
             console.error(error);
@@ -405,65 +147,16 @@ module contentList {
         }
     }
 
-    // コンテンツをお気に入りに登録する
-    function doPostFavoriteContent(contentId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
-        return fetch(url, {
-            method: 'post',
-            // TODO: 認証用のヘッダを本場用に修正する
-            headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
-            }
-        }).then(processResponse).catch(error => {
-            console.error(error);
-        });
-
-        function processResponse(response: any) {
-            if (!response.ok) {
-                // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
-            }
-        }
-    }
-
-    // コンテンツのお気に入りを解除する
-    function doDeleteUnfavoriteContent(contentId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/content/${contentId}/like`
-        return fetch(url, {
-            method: 'delete',
-            // TODO: 認証用のヘッダを本場用に修正する
-            headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
-            }
-        }).then(processResponse).catch(error => {
-            console.error(error);
-        });
-
-        function processResponse(response: any) {
-            if (!response.ok) {
-                // TODO: エラー時の処理を実装する
-                console.error("エラーレスポンス", response);
-            }
-        }
-    }
-
     // コンテンツをフォルダに追加する
     export function doPostContentToFolder(contentId: number, folderId: number) {
-        // TODO: URLを本番APIに修正する
-        const url = `https://virtserver.swaggerhub.com/Web-Shiori/Web-Shiori/1.0.0/v1/folder/${folderId}/content/${contentId}`
+        const url = `${baseUrl}/v1/folder/${folderId}/content/${contentId}`
         return fetch(url, {
             method: 'post',
-            // TODO: 認証用のヘッダを本場用に修正する
             headers: {
-                'access-token': 'access-token',
-                'client': 'client',
-                'uid': 'uid'
+                'Content-Type': 'application/json',
+                'access-token': currentUser!.accessToken,
+                'client': currentUser!.client,
+                'uid': currentUser!.uid
             }
         }).then(processResponse).catch(error => {
             console.error(error);
@@ -532,7 +225,7 @@ module contentList {
                 switch ((<HTMLInputElement>event.target).id) {
                     // フォルダに追加ボタンクリック
                     case `content-button-folder-${i}`:
-                        addContentToFolder(targetContent.content_id)
+                        addContentToFolder(targetContent.id)
                         break
                     // お気に入りボタンクリック
                     case `content-button-heart-${i}`:
@@ -541,7 +234,7 @@ module contentList {
                     // 削除ボタンクリック
                     case `content-button-trash-${i}`:
                         // TODO: リファクタリング
-                        doDeleteContent(contentList[i].content_id)
+                        doDeleteContent(contentList[i].id)
                         break
                     // その他の場所をクリック
                     default:
@@ -581,8 +274,8 @@ module contentList {
         if (contentButtonHeart === null) return
 
         // お気に入り登録リクエストを送信
-        const contentId = contentList[contentListIndex].content_id
-        doPostFavoriteContent(contentId)
+        const contentId = contentList[contentListIndex].id
+        doPutContent(contentId, true)
         // お気に入りボタンのスタイルを変更する
         contentButtonHeart.className = "bi-heart-fill content-button"
         // コンテンツのプロパティを変更
@@ -595,8 +288,8 @@ module contentList {
         if (contentButtonHeart === null) return
 
         // お気に入り登録リクエストを送信
-        const contentId = contentList[contentListIndex].content_id
-        doDeleteUnfavoriteContent(contentId)
+        const contentId = contentList[contentListIndex].id
+        doPutContent(contentId, false)
         // お気に入りボタンのスタイルを変更する
         contentButtonHeart.className = "bi-heart content-button"
         // コンテンツのプロパティを変更
@@ -632,13 +325,19 @@ module contentList {
 
     // main領域にコンテンツ一覧を表示する
     export async function initializeContent(query: string, folderId: number|null) {
+        // TODO: リファクタリング
+        // currentUserセット
+        const isLoggedInUser = await setCurrentUser()
+        if (!isLoggedInUser) {
+            window.close()
+            openSignInView()
+        }
         startIndicator("content-list-indicator-area")
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
             await doGetFolderContentList(query, folderId)
         } else {
-            // await doGetContentList(query)
-            await dummyFetchContentList()
+            await doGetContentList(query)
         }
         const contentViewTl = await generateContentView()
         await renderContentView(contentViewTl)
