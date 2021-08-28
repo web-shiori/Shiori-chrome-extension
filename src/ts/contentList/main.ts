@@ -109,9 +109,9 @@ module contentList {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'access-token': '_wngFEvVAn1X5hTZ1mbiew',
-                client: 'iXFWJAgK28eBDNeFfXSpWA',
-                uid: 'unko@gmail.com',
+                'access-token': currentUser!.accessToken,
+                client: currentUser!.client,
+                uid: currentUser!.uid,
             },
             body: JSON.stringify({ liked: liked }),
         })
