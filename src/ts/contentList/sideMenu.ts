@@ -254,6 +254,13 @@ module contentList {
 
     // サイドメニューにフォルダを表示する
     async function initializeSideMenu() {
+        // TODO: リファクタリング
+        // currentUserセット
+        const isLoggedInUser = await setCurrentUser()
+        if (!isLoggedInUser) {
+            window.close()
+            openSignInView()
+        }
         startIndicator("sidemenu-indicator")
         await doGetFolderList()
         const folderViewTl = await generateFolderView()
