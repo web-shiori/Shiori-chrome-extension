@@ -45,7 +45,6 @@ module popup {
         const url = `${baseUrl}/v1/content`;
         return fetch(url, {
             method: 'POST',
-            // TODO: ヘッダをちゃんとする
             headers: {
                 'Content-Type': 'application/json',
                 'access-token': currentUser!.accessToken,
