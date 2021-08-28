@@ -205,6 +205,7 @@ module popup {
                         {
                             // TODO: サムネイル画像取得方法を改善したい: これとかを使う？(https://github.com/gottfrois/link_thumbnailer)
                             // TODO: youtubeの場合工夫する必要がある
+                            // NOTE: 取得できなかったらファビコンで良いかもしれない
                             code: `document.images[0].src;`,
                         },
                         (result) => {
