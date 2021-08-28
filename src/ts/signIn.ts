@@ -26,12 +26,8 @@ module auth {
             } else {
                 // ログイン画面を閉じる
                 window.close()
-                // ポップアップを表示する
-                chrome.windows.create({
-                    url: '../html/popup.html',
-                    type: "popup"
-                })
-                alert("ログイン成功")
+                // コンテンツ一覧画面を表示する
+                chrome.tabs.create({ url: "../html/contentList.html" })
             }
         }
     }

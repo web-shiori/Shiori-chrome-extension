@@ -119,6 +119,8 @@ module popup {
     async function initializeContent() {
         const isLoggedInUser = await setCurrentUser()
         if (!isLoggedInUser) {
+            console.log("ログインしてない")
+            console.log(JSON.stringify(currentUser))
             window.close()
             openSignInView()
         }
