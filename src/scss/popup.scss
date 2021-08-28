@@ -143,4 +143,15 @@ $shiori-gray: gainsboro;
       display: inline;
     }
   }
+
+  #content-save-failed-popup {
+    padding: 5px;
+    #content-save-failed-icon {
+      color: red;
+    }
+
+    #content-save-failed-text {
+      display: inline;
+    }
+  }
 }

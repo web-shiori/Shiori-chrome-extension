@@ -60,8 +60,18 @@ module popup {
 
         function processResponse(response: any) {
             if (!response.ok) {
-                // TODO: エラー時の処理を実装する
                 console.error('エラーレスポンス', response.json());
+                // コンテンツ保存失敗画面表示
+                const defaultPopup = document.getElementById('default-popup');
+                const contentSaveFailedPopup = document.getElementById(
+                    'content-save-failed-popup'
+                );
+                if (defaultPopup !== null) {
+                    defaultPopup.style.display = 'none';
+                }
+                if (contentSaveFailedPopup !== null) {
+                    contentSaveFailedPopup.style.display = 'block';
+                }
             } else {
                 // 保存完了画面表示
                 const defaultPopup = document.getElementById('default-popup');
