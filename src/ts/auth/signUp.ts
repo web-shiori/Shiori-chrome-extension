@@ -1,5 +1,5 @@
 module auth {
-    // NOTE: signInと共有したいけど。。
+    // NOTE: signInと共有したいが、なぜかundefinedになるのでここでも定義する
     const baseUrl: string = "https://web-shiori.herokuapp.com"
 
     // 会員登録リクエスト
