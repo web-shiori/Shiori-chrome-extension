@@ -3,9 +3,9 @@ module contentList {
     /**
      * 認証関連のコード
      * 本当はリファクタリングしたいが、jsにトランスパイルした後でエラーが出るので暫定で個別に実装する
+     * popup/popup.tsにも同じコードを定義している
      */
     export let currentUser: User|undefined = undefined
-
     // currentUserにユーザをセットする
     export function setCurrentUser(): Promise<boolean> {
         return new Promise((resolve) => {

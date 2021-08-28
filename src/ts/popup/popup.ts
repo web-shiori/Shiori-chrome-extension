@@ -3,6 +3,7 @@ module popup {
     /**
      * 認証関連のコード
      * 本当はリファクタリングしたいが、jsにトランスパイルした後でエラーが出るので暫定で個別に実装する
+     * contentList/main.tsにも同じコードを定義している
      */
     export let currentUser: User|undefined = undefined
 
