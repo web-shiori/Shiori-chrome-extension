@@ -32,6 +32,9 @@ module popup {
         chrome.windows.create({
             url: '../html/signIn.html',
             type: 'popup',
+            height: 630,
+            width: 410,
+            state: 'normal',
         });
     }
 

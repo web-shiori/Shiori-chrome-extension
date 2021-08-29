@@ -9,7 +9,8 @@ $shiori-primary-color: #1DDBB5;
   right: 0;
   bottom: 0;
   margin: auto;
-
+  box-shadow: 5px 1px 41px lightgrey;
+  
   // header
   .header-sign-in-view {
     width: 90%;
@@ -44,7 +45,6 @@ $shiori-primary-color: #1DDBB5;
       display: block;
       border: 1px solid rgba(0,0,0,.1);
       padding: 3px;
-      background: transparent;
       .bi-google {
         background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
         -webkit-background-clip: text;
@@ -93,7 +93,6 @@ $shiori-primary-color: #1DDBB5;
 
   // パスワードログイン
   .sign-in-with-password-button-view {
-    background-color: orange;
     width: 90%;
     margin: auto;
     #sign-in-with-password-form {
