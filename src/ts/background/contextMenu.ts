@@ -212,17 +212,7 @@ module background {
 
     // コンテキストメニュークリック時の処理
     chrome.contextMenus.onClicked.addListener(function (info) {
-        console.log(JSON.stringify(info));
-        console.log(info.selectionText);
         if (info.menuItemId === 'child1') {
-            // 子メニュー1をクリックしたときの処理
-            // chrome.runtime.sendMessage({
-            //     msg: 'contextMenu',
-            //     data: {
-            //         url: info.pageUrl,
-            //         selectionText: info.selectionText,
-            //     },
-            // });
             getContent()
                 .then((content) => {
                     content.specified_text = info.selectionText ?? '';

@@ -268,18 +268,4 @@ module popup {
             chrome.tabs.create({ url: '../html/options.html' });
         });
     }
-
-    // コンテキストメニュークリック時のメッセージを受け取る
-    chrome.runtime.onMessage.addListener(function (message) {
-        if (message.msg === 'contextMenu') {
-            getContent()
-                .then((content) => {
-                    content.specified_text = message.data.selectionText;
-                    doPostContent(content);
-                })
-                .catch((error) => {
-                    console.error('エラー', error);
-                });
-        }
-    });
 }
