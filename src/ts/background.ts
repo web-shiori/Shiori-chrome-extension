@@ -131,14 +131,14 @@ module background {
         console.log(JSON.stringify(info));
         console.log(info.selectionText);
         // 子メニュー1をクリックしたときの処理
-        // popup/content.tsにメッセージを送る
         chrome.runtime.sendMessage({
             msg: 'contextMenu',
             data: {
-                subject: 'a',
-                content: 'b',
+                url: info.pageUrl,
+                selectionText: info.selectionText,
             },
         });
+
         // 子メニュー2をクリックしたときの処理
     });
 }
