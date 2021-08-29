@@ -130,6 +130,15 @@ module background {
     chrome.contextMenus.onClicked.addListener(function (info) {
         console.log(JSON.stringify(info));
         console.log(info.selectionText);
+        // 子メニュー1をクリックしたときの処理
         // popup/content.tsにメッセージを送る
+        chrome.runtime.sendMessage({
+            msg: 'contextMenu',
+            data: {
+                subject: 'a',
+                content: 'b',
+            },
+        });
+        // 子メニュー2をクリックしたときの処理
     });
 }

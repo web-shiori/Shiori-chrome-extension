@@ -133,5 +133,17 @@ module popup {
         addEventToContentView();
     }
 
+    // コンテキストメニュークリック時のメッセージを受け取る
+    chrome.runtime.onMessage.addListener(function (
+        message,
+        sender,
+        sendResponse
+    ) {
+        console.log(message);
+        alert(message);
+        alert(sender);
+        alert(sendResponse);
+    });
+
     initializeContent();
 }
