@@ -2,6 +2,7 @@ module background {
     /**
      *  メッセージが送られてきたときの処理
      */
+    // TODO: コンテンツを開く、というメッセージのときのみ動作するよう変更する
     chrome.runtime.onMessage.addListener((content: Content) => {
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
         setVideoPlayBackPosition(content.video_playback_position);
