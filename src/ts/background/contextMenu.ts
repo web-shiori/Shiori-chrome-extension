@@ -79,8 +79,8 @@ module background {
                 title: metaData.title,
                 url: metaData.url,
                 thumbnail_img_url: thumbnailImgUrl,
-                scroll_position_x: null,
-                scroll_position_y: null,
+                scroll_position_x: 0,
+                scroll_position_y: 0,
                 max_scroll_position_x: metaData.max_scroll_position_x,
                 max_scroll_position_y: metaData.max_scroll_position_y,
                 video_playback_position: videoPlayBackPosition,
@@ -190,23 +190,32 @@ module background {
     });
 
     // コンテキストメニュークリック時の処理
-    chrome.contextMenus.onClicked.addListener(function (info) {
-        if (info.menuItemId === 'child1') {
-            getContent()
-                .then((content) => {
-                    content.specified_text = info.selectionText ?? '';
-                    doPostContent(content);
-                })
-                .catch((error) => {
-                    console.error('エラー', error);
-                });
-        } else if (info.menuItemId === 'child2') {
-            // 子メニュー2をクリックしたときの処理
-            // 選択されたテキストへのリンクを生成
-            const urlWithSpecifiedText =
-                info.pageUrl + '#:~:text=' + info.selectionText;
-            saveToClipboard(urlWithSpecifiedText);
-        }
+    chrome.contextMenus.onClicked.addListener(function (info, tab) {
+        if (tab === undefined) return;
+        chrome.tabs.sendMessage(
+            <number>tab.id,
+            { method: 'getSelection' },
+            (response) => {
+                if (info.menuItemId === 'child1') {
+                    getContent()
+                        .then((content) => {
+                            content.specified_text = response.data;
+                            doPostContent(content);
+                        })
+                        .catch((error) => {
+                            console.error('エラー', error);
+                        });
+                } else if (info.menuItemId === 'child2') {
+                    // 子メニュー2をクリックしたときの処理
+                    // 選択されたテキストへのリンクを生成
+                    // NOTE: これだと対応できないパターンがたくさんある。けど大変そうなので暫定で以下のまま
+                    const urlWithSpecifiedText = encodeURI(
+                        info.pageUrl + '#:~:text=' + response.data
+                    );
+                    saveToClipboard(urlWithSpecifiedText);
+                }
+            }
+        );
     });
 
     // 文字列をクリップボードにコピーする

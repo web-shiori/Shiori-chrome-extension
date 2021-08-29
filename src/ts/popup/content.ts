@@ -129,7 +129,7 @@ module popup {
         url: string,
         specifiedText: string
     ): string {
-        return url + '#:~:text=' + specifiedText;
+        return encodeURI(url + '#:~:text=' + specifiedText);
     }
 
     // ポップアップviewにコンテンツを表示する

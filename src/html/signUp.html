@@ -8,32 +8,35 @@
     <title>Web Shiori</title>
 </head>
 <body>
-    <div class="header-sign-up-view">
-        Web-Shiori
-    </div>
-    <h1>会員登録</h1>
-    <div class="sign-up-with-omniauth-button-view">
-        <a id="sign-up-with-google-button" href="https://web-shiori.herokuapp.com/v1/auth/google">
-            <i class="bi bi-google"></i>Googleで続ける
-        </a>
-        <a id="sign-up-with-twitter-button" href="https://web-shiori.herokuapp.com/v1/auth/twitter">
-            <i class="bi bi-twitter"></i>Twitterで続ける
-        </a>
-        <a id="sign-up-with-github-button" href="https://web-shiori.herokuapp.com/v1/auth/github">
-            <i class="bi bi-github"></i>Githubで続ける
-        </a>
-    </div>
-    または
-    <div class="sign-up-with-password-button-viwe">
-        <form id="sign-up-with-password-form">
-            <input id="sign-up-with-password-form-email" type="email" placeholder="メールアドレス">
-            <input id="sign-up-with-password-form-password" type="password" placeholder="パスワード">
-            <button id="sign-up-with-password-button">会員登録</button>
-        </form>
-    </div>
-    <div class="footer-sign-up-view">
-        既にアカウントをお持ちですか？
-        <a id="move-to-sign-in-view-button" href="../html/signIn.html">ログイン</a>
+    <div class="sign-up-view">
+        <div class="header-sign-up-view">
+            <img src="../img/icons/shiori.png" class="sign-up-view-logo-img">
+            <p class="sign-up-view-web-shiori">Web-Shiori</p>
+            <h4 class="sign-up-view-h1">会員登録</h4>
+        </div>
+        <div class="sign-up-with-omniauth-button-view">
+            <a id="sign-up-with-google-button" class="btn btn-light" href="https://web-shiori.herokuapp.com/v1/auth/google">
+                <i class="bi bi-google"></i>Googleで続ける
+            </a>
+            <a id="sign-up-with-twitter-button" class="btn btn-light" href="https://web-shiori.herokuapp.com/v1/auth/twitter">
+                <i class="bi bi-twitter"></i>Twitterで続ける
+            </a>
+            <a id="sign-up-with-github-button" class="btn btn-light" href="https://web-shiori.herokuapp.com/v1/auth/github">
+                <i class="bi bi-github"></i>Githubで続ける
+            </a>
+        </div>
+        <p class="sign-up-separation-text"><span>または</span></p>
+        <div class="sign-up-with-password-button-view">
+            <form id="sign-up-with-password-form">
+                <input id="sign-up-with-password-form-email" type="email" placeholder="メールアドレス">
+                <input id="sign-up-with-password-form-password" type="password" placeholder="パスワード">
+                <button id="sign-up-with-password-button" class="btn btn-light">会員登録</button>
+            </form>
+        </div>
+        <div class="footer-sign-up-view">
+            <p class="footer-sign-up-view-text">既にアカウントをお持ちですか？</p>
+            <a id="move-to-sign-up-view-button" href="../html/signIn.html">ログイン</a>
+        </div>
     </div>
     <script type="text/javascript" src="../js/auth/signUp.js"></script>
 </body>
