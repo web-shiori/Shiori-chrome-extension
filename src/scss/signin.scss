@@ -41,6 +41,14 @@ $shiori-primary-color: #1DDBB5;
     width: 90%;
     margin: auto;
 
+    .btn-light {
+      background-color: white;
+    }
+
+    .btn-light:hover {
+      background-color: rgba(0,0,0,.1);
+    }
+
     #sign-in-with-google-button {
       display: block;
       border: 1px solid rgba(0,0,0,.1);
