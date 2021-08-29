@@ -25,6 +25,7 @@
     "background",
     "webRequest",
     "contextMenus",
+    "clipboardRead",
     "http://*/",
     "https://*/",
     "https://web-shiori.herokuapp.com/*"

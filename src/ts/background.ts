@@ -130,15 +130,30 @@ module background {
     chrome.contextMenus.onClicked.addListener(function (info) {
         console.log(JSON.stringify(info));
         console.log(info.selectionText);
-        // 子メニュー1をクリックしたときの処理
-        chrome.runtime.sendMessage({
-            msg: 'contextMenu',
-            data: {
-                url: info.pageUrl,
-                selectionText: info.selectionText,
-            },
-        });
-
-        // 子メニュー2をクリックしたときの処理
+        if (info.menuItemId === 'child1') {
+            // 子メニュー1をクリックしたときの処理
+            chrome.runtime.sendMessage({
+                msg: 'contextMenu',
+                data: {
+                    url: info.pageUrl,
+                    selectionText: info.selectionText,
+                },
+            });
+        } else if (info.menuItemId === 'child2') {
+            // 子メニュー2をクリックしたときの処理
+            const urlWithSpecifiedText =
+                info.pageUrl + '#:~:text=' + info.selectionText;
+            saveToClipboard(urlWithSpecifiedText);
+        }
     });
+
+    // 文字列をクリップボードにコピーする
+    function saveToClipboard(str: string | undefined) {
+        const textArea = document.createElement('textarea');
+        document.body.appendChild(textArea);
+        textArea.value = str ?? '';
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    }
 }
