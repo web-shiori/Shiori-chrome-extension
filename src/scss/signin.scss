@@ -1,7 +1,6 @@
 $shiori-primary-color: #1DDBB5;
 
 .sign-in-view {
-  background-color: greenyellow;
   width: 410px;
   height: 630px;
   position: absolute;
@@ -13,7 +12,6 @@ $shiori-primary-color: #1DDBB5;
 
   // header
   .header-sign-in-view {
-    background-color: #87ccff;
     width: 90%;
     margin: auto;
     margin-top: 20px;
@@ -39,7 +37,6 @@ $shiori-primary-color: #1DDBB5;
 
   // 外部サービスログインボタン
   .sign-in-with-omniauth-button-view {
-    background-color: aqua;
     width: 90%;
     margin: auto;
 
@@ -52,7 +49,6 @@ $shiori-primary-color: #1DDBB5;
         background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
         -webkit-background-clip: text;
         background-clip: text;
-        color: transparent;
         -webkit-text-fill-color: transparent;
         margin-right: 5px;
       }
@@ -63,7 +59,6 @@ $shiori-primary-color: #1DDBB5;
       margin-top: 5px;
       border: 1px solid rgba(0,0,0,.1);
       padding: 3px;
-      background: transparent;
       .bi-twitter {
         color: #00acee;
         margin-right: 5px;
@@ -75,7 +70,6 @@ $shiori-primary-color: #1DDBB5;
       margin-top: 5px;
       border: 1px solid rgba(0,0,0,.1);
       padding: 3px;
-      background: transparent;
       .bi-github {
         margin-right: 5px;
       }
@@ -86,7 +80,7 @@ $shiori-primary-color: #1DDBB5;
     text-align: center;
     width: 90%;
     border-bottom: 1px solid rgba(0,0,0,.1);
-    color: rgba(0,0,0,.1);
+    color: gray;
     line-height: 0.1em;
     margin: auto;
     margin-top: 23px;
