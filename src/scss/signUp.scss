@@ -1,0 +1,168 @@
+$shiori-primary-color: #1DDBB5;
+
+.sign-up-view {
+  width: 400px;
+  height: 575px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  box-shadow: 5px 1px 41px lightgrey;
+
+  // header
+  .header-sign-up-view {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+
+    .sign-up-view-logo-img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .sign-up-view-web-shiori {
+      display: inline;
+      color: $shiori-primary-color;
+      margin: auto;
+      font-size: larger;
+      margin-left: 5px;
+    }
+
+    .sigin-in-view-h1 {
+      margin-top: 10px;
+      font-weight: revert;
+    }
+  }
+
+  // 外部サービスログインボタン
+  .sign-up-with-omniauth-button-view {
+    width: 90%;
+    margin: auto;
+
+    .btn-light {
+      background-color: white;
+    }
+
+    .btn-light:hover {
+      background-color: rgba(0,0,0,.1);
+    }
+
+    #sign-up-with-google-button {
+      display: block;
+      border: 1px solid rgba(0,0,0,.1);
+      padding: 3px;
+      .bi-google {
+        background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-right: 5px;
+      }
+    }
+
+    #sign-up-with-twitter-button {
+      display: block;
+      margin-top: 5px;
+      border: 1px solid rgba(0,0,0,.1);
+      padding: 3px;
+      .bi-twitter {
+        color: #00acee;
+        margin-right: 5px;
+      }
+    }
+
+    #sign-up-with-github-button {
+      display: block;
+      margin-top: 5px;
+      border: 1px solid rgba(0,0,0,.1);
+      padding: 3px;
+      .bi-github {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .sign-up-separation-text {
+    text-align: center;
+    width: 90%;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    color: gray;
+    line-height: 0.1em;
+    margin: auto;
+    margin-top: 23px;
+    margin-bottom: 20px;
+    span {
+      background:#fff;
+      padding:0 10px;
+    }
+  }
+
+  // パスワードログイン
+  .sign-up-with-password-button-view {
+    width: 90%;
+    margin: auto;
+    #sign-up-with-password-form {
+      #sign-up-with-password-form-email {
+        display: block;
+        margin: auto;
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid rgba(0,0,0,.1);
+        padding-left: 5px;
+        height: 32px;
+      }
+
+      #sign-up-with-password-form-email:focus-visible {
+        outline: none;
+      }
+
+      #sign-up-with-password-form-password {
+        display: block;
+        margin: auto;
+        margin-top: 5px;
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid rgba(0,0,0,.1);
+        padding-left: 5px;
+        height: 32px;
+      }
+
+      #sign-up-with-password-form-password:focus-visible {
+        outline: none;
+      }
+
+      #sign-up-with-password-button {
+        display: block;
+        margin: auto;
+        margin-top: 5px;
+        width: 100%;
+        background-color: $shiori-primary-color;
+        color: white;
+        padding: 3px;
+        border: 1px solid rgba(0,0,0,.1);
+      }
+    }
+  }
+
+  // footer
+  .footer-sign-up-view {
+    text-align: center;
+    margin: auto;
+    border-top: 1px solid rgba(0,0,0,.1);
+    margin-top: 30px;
+    width: 90%;
+
+    .footer-sign-up-view-text {
+      margin-top: 5px;
+      margin-bottom: 0px;
+    }
+
+    #move-to-sign-up-view-button {
+      display: block;
+      text-align: center;
+
+    }
+  }
+}
