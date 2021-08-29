@@ -86,22 +86,13 @@ module background {
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData();
         const videoPlayBackPositionPromise = getVideoPlayBackPosition();
-        const scrollPositionXPromise = getScrollPositionX();
-        const scrollPositionYPromise = getScrollPositionY();
         const thumbnailImgUrlPromise = getThumbnailImgUrl();
-        const [
-            metaData,
-            videoPlayBackPosition,
-            scrollPositionX,
-            scrollPositionY,
-            thumbnailImgUrl,
-        ] = await Promise.all([
-            metaDataPromise,
-            videoPlayBackPositionPromise,
-            scrollPositionXPromise,
-            scrollPositionYPromise,
-            thumbnailImgUrlPromise,
-        ]);
+        const [metaData, videoPlayBackPosition, thumbnailImgUrl] =
+            await Promise.all([
+                metaDataPromise,
+                videoPlayBackPositionPromise,
+                thumbnailImgUrlPromise,
+            ]);
 
         // TODO: エラー起きたときの処理も書く
         return new Promise((resolve) => {
@@ -109,8 +100,8 @@ module background {
                 title: metaData.title,
                 url: metaData.url,
                 thumbnail_img_url: thumbnailImgUrl,
-                scroll_position_x: scrollPositionX,
-                scroll_position_y: scrollPositionY,
+                scroll_position_x: null,
+                scroll_position_y: null,
                 max_scroll_position_x: metaData.max_scroll_position_x,
                 max_scroll_position_y: metaData.max_scroll_position_y,
                 video_playback_position: videoPlayBackPosition,
@@ -162,35 +153,6 @@ module background {
                                 result[0]
                             );
                             resolve(videoPlayBackPosition);
-                        }
-                    );
-                }
-            );
-        });
-    }
-
-    // 現在開いているタブのコンテンツのスクロール位置(横)を取得する
-    function getScrollPositionX(): Promise<number> {
-        // NOTE: 横方向のスクロールを保存したい人なんていないと思うので0を返す
-        return new Promise((resolve) => {
-            resolve(0);
-        });
-    }
-
-    // 現在開いているタブのコンテンツのスクロール位置(横)を取得する
-    function getScrollPositionY(): Promise<number> {
-        return new Promise<number>((resolve) => {
-            chrome.tabs.query(
-                { active: true, lastFocusedWindow: true },
-                function (tabs) {
-                    chrome.tabs.executeScript(
-                        <number>tabs[0].id,
-                        {
-                            code: `Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);`,
-                        },
-                        (result) => {
-                            const scrollPositionY: number = Number(result[0]);
-                            resolve(scrollPositionY);
                         }
                     );
                 }
