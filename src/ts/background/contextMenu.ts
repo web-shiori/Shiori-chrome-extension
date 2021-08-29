@@ -208,6 +208,7 @@ module background {
                 } else if (info.menuItemId === 'child2') {
                     // 子メニュー2をクリックしたときの処理
                     // 選択されたテキストへのリンクを生成
+                    // NOTE: これだと対応できないパターンがたくさんある。けど大変そうなので暫定で以下のまま
                     const urlWithSpecifiedText = encodeURI(
                         info.pageUrl + '#:~:text=' + response.data
                     );
