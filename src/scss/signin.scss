@@ -1,3 +1,5 @@
+$shiori-primary-color: #1DDBB5;
+
 .sign-in-view {
   background-color: greenyellow;
   width: 410px;
@@ -96,6 +98,7 @@
         margin: auto;
         margin-top: 5px;
         width: 100%;
+        background-color: $shiori-primary-color;
       }
     }
   }
