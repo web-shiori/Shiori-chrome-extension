@@ -1,9 +1,28 @@
-
 .sign-in-view {
+  background-color: greenyellow;
+  width: 410px;
+  height: 630px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+
   // header
   .header-sign-in-view {
-    .sign-in-view-web-shiori {
+    background-color: #87ccff;
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
 
+    .sign-in-view-logo-img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .sign-in-view-web-shiori {
+      display: inline;
     }
 
     .sigin-in-view-h1 {
@@ -11,40 +30,75 @@
     }
   }
 
-  //
+  // 外部サービスログインボタン
   .sign-in-with-omniauth-button-view {
-    #sign-in-with-google-button {
+    background-color: aqua;
+    width: 90%;
+    margin: auto;
 
+    #sign-in-with-google-button {
+      display: block;
     }
 
     #sign-in-with-twitter-button {
-
+      display: block;
     }
 
     #sign-in-with-github-button {
-
+      display: block;
     }
   }
 
+  .sign-in-separation-text {
+    text-align: center;
+  }
+
+  // パスワードログイン
   .sign-in-with-password-button-view {
+    background-color: orange;
+    width: 90%;
+    margin: auto;
     #sign-in-with-password-form {
       #sign-in-with-password-form-email {
-
+        display: block;
+        margin: auto;
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid rgba(0,0,0,.1);
       }
 
       #sign-in-with-password-form-password {
-
+        display: block;
+        margin: auto;
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid rgba(0,0,0,.1);
       }
 
       #sign-in-with-password-button {
-
+        display: block;
+        margin: auto;
+        width: 100%;
       }
     }
   }
 
   // footer
   .footer-sign-in-view {
+    text-align: center;
+    margin: auto;
+    border-top: 1px solid rgba(0,0,0,.1);
+    margin-top: 30px;
+    width: 90%;
+
+    .footer-sign-in-view-text {
+      margin-top: 5px;
+      margin-bottom: 0px;
+    }
+
     #move-to-sign-up-view-button {
+      display: block;
+      text-align: center;
 
     }
   }
