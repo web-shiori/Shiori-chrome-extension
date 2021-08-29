@@ -190,24 +190,31 @@ module background {
     });
 
     // コンテキストメニュークリック時の処理
-    chrome.contextMenus.onClicked.addListener(function (info) {
-        if (info.menuItemId === 'child1') {
-            getContent()
-                .then((content) => {
-                    content.specified_text = info.selectionText ?? '';
-                    doPostContent(content);
-                })
-                .catch((error) => {
-                    console.error('エラー', error);
-                });
-        } else if (info.menuItemId === 'child2') {
-            // 子メニュー2をクリックしたときの処理
-            // 選択されたテキストへのリンクを生成
-            const urlWithSpecifiedText = encodeURI(
-                info.pageUrl + '#:~:text=' + info.selectionText
-            );
-            saveToClipboard(urlWithSpecifiedText);
-        }
+    chrome.contextMenus.onClicked.addListener(function (info, tab) {
+        if (tab === undefined) return;
+        chrome.tabs.sendMessage(
+            <number>tab.id,
+            { method: 'getSelection' },
+            (response) => {
+                if (info.menuItemId === 'child1') {
+                    getContent()
+                        .then((content) => {
+                            content.specified_text = response.data;
+                            doPostContent(content);
+                        })
+                        .catch((error) => {
+                            console.error('エラー', error);
+                        });
+                } else if (info.menuItemId === 'child2') {
+                    // 子メニュー2をクリックしたときの処理
+                    // 選択されたテキストへのリンクを生成
+                    const urlWithSpecifiedText = encodeURI(
+                        info.pageUrl + '#:~:text=' + response.data
+                    );
+                    saveToClipboard(urlWithSpecifiedText);
+                }
+            }
+        );
     });
 
     // 文字列をクリップボードにコピーする
