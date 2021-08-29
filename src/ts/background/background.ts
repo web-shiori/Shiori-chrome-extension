@@ -8,9 +8,9 @@ module background {
         setVideoPlayBackPosition(content.video_playback_position);
     });
 
-    // TODO: loadedmetadataイベントが発生した後に再生位置を設定する
     // 動画再生位置を復元する
     function setVideoPlayBackPosition(videoPlayBackPosition: number) {
+        console.log('再生位置', videoPlayBackPosition);
         chrome.tabs.query(
             { active: true, lastFocusedWindow: true },
             function (tabs) {
@@ -23,7 +23,11 @@ module background {
                     },
                     () => {
                         chrome.tabs.executeScript(<number>tabs[0].id, {
-                            code: `document.getElementsByTagName('video')[0].currentTime = videoPlayBackPosition;`,
+                            code: `
+                            const video = document.getElementsByTagName('video')[0];
+                            video.addEventListener("loadeddata", function () { 
+                                video.currentTime = videoPlayBackPosition;
+                            })`,
                         });
                     }
                 );
