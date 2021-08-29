@@ -1,8 +1,8 @@
 $shiori-primary-color: #1DDBB5;
 
 .sign-in-view {
-  width: 410px;
-  height: 630px;
+  width: 400px;
+  height: 575px;
   position: absolute;
   top: 0;
   left: 0;
@@ -10,7 +10,7 @@ $shiori-primary-color: #1DDBB5;
   bottom: 0;
   margin: auto;
   box-shadow: 5px 1px 41px lightgrey;
-  
+
   // header
   .header-sign-in-view {
     width: 90%;
@@ -106,6 +106,10 @@ $shiori-primary-color: #1DDBB5;
         height: 32px;
       }
 
+      #sign-in-with-password-form-email:focus-visible {
+        outline: none;
+      }
+
       #sign-in-with-password-form-password {
         display: block;
         margin: auto;
@@ -115,6 +119,10 @@ $shiori-primary-color: #1DDBB5;
         border: 1px solid rgba(0,0,0,.1);
         padding-left: 5px;
         height: 32px;
+      }
+
+      #sign-in-with-password-form-password:focus-visible {
+        outline: none;
       }
 
       #sign-in-with-password-button {
