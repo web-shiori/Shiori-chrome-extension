@@ -25,10 +25,15 @@ $shiori-primary-color: #1DDBB5;
 
     .sign-in-view-web-shiori {
       display: inline;
+      color: $shiori-primary-color;
+      margin: auto;
+      font-size: larger;
+      margin-left: 5px;
     }
 
     .sigin-in-view-h1 {
-
+      margin-top: 10px;
+      font-weight: revert;
     }
   }
 
@@ -41,12 +46,15 @@ $shiori-primary-color: #1DDBB5;
     #sign-in-with-google-button {
       display: block;
       border: 1px solid rgba(0,0,0,.1);
+      padding: 3px;
+      background: transparent;
       .bi-google {
         background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         -webkit-text-fill-color: transparent;
+        margin-right: 5px;
       }
     }
 
@@ -54,8 +62,11 @@ $shiori-primary-color: #1DDBB5;
       display: block;
       margin-top: 5px;
       border: 1px solid rgba(0,0,0,.1);
+      padding: 3px;
+      background: transparent;
       .bi-twitter {
         color: #00acee;
+        margin-right: 5px;
       }
     }
 
@@ -63,11 +74,27 @@ $shiori-primary-color: #1DDBB5;
       display: block;
       margin-top: 5px;
       border: 1px solid rgba(0,0,0,.1);
+      padding: 3px;
+      background: transparent;
+      .bi-github {
+        margin-right: 5px;
+      }
     }
   }
 
   .sign-in-separation-text {
     text-align: center;
+    width: 90%;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    color: rgba(0,0,0,.1);
+    line-height: 0.1em;
+    margin: auto;
+    margin-top: 23px;
+    margin-bottom: 20px;
+    span {
+      background:#fff;
+      padding:0 10px;
+    }
   }
 
   // パスワードログイン
@@ -82,6 +109,8 @@ $shiori-primary-color: #1DDBB5;
         width: 100%;
         border-radius: 5px;
         border: 1px solid rgba(0,0,0,.1);
+        padding-left: 5px;
+        height: 32px;
       }
 
       #sign-in-with-password-form-password {
@@ -91,6 +120,8 @@ $shiori-primary-color: #1DDBB5;
         width: 100%;
         border-radius: 5px;
         border: 1px solid rgba(0,0,0,.1);
+        padding-left: 5px;
+        height: 32px;
       }
 
       #sign-in-with-password-button {
@@ -99,6 +130,9 @@ $shiori-primary-color: #1DDBB5;
         margin-top: 5px;
         width: 100%;
         background-color: $shiori-primary-color;
+        color: white;
+        padding: 3px;
+        border: 1px solid rgba(0,0,0,.1);
       }
     }
   }
