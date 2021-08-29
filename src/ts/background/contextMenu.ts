@@ -2,9 +2,9 @@ module background {
     /**
      * 認証関連のコード
      * 本当はリファクタリングしたいが、jsにトランスパイルした後でエラーが出るので暫定で個別に実装する
-     * contentList/main.tsにも同じコードを定義している
+     * バックグラウンドだけに定義して、chrome.runtime.getBackgroundPage().currentUserでアクセスできると本には書いてあるけど、できない
+     * contentListとpopupにも同じコードを定義している
      */
-
     let currentUser: User | undefined = undefined;
 
     // currentUserにユーザをセットする
