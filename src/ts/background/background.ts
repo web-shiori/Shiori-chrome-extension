@@ -1,5 +1,8 @@
 module background {
-    // メッセージが送られてきたときの処理
+    /**
+     *  メッセージが送られてきたときの処理
+     */
+    // TODO: コンテンツを開く、というメッセージのときのみ動作するよう変更する
     chrome.runtime.onMessage.addListener((content: Content) => {
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
         setVideoPlayBackPosition(content.video_playback_position);
@@ -56,7 +59,11 @@ module background {
         );
     }
 
-    // 外部サービスログイン後、認証情報をストレージに保存する
+    /**
+     * 外部サービスログイン後、認証情報をストレージに保存する
+     * chromeのHTTPリクエストを監視し、ログイン後のレスポンスヘッダから認証トークンを取得する
+     * それをストレージに保存する
+     */
     chrome.webRequest.onHeadersReceived.addListener(
         function (details) {
             const uid = details.responseHeaders?.find(
@@ -90,7 +97,7 @@ module background {
                 }
             );
         },
-        { urls: ['https://web-shiori.herokuapp.com/*'] },
+        { urls: ['https://web-shiori.herokuapp.com/v1/auth/*'] },
         ['responseHeaders']
     );
 }

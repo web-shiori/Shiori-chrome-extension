@@ -6,8 +6,8 @@ interface Content {
     sharing_url: string;
     file_url: string | null;
     thumbnail_img_url: string;
-    scroll_position_x: number;
-    scroll_position_y: number;
+    scroll_position_x: number | null;
+    scroll_position_y: number | null;
     max_scroll_position_x: number;
     max_scroll_position_y: number;
     video_playback_position: number;
@@ -26,8 +26,8 @@ interface PostContent {
     title: string;
     url: string;
     thumbnail_img_url: string | null;
-    scroll_position_x: number;
-    scroll_position_y: number;
+    scroll_position_x: number | null;
+    scroll_position_y: number | null;
     max_scroll_position_x: number;
     max_scroll_position_y: number;
     video_playback_position: number | null;

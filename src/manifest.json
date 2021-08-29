@@ -7,13 +7,13 @@
     "default_title": "Web Shiori",
     "default_icon": {
       "16": "img/icons/icon16.png",
-      "24": "img/icons/icon16.png",
-      "32": "img/icons/icon16.png"
+      "24": "img/icons/icon24.png",
+      "32": "img/icons/icon32.png"
     },
     "default_popup": "html/popup.html"
   },
   "background": {
-    "scripts": ["js/background.js", "js/lib/jquery-3.6.0.min.js"]
+    "scripts": ["js/background/background.js", "js/background/contextMenu.js", "js/lib/jquery-3.6.0.min.js"]
   },
   "options_ui": {
     "page": "./html/options.html",
@@ -24,9 +24,16 @@
     "storage",
     "background",
     "webRequest",
+    "contextMenus",
+    "clipboardRead",
     "http://*/",
     "https://*/",
     "https://web-shiori.herokuapp.com/*"
   ],
+  "icons": {
+    "16": "img/icons/icon16.png",
+    "48": "img/icons/icon48.png",
+    "128": "img/icons/icon128.png"
+  },
   "author": "MasatoraAtarashi"
 }
