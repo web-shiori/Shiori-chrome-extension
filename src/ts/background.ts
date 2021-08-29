@@ -104,14 +104,32 @@ module background {
      * コンテキストメニュー
      */
     // 親メニュー追加
-    chrome.contextMenus.create({
+    const parentId = chrome.contextMenus.create({
         id: 'parent',
-        title: 'Web-Shioriに保存',
+        title: 'Web-Shiori',
         contexts: ['all'],
+    });
+
+    // 子メニュー1追加
+    chrome.contextMenus.create({
+        id: 'child1',
+        title: '選択したテキストへのリンクをWeb-Shioriに保存する',
+        contexts: ['all'],
+        parentId: parentId,
+    });
+
+    // 子メニュー2追加
+    chrome.contextMenus.create({
+        id: 'child2',
+        title: '選択したテキストへのリンクをクリップボードにコピー',
+        contexts: ['all'],
+        parentId: parentId,
     });
 
     // コンテキストメニュークリック時の処理
     chrome.contextMenus.onClicked.addListener(function (info) {
+        console.log(JSON.stringify(info));
         console.log(info.selectionText);
+        // popup/content.tsにメッセージを送る
     });
 }
