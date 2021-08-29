@@ -141,6 +141,7 @@ module background {
             });
         } else if (info.menuItemId === 'child2') {
             // 子メニュー2をクリックしたときの処理
+            // 選択されたテキストへのリンクを生成
             const urlWithSpecifiedText =
                 info.pageUrl + '#:~:text=' + info.selectionText;
             saveToClipboard(urlWithSpecifiedText);
