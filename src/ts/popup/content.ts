@@ -114,9 +114,22 @@ module popup {
     // コンテンツを新しいタブで開く
     async function openContent(index: number) {
         const targetContent: Content = contentList[index];
-        const url: string = targetContent.url;
+        const url: string = targetContent.specified_text
+            ? generateUrlForSpecifiedText(
+                  targetContent.url,
+                  targetContent.specified_text
+              )
+            : targetContent.url;
         await chrome.tabs.create({ url });
         chrome.runtime.sendMessage(targetContent);
+    }
+
+    // 指定したテキストを復元するためのリンクを生成する
+    function generateUrlForSpecifiedText(
+        url: string,
+        specifiedText: string
+    ): string {
+        return url + '#:~:text=' + specifiedText;
     }
 
     // ポップアップviewにコンテンツを表示する
