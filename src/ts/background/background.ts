@@ -10,6 +10,7 @@ module background {
 
     // 動画再生位置を復元する
     function setVideoPlayBackPosition(videoPlayBackPosition: number) {
+        console.log('再生位置', videoPlayBackPosition);
         chrome.tabs.query(
             { active: true, lastFocusedWindow: true },
             function (tabs) {
