@@ -81,8 +81,8 @@ module background {
                 thumbnail_img_url: thumbnailImgUrl,
                 scroll_position_x: 0,
                 scroll_position_y: 0,
-                max_scroll_position_x: metaData.max_scroll_position_x,
-                max_scroll_position_y: metaData.max_scroll_position_y,
+                max_scroll_position_x: 0,
+                max_scroll_position_y: 0,
                 video_playback_position: videoPlayBackPosition,
                 specified_text: null,
                 specified_dom_id: null,
@@ -102,13 +102,9 @@ module background {
                 function (tabs) {
                     const title = tabs[0].title ?? '';
                     const url = tabs[0].url ?? 'a';
-                    const max_scroll_position_x = tabs[0].width ?? 0;
-                    const max_scroll_position_y = tabs[0].height ?? 0;
                     const metaData: MetaData = {
                         title,
                         url,
-                        max_scroll_position_x,
-                        max_scroll_position_y,
                     };
                     resolve(metaData);
                 }
