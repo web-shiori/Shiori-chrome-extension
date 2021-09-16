@@ -96,6 +96,7 @@ body {
     display: block;
     float: left;
     border-right: 1px solid rgba(0,0,0,.1);
+    min-width: 180px;
 
     #sidemenu-indicator {
       color: $shiori-gray;
