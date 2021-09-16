@@ -310,6 +310,7 @@ body {
     #select-folder-heading {
       background-color: $shiori-secondory-color;
       padding: 10px;
+      color: white;
     }
 
     #select-folder-view-close-button {
@@ -320,10 +321,11 @@ body {
       right: 2px;
       font-size: xx-large;
       cursor: pointer;
+      color: white;
     }
 
     #select-folder-view-close-button:hover {
-      color: gainsboro;
+      color: #6c757d;
     }
   }
 
