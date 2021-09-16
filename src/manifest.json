@@ -23,10 +23,6 @@
       "all_frames": true
     }
   ],
-  "options_ui": {
-    "page": "./html/options.html",
-    "open_in_tab": true
-  },
   "permissions": [
     "tabs",
     "storage",
