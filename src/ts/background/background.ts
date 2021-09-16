@@ -89,15 +89,24 @@ module background {
                 console.log('accessToken saved');
             });
 
+            console.log('aaa');
+
             // 外部サービスログイン後、ログイン画面を閉じる
             chrome.tabs.query(
                 { active: true, lastFocusedWindow: true },
                 function (tabs) {
-                    const regex =
-                        /https:\/\/web-shiori.herokuapp.com\/v1\/auth\/.*\/callback/g;
-                    if ((<string>tabs[0].url).match(regex)) {
-                        chrome.tabs.remove(<number>tabs[0].id);
-                    }
+                    chrome.storage.sync.get(
+                        ['uid', 'client', 'accessToken'],
+                        function (value) {
+                            if (
+                                value.uid &&
+                                value.client &&
+                                value.accessToken
+                            ) {
+                                chrome.tabs.remove(<number>tabs[0].id);
+                            }
+                        }
+                    );
                 }
             );
         },
