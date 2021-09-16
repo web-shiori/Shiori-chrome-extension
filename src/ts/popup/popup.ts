@@ -241,6 +241,19 @@ module popup {
             chrome.tabs.query(
                 { active: true, lastFocusedWindow: true },
                 function (tabs) {
+                    // NOTE: youtubeのサムネイルは特殊なので個別対応
+                    const url = tabs[0].url;
+                    if (url?.includes('https://www.youtube.com/')) {
+                        // youtubeのvideo-idを取得
+                        let videoId = url.split('v=')[1];
+                        const ampersandPosition = videoId.indexOf('&');
+                        // video-idの&=以降を削除
+                        if (ampersandPosition != -1) {
+                            videoId = videoId.substring(0, ampersandPosition);
+                        }
+                        const thumbnailImgURL = `http://img.youtube.com/vi/${videoId}/0.jpg`;
+                        resolve(thumbnailImgURL);
+                    }
                     chrome.tabs.executeScript(
                         <number>tabs[0].id,
                         {
