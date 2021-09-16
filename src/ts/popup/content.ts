@@ -164,5 +164,9 @@ module popup {
         stopIndicator('content-list-indicator-area');
     }
 
-    initializeContent();
+    function main() {
+        initializeContent();
+    }
+
+    main();
 }

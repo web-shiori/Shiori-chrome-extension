@@ -224,5 +224,9 @@ module background {
         document.body.removeChild(textArea);
     }
 
-    setCurrentUser();
+    function main() {
+        setCurrentUser();
+    }
+
+    main();
 }

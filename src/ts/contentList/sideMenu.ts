@@ -303,6 +303,9 @@ module contentList {
         stopIndicator('sidemenu-indicator');
     }
 
-    // ページを開いたときの処理
-    initializeSideMenu();
+    function main() {
+        initializeSideMenu();
+    }
+
+    main();
 }

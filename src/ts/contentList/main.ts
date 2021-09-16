@@ -382,6 +382,9 @@ module contentList {
         stopIndicator('content-list-indicator-area');
     }
 
-    // ページを開いたときの処理
-    initializeContent('', null);
+    function main() {
+        initializeContent('', null);
+    }
+
+    main();
 }
