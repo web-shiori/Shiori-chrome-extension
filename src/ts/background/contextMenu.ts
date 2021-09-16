@@ -157,10 +157,17 @@ module background {
                     chrome.tabs.executeScript(
                         <number>tabs[0].id,
                         {
-                            // TODO: サムネイル画像取得方法を改善したい: これとかを使う？(https://github.com/gottfrois/link_thumbnailer)
-                            // TODO: youtubeの場合工夫する必要がある
-                            // NOTE: 取得できなかったらファビコンで良いかもしれない
-                            code: `document.images[0].src;`,
+                            // body内で一番サイズの大きい画像をサムネイル画像とする
+                            code: `
+                                var largest = 0;
+                                var largestImg; 
+                                Array.from(document.body.getElementsByTagName('img')).forEach(function(e) { 
+                                    if (largest < e.height) {
+                                        largestImg = e;largest = e.height
+                                    }
+                                });
+                                largestImg.src
+                            `,
                         },
                         (result) => {
                             const thumbnailImgUrl: string = String(result[0]);
