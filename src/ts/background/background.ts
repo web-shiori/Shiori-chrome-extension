@@ -4,7 +4,12 @@ module background {
      */
     // TODO: コンテンツを開く、というメッセージのときのみ動作するよう変更する
     chrome.runtime.onMessage.addListener((content: Content) => {
-        setScrollPosition(content.scroll_position_x, content.scroll_position_y);
+        setScrollPosition(
+            content.scroll_position_x,
+            content.scroll_position_y,
+            content.max_scroll_position_x,
+            content.max_scroll_position_y
+        );
         setVideoPlayBackPosition(content.video_playback_position);
     });
 
@@ -38,7 +43,9 @@ module background {
     // スクロール位置を復元する
     function setScrollPosition(
         scrollPositionX: number,
-        scrollPositionY: number
+        scrollPositionY: number,
+        maxScrollPositionX: number,
+        maxScrollPositionY: number
     ) {
         chrome.tabs.query(
             { active: true, lastFocusedWindow: true },
@@ -47,16 +54,28 @@ module background {
                     <number>tabs[0].id,
                     {
                         code: `
-                const scrollPositionX = ${scrollPositionX}
-                const scrollPositionY = ${scrollPositionY}
-            `,
+                    const scrollPositionX = ${scrollPositionX};
+                    const scrollPositionY = ${scrollPositionY};
+                    const maxScrollPositionX = ${maxScrollPositionX};
+                    const maxScrollPositionY = ${maxScrollPositionY};
+                    const scrollRateY = scrollPositionY / maxScrollPositionY
+                `,
                     },
                     () => {
-                        chrome.tabs.executeScript(<number>tabs[0].id, {
-                            code: `
-                    window.scrollTo(scrollPositionX, scrollPositionY);
-                `,
-                        });
+                        chrome.tabs.executeScript(
+                            <number>tabs[0].id,
+                            {
+                                code: `
+                                    const maxScrollPositionYOnChrome = document.documentElement.scrollHeight
+                                    const ratedScrollPositionY = maxScrollPositionYOnChrome * scrollRateY
+                                `,
+                            },
+                            () => {
+                                chrome.tabs.executeScript(<number>tabs[0].id, {
+                                    code: `window.scrollTo(0, ratedScrollPositionY);`,
+                                });
+                            }
+                        );
                     }
                 );
             }
