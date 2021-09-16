@@ -31,6 +31,13 @@ $shiori-gray: gainsboro;
     }
   }
 
+  #content-list-indicator {
+    color: $shiori-gray;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   #content-list-view {
     border-bottom: 1px solid rgba(0,0,0,.1);
     margin-top: 20px;
