@@ -331,11 +331,11 @@ body {
     margin-top: -16px;
 
     .folder-view-select-folder-modal {
-      height: 32px;
+      height: 36px;
       width: 100%;
       position: relative;
       cursor: pointer;
-      border-top: 1px solid rgba(0, 0, 0, .1);
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
 
       .folder-view-name-select-folder-modal {
         font-size: smaller;
