@@ -45,7 +45,6 @@ module contentList {
 
     // コンテンツ一覧を取得する
     function doGetContentList(query: string) {
-        // TODO:
         const url = `${baseUrl}/v1/content?q=${query}`;
         return fetch(url, {
             headers: {
