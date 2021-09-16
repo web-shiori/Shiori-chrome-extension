@@ -99,6 +99,10 @@ module contentList {
         return new Promise<string>((resolve) => {
             let selectFolderModalViewTl: string = ``;
             for (let i = 0; i < folderList.length; i++) {
+                // ホームフォルダ || お気に入りフォルダは表示しない
+                if (folderList[i].folder_id < 0) {
+                    continue;
+                }
                 const viewTl = `
                 <div id="folder-view-select-folder-modal-${i}" class="folder-view-select-folder-modal">
                     <div class="folder-text-area-select-folder-modal">
