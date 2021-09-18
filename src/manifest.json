@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Shiori Web",
+  "name": "Web Shiori",
   "version": "1.0.0",
   "description": "Webにしおりをはさめる拡張機能です。Webコンテンツの閲覧状態(スクロール位置・再生位置等)を複数端末で同期することができます。Webコンテンツの特定の箇所(テキスト・シーン等)を共有することができます。",
   "browser_action": {
