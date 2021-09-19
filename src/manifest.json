@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Shiori Web",
+  "name": "Web Shiori",
   "version": "1.0.0",
-  "description": "shiori-web-chrome-extension",
+  "description": "Webにしおりをはさめる拡張機能です。Webコンテンツの閲覧状態(スクロール位置・再生位置等)を複数端末で同期することができます。Webコンテンツの特定の箇所(テキスト・シーン等)を共有することができます。",
   "browser_action": {
     "default_title": "Web Shiori",
     "default_icon": {
@@ -23,10 +23,6 @@
       "all_frames": true
     }
   ],
-  "options_ui": {
-    "page": "./html/options.html",
-    "open_in_tab": true
-  },
   "permissions": [
     "tabs",
     "storage",

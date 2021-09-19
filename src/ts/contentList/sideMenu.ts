@@ -99,6 +99,10 @@ module contentList {
         return new Promise<string>((resolve) => {
             let selectFolderModalViewTl: string = ``;
             for (let i = 0; i < folderList.length; i++) {
+                // ホームフォルダ || お気に入りフォルダは表示しない
+                if (folderList[i].folder_id < 0) {
+                    continue;
+                }
                 const viewTl = `
                 <div id="folder-view-select-folder-modal-${i}" class="folder-view-select-folder-modal">
                     <div class="folder-text-area-select-folder-modal">
@@ -206,7 +210,11 @@ module contentList {
                     doDeleteFolder(folderList[i].folder_id);
                 } else {
                     // その他をクリックした場合、そのフォルダ内のコンテンツを表示する
-                    folderVIew[i].classList.add('selected-folder-view');
+                    /*
+                        NOTE: 選択中のフォルダに色を付ける処理。
+                        他のフォルダを選択したら外さないといけないんだけどめんどいので一旦消しておく
+                     */
+                    // folderVIew[i].classList.add('selected-folder-view');
                     currentFolderId = folderList[i].folder_id;
                     initializeContent('', currentFolderId);
                 }
@@ -303,6 +311,9 @@ module contentList {
         stopIndicator('sidemenu-indicator');
     }
 
-    // ページを開いたときの処理
-    initializeSideMenu();
+    function main() {
+        initializeSideMenu();
+    }
+
+    main();
 }

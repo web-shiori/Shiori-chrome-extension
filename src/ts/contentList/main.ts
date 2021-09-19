@@ -44,9 +44,8 @@ module contentList {
     export const baseUrl: string = 'https://web-shiori.herokuapp.com';
 
     // コンテンツ一覧を取得する
-    function doGetContentList(query: string) {
-        // TODO:
-        const url = `${baseUrl}/v1/content?q=${query}`;
+    function doGetContentList(query: string, liked: boolean) {
+        const url = `${baseUrl}/v1/content?q=${query}&per_page=1000&liked=${liked}`;
         return fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
@@ -331,12 +330,26 @@ module contentList {
         contentList[contentListIndex].liked = false;
     }
 
+    // NOTE: content.tsのコピペ
     // コンテンツを新しいタブで開く
     async function openContent(index: number) {
         const targetContent: Content = contentList[index];
-        const url: string = targetContent.url;
+        const url: string = targetContent.specified_text
+            ? generateUrlForSpecifiedText(
+                  targetContent.url,
+                  targetContent.specified_text
+              )
+            : targetContent.url;
         await chrome.tabs.create({ url });
         chrome.runtime.sendMessage(targetContent);
+    }
+
+    // 指定したテキストを復元するためのリンクを生成する
+    function generateUrlForSpecifiedText(
+        url: string,
+        specifiedText: string
+    ): string {
+        return encodeURI(url + '#:~:text=' + specifiedText);
     }
 
     /*
@@ -372,9 +385,17 @@ module contentList {
         startIndicator('content-list-indicator-area');
         //NOTE:  folderIdは0(falthy)である可能性があるかもしれないので三項演算子が使えない？
         if (folderId !== null) {
-            await doGetFolderContentList(query, folderId);
+            if (folderId == -1) {
+                // ホームフォルダ
+                await doGetContentList(query, false);
+            } else if (folderId == -2) {
+                // お気に入りフォルダ
+                await doGetContentList(query, true);
+            } else {
+                await doGetFolderContentList(query, folderId);
+            }
         } else {
-            await doGetContentList(query);
+            await doGetContentList(query, false);
         }
         const contentViewTl = await generateContentView();
         await renderContentView(contentViewTl);
@@ -383,6 +404,9 @@ module contentList {
         stopIndicator('content-list-indicator-area');
     }
 
-    // ページを開いたときの処理
-    initializeContent('', null);
+    function main() {
+        initializeContent('', null);
+    }
+
+    main();
 }

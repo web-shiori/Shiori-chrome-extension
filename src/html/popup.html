@@ -14,13 +14,20 @@
             </button>
         </div>
 
+        <div id="content-list-indicator-area" class="text-center" style="display: none">
+            <div id="content-list-indicator" class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
         <div id="content-list-view">
         </div>
 
         <p id="show-content-list-view-button">保存済みのコンテンツ一覧</p>
 
-        <div id="footer-view">
-            <i class="bi-gear-fill" id="show-option-view-button"> 設定</i>
+        <!--NOTE: オプションページ作成までは非表示-->
+        <div id="footer-view" style="display:none;">
+            <i class="bi-gear-fill" id="show-option-view-button" style="display: none"> 設定</i>
         </div>
     </div>
 

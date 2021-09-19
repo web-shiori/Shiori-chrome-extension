@@ -132,6 +132,21 @@ module popup {
         return encodeURI(url + '#:~:text=' + specifiedText);
     }
 
+    /*
+    NOTE: contentList/popup.tsにも同じコードある
+     */
+    // インジケータを表示する
+    export function startIndicator(indicatorElementId: string) {
+        const indicator = document.getElementById(indicatorElementId);
+        if (indicator !== null) indicator.style.display = 'flex';
+    }
+
+    // インジケータを非表示にする
+    export function stopIndicator(indicatorElementId: string) {
+        const contentIndicator = document.getElementById(indicatorElementId);
+        if (contentIndicator !== null) contentIndicator.style.display = 'none';
+    }
+
     // ポップアップviewにコンテンツを表示する
     async function initializeContent() {
         const isLoggedInUser = await setCurrentUser();
@@ -140,11 +155,18 @@ module popup {
             openSignInView();
         }
         // NOTE: 表示にちょっと時間がかかる(仕方ない？)
+        startIndicator('content-list-indicator-area');
         await doGetContentList();
         const contentViewTl = await generateContentView();
         await renderContentView(contentViewTl);
         addEventToContentView();
+
+        stopIndicator('content-list-indicator-area');
     }
 
-    initializeContent();
+    function main() {
+        initializeContent();
+    }
+
+    main();
 }
