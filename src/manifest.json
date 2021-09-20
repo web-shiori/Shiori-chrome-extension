@@ -27,8 +27,7 @@
     "storage",
     "webRequest",
     "http://*/",
-    "https://*/",
-    "https://web-shiori.herokuapp.com/*"
+    "https://*/"
   ],
   "icons": {
     "16": "img/icons/icon16.png",
