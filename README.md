@@ -1,4 +1,6 @@
 # Shiori-chrome-extension
+Web ShioriのChrome拡張機能
+
 ### スクロール位置保存・復旧機能
 [![](https://img.youtube.com/vi/oxEndMKbMow/0.jpg)](https://www.youtube.com/watch?v=oxEndMKbMow&ab_channel=mgwg.pmpwtggw)
 
