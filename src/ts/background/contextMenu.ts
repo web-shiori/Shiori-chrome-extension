@@ -179,61 +179,127 @@ module background {
     //     });
     // }
 
+    var id = 100;
+    function pdf() {
+        chrome.tabs.captureVisibleTab(function (screenshotUrl) {
+            // @ts-ignore
+            var viewTabUrl = chrome.extension.getURL(
+                'screenshot.html?id=',
+                // @ts-ignore
+                +id++
+            );
+
+            // @ts-ignore
+            var targetId = null;
+
+            chrome.tabs.onUpdated.addListener(function listener(
+                tabId,
+                changedProps
+            ) {
+                // We are waiting for the tab we opened to finish loading.
+                // Check that the tab's id matches the tab we opened,
+                // and that the tab is done loading.
+                // @ts-ignore
+                if (tabId != targetId || changedProps.status != 'complete')
+                    return;
+
+                // Passing the above test means this is the event we were waiting for.
+                // There is nothing we need to do for future onUpdated events, so we
+                // use removeListner to stop getting called when onUpdated events fire.
+                chrome.tabs.onUpdated.removeListener(listener);
+
+                // Look through all views to find the window which will display
+                // the screenshot.  The url of the tab which will display the
+                // screenshot includes a query parameter with a unique id, which
+                // ensures that exactly one view will have the matching URL.
+                var views = chrome.extension.getViews();
+                for (var i = 0; i < views.length; i++) {
+                    var view = views[i];
+                    if (view.location.href == viewTabUrl) {
+                        setScreenshotUrl(screenshotUrl);
+                        break;
+                    }
+                }
+            });
+
+            chrome.tabs.create({ url: viewTabUrl }, function (tab) {
+                targetId = tab.id;
+            });
+        });
+    }
+
+    // @ts-ignore
+    function setScreenshotUrl(url) {
+        // @ts-ignore
+        document.getElementById('target').src = url;
+    }
+
     /**
      * コンテキストメニュー
      * NOTE: うまく動作していないので一旦消す
      */
-    // // 親メニュー追加
-    // const parentId = chrome.contextMenus.create({
-    //     id: 'parent',
-    //     title: 'Web-Shiori',
-    //     contexts: ['all'],
-    // });
-    //
-    // // 子メニュー1追加
-    // chrome.contextMenus.create({
-    //     id: 'child1',
-    //     title: '選択したテキストへのリンクをWeb-Shioriに保存する',
-    //     contexts: ['all'],
-    //     parentId: parentId,
-    // });
-    //
-    // // 子メニュー2追加
-    // chrome.contextMenus.create({
-    //     id: 'child2',
-    //     title: '選択したテキストへのリンクをクリップボードにコピー',
-    //     contexts: ['all'],
-    //     parentId: parentId,
-    // });
-    //
-    // // コンテキストメニュークリック時の処理
-    // chrome.contextMenus.onClicked.addListener(function (info, tab) {
-    //     if (tab === undefined) return;
-    //     chrome.tabs.sendMessage(
-    //         <number>tab.id,
-    //         { method: 'getSelection' },
-    //         (response) => {
-    //             if (info.menuItemId === 'child1') {
-    //                 getContent()
-    //                     .then((content) => {
-    //                         content.specified_text = response.data;
-    //                         doPostContent(content);
-    //                     })
-    //                     .catch((error) => {
-    //                         console.error('エラー', error);
-    //                     });
-    //             } else if (info.menuItemId === 'child2') {
-    //                 // 子メニュー2をクリックしたときの処理
-    //                 // 選択されたテキストへのリンクを生成
-    //                 // NOTE: これだと対応できないパターンがたくさんある。けど大変そうなので暫定で以下のまま
-    //                 const urlWithSpecifiedText = encodeURI(
-    //                     info.pageUrl + '#:~:text=' + response.data
-    //                 );
-    //                 saveToClipboard(urlWithSpecifiedText);
-    //             }
-    //         }
-    //     );
-    // });
+    // 親メニュー追加
+    const parentId = chrome.contextMenus.create({
+        id: 'parent',
+        title: 'Web-Shiori',
+        contexts: ['all'],
+    });
+
+    // 子メニュー1追加
+    chrome.contextMenus.create({
+        id: 'child1',
+        title: '選択したテキストへのリンクをWeb-Shioriに保存する',
+        contexts: ['all'],
+        parentId: parentId,
+    });
+
+    // 子メニュー2追加
+    chrome.contextMenus.create({
+        id: 'child2',
+        title: '選択したテキストへのリンクをクリップボードにコピー',
+        contexts: ['all'],
+        parentId: parentId,
+    });
+
+    // PDF実験用: 子メニュー3追加
+    chrome.contextMenus.create({
+        id: 'child3',
+        title: 'PDF',
+        contexts: ['all'],
+        parentId: parentId,
+    });
+
+    // コンテキストメニュークリック時の処理
+    chrome.contextMenus.onClicked.addListener(function (info, tab) {
+        if (tab === undefined) return;
+        chrome.tabs.sendMessage(
+            <number>tab.id,
+            { method: 'getSelection' },
+            (response) => {
+                if (info.menuItemId === 'child1') {
+                    // getContent()
+                    //     .then((content) => {
+                    //         content.specified_text = response.data;
+                    //         doPostContent(content);
+                    //     })
+                    //     .catch((error) => {
+                    //         console.error('エラー', error);
+                    //     });
+                } else if (info.menuItemId === 'child2') {
+                    // // 子メニュー2をクリックしたときの処理
+                    // // 選択されたテキストへのリンクを生成
+                    // // NOTE: これだと対応できないパターンがたくさんある。けど大変そうなので暫定で以下のまま
+                    // const urlWithSpecifiedText = encodeURI(
+                    //     info.pageUrl + '#:~:text=' + response.data
+                    // );
+                    // saveToClipboard(urlWithSpecifiedText);
+                } else if (info.menuItemId === 'child3') {
+                    console.log(response);
+                    pdf();
+                }
+            }
+        );
+    });
     //
     // // 文字列をクリップボードにコピーする
     // function saveToClipboard(str: string | undefined) {

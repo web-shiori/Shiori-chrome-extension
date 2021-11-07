@@ -26,6 +26,9 @@
   "permissions": [
     "storage",
     "webRequest",
+    "contextMenus",
+    "desktopCapture",
+    "activeTab",
     "http://*/",
     "https://*/"
   ],
