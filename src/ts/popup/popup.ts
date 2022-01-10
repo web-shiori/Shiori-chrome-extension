@@ -152,6 +152,8 @@ module popup {
             const postContent: PostContent = {
                 title: metaData.title,
                 url: metaData.url,
+                device: metaData.device,
+                browser: metaData.browser,
                 thumbnail_img_url: thumbnailImgUrl,
                 scroll_position_x: scrollPositionX,
                 scroll_position_y: scrollPositionY,
@@ -180,9 +182,15 @@ module popup {
                 function (tabs) {
                     const title = tabs[0].title ?? '';
                     const url = tabs[0].url ?? '';
+                    // NOTE: deviceは"PC"固定
+                    const device = 'PC';
+                    // NOTE: browserは"Chrome"固定
+                    const browser = 'Chrome';
                     const metaData: MetaData = {
                         title,
                         url,
+                        device,
+                        browser,
                     };
                     resolve(metaData);
                 }

@@ -23,6 +23,8 @@ interface Content {
     updated_at: string;
     window_inner_width: number | null;
     window_inner_height: number | null;
+    device: string | null;
+    browser: string | null;
 }
 
 interface PostContent {
@@ -43,4 +45,6 @@ interface PostContent {
     pdf: File | null;
     window_inner_width: number | null;
     window_inner_height: number | null;
+    device: string | null;
+    browser: string | null;
 }
