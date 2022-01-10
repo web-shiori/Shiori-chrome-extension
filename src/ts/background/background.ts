@@ -4,7 +4,7 @@ module background {
      */
     // TODO: コンテンツを開く、というメッセージのときのみ動作するよう変更する
     chrome.runtime.onMessage.addListener((content: Content) => {
-        setScrollPosition(content.scroll_position_x, content.scroll_position_y);
+        restoreScrollPosition(content);
         if (content.video_playback_position != null) {
             setVideoPlayBackPosition(content.video_playback_position);
         }
@@ -12,6 +12,34 @@ module background {
             setAudioPlayBackPosition(content.audio_playback_position);
         }
     });
+
+    async function restoreScrollPosition(content: Content) {
+        if (
+            content.window_inner_width != null &&
+            content.window_inner_height != null
+        ) {
+            await restoreWindowSize(
+                content.window_inner_width,
+                content.window_inner_height
+            );
+        }
+        setScrollPosition(content.scroll_position_x, content.scroll_position_y);
+    }
+
+    // 保存時のウィンドウサイズを復元する
+    function restoreWindowSize(windowWidth: number, windowHeight: number) {
+        const info = {
+            width: windowWidth,
+            height: windowHeight,
+            state: 'normal',
+        };
+        chrome.windows.getCurrent({ populate: true }, function (currentWindow) {
+            if (currentWindow.id != null) {
+                // @ts-ignore
+                chrome.windows.update(currentWindow.id, info);
+            }
+        });
+    }
 
     // 動画再生位置を復元する
     function setVideoPlayBackPosition(videoPlayBackPosition: number) {
