@@ -306,44 +306,14 @@ module popup {
         });
     }
 
+    // TODO: 別ファイルに切り出したい.
     // PDFのスクリーンショット(File型)を返す. PDF出ない場合はnilを返す.
     async function getPDFScreenShot(): Promise<File | null> {
         return new Promise<File | null>((resolve) => {
             isPDF()
                 .then((isPDF) => {
                     if (isPDF) {
-                        chrome.windows.getCurrent(
-                            { populate: true },
-                            function (currentWindow) {
-                                if (currentWindow.id != null) {
-                                    chrome.tabs.captureVisibleTab(
-                                        currentWindow.id,
-                                        { format: 'png' },
-                                        (image) => {
-                                            const blob = atob(
-                                                image.replace(/^.*,/, '')
-                                            );
-                                            let buffer = new Uint8Array(
-                                                blob.length
-                                            );
-                                            for (
-                                                let i = 0;
-                                                i < blob.length;
-                                                i++
-                                            ) {
-                                                buffer[i] = blob.charCodeAt(i);
-                                            }
-                                            const f = new File(
-                                                [buffer.buffer],
-                                                'screenshot.png',
-                                                { type: 'file' }
-                                            );
-                                            resolve(f);
-                                        }
-                                    );
-                                }
-                            }
-                        );
+                        resolve(captureScreenShot());
                     } else {
                         resolve(null);
                     }
@@ -370,7 +340,38 @@ module popup {
     }
 
     // PDFのスクリーンショットを撮影する.
+    function captureScreenShot(): Promise<File | null> {
+        return new Promise<File | null>((resolve) => {
+            chrome.windows.getCurrent(
+                { populate: true },
+                function (currentWindow) {
+                    if (currentWindow.id != null) {
+                        chrome.tabs.captureVisibleTab(
+                            currentWindow.id,
+                            { format: 'png' },
+                            (image) => {
+                                const f = conversionBase64ToFile(image);
+                                resolve(f);
+                            }
+                        );
+                    }
+                }
+            );
+        });
+    }
+
     // base64エンコードをFileに変換する
+    function conversionBase64ToFile(image: string): File {
+        const blob = atob(image.replace(/^.*,/, ''));
+        let buffer = new Uint8Array(blob.length);
+        for (let i = 0; i < blob.length; i++) {
+            buffer[i] = blob.charCodeAt(i);
+        }
+        const f = new File([buffer.buffer], 'screenshot.png', {
+            type: 'file',
+        });
+        return f;
+    }
 
     // `保存する`ボタンをクリックしたときの処理
     const saveButton = document.getElementById('save-button');
