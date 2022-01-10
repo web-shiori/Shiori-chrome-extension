@@ -115,6 +115,7 @@ module popup {
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData();
         const videoPlayBackPositionPromise = getVideoPlayBackPosition();
+        const audioPlayBackPositionPromise = getAudioPlayBackPosition();
         const scrollPositionXPromise = getScrollPositionX();
         const scrollPositionYPromise = getScrollPositionY();
         const maxScrollPositionXPromise = getMaxScrollPositionX();
@@ -124,6 +125,7 @@ module popup {
         const [
             metaData,
             videoPlayBackPosition,
+            audioPlayBackPosition,
             scrollPositionX,
             scrollPositionY,
             maxScrollPositionX,
@@ -133,6 +135,7 @@ module popup {
         ] = await Promise.all([
             metaDataPromise,
             videoPlayBackPositionPromise,
+            audioPlayBackPositionPromise,
             scrollPositionXPromise,
             scrollPositionYPromise,
             maxScrollPositionXPromise,
@@ -158,6 +161,7 @@ module popup {
                 specified_dom_tag: null,
                 liked: null,
                 pdf: pdfScreenShot,
+                audio_playback_position: audioPlayBackPosition,
             };
             resolve(postContent);
         });
@@ -197,6 +201,29 @@ module popup {
                                 result[0]
                             );
                             resolve(videoPlayBackPosition);
+                        }
+                    );
+                }
+            );
+        });
+    }
+
+    // 現在開いているタブの音声の再生位置を取得する
+    function getAudioPlayBackPosition(): Promise<number> {
+        return new Promise<number>((resolve) => {
+            chrome.tabs.query(
+                { active: true, lastFocusedWindow: true },
+                function (tabs) {
+                    chrome.tabs.executeScript(
+                        <number>tabs[0].id,
+                        {
+                            code: `document.getElementsByTagName('audio')[0].currentTime;`,
+                        },
+                        (result) => {
+                            const audioPlayBackPosition: number = Number(
+                                result[0]
+                            );
+                            resolve(audioPlayBackPosition);
                         }
                     );
                 }
