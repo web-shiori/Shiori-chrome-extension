@@ -10,7 +10,8 @@ interface Content {
     scroll_position_y: number;
     max_scroll_position_x: number;
     max_scroll_position_y: number;
-    video_playback_position: number;
+    video_playback_position: number | null;
+    audio_playback_position: number | null;
     specified_text: string | null;
     specified_dom_id: string | null;
     specified_dom_class: string | null;
@@ -31,6 +32,7 @@ interface PostContent {
     max_scroll_position_x: number;
     max_scroll_position_y: number;
     video_playback_position: number | null;
+    audio_playback_position: number | null;
     specified_text: string | null;
     specified_dom_id: string | null;
     specified_dom_class: string | null;
