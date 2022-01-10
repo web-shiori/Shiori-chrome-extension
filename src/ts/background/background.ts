@@ -15,12 +15,12 @@ module background {
 
     async function restoreScrollPosition(content: Content) {
         if (
-            content.window_inner_width != null &&
-            content.window_inner_height != null
+            content.window_outer_width != null &&
+            content.window_outer_height != null
         ) {
             await restoreWindowSize(
-                content.window_inner_width,
-                content.window_inner_height
+                content.window_outer_width,
+                content.window_outer_height
             );
         }
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
@@ -31,7 +31,6 @@ module background {
         const info = {
             width: windowWidth,
             height: windowHeight,
-            state: 'normal',
         };
         chrome.windows.getCurrent({ populate: true }, function (currentWindow) {
             if (currentWindow.id != null) {

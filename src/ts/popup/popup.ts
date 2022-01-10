@@ -165,8 +165,10 @@ module popup {
                 liked: false,
                 pdf: pdfScreenShot,
                 audio_playback_position: audioPlayBackPosition,
-                window_inner_width: windowSize.inner_width,
-                window_inner_height: windowSize.inner_height,
+                window_inner_width: windowSize.innerWidth,
+                window_inner_height: windowSize.innerHeight,
+                window_outer_width: windowSize.outerWidth,
+                window_outer_height: windowSize.outerHeight,
             };
             resolve(postContent);
         });
@@ -454,8 +456,10 @@ module popup {
     }
 
     interface WindowSize {
-        inner_width: number;
-        inner_height: number;
+        innerWidth: number;
+        innerHeight: number;
+        outerWidth: number;
+        outerHeight: number;
     }
 
     // ウィンドウサイズを取得
@@ -468,19 +472,21 @@ module popup {
                         <number>tabs[0].id,
                         {
                             code: `
-                                var w = window.innerWidth;
-                                var h = window.innerHeight;
-                                var result = [w, h];
+                                var iw = window.innerWidth;
+                                var ih = window.innerHeight;
+                                var ow = window.outerWidth;
+                                var oh = window.outerHeight;
+                                var result = [iw, ih, ow, oh];
                                 result;
                             `,
                         },
                         (result) => {
                             let windowSize: WindowSize = {
-                                inner_width: 0,
-                                inner_height: 0,
+                                innerWidth: Number(result[0][0]),
+                                innerHeight: Number(result[0][1]),
+                                outerWidth: Number(result[0][2]),
+                                outerHeight: Number(result[0][3]),
                             };
-                            windowSize.inner_width = Number(result[0][0]);
-                            windowSize.inner_height = Number(result[0][1]);
                             resolve(windowSize);
                         }
                     );
