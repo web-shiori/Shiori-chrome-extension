@@ -116,10 +116,8 @@ module popup {
         const metaDataPromise = getMetaData();
         const videoPlayBackPositionPromise = getVideoPlayBackPosition();
         const audioPlayBackPositionPromise = getAudioPlayBackPosition();
-        const scrollPositionXPromise = getScrollPositionX();
-        const scrollPositionYPromise = getScrollPositionY();
-        const maxScrollPositionXPromise = getMaxScrollPositionX();
-        const maxScrollPositionYPromise = getMaxScrollPositionY();
+        const scrollPositionPromise = getScrollPosition();
+        const maxScrollPositionPromise = getMaxScrollPosition();
         const thumbnailImgUrlPromise = getThumbnailImgUrl();
         const pdfScreenShotPromise = getPDFScreenShot();
         const windowSizePromise = getWindowSize();
@@ -127,10 +125,8 @@ module popup {
             metaData,
             videoPlayBackPosition,
             audioPlayBackPosition,
-            scrollPositionX,
-            scrollPositionY,
-            maxScrollPositionX,
-            maxScrollPositionY,
+            scrollPosition,
+            maxScrollPosition,
             thumbnailImgUrl,
             pdfScreenShot,
             windowSize,
@@ -138,10 +134,8 @@ module popup {
             metaDataPromise,
             videoPlayBackPositionPromise,
             audioPlayBackPositionPromise,
-            scrollPositionXPromise,
-            scrollPositionYPromise,
-            maxScrollPositionXPromise,
-            maxScrollPositionYPromise,
+            scrollPositionPromise,
+            maxScrollPositionPromise,
             thumbnailImgUrlPromise,
             pdfScreenShotPromise,
             windowSizePromise,
@@ -155,16 +149,16 @@ module popup {
                 device: metaData.device,
                 browser: metaData.browser,
                 thumbnail_img_url: thumbnailImgUrl,
-                scroll_position_x: scrollPositionX,
-                scroll_position_y: scrollPositionY,
-                max_scroll_position_x: maxScrollPositionX,
-                max_scroll_position_y: maxScrollPositionY,
+                scroll_position_x: scrollPosition.x,
+                scroll_position_y: scrollPosition.y,
+                max_scroll_position_x: maxScrollPosition.x,
+                max_scroll_position_y: maxScrollPosition.y,
                 video_playback_position: videoPlayBackPosition,
                 specified_text: null,
                 specified_dom_id: null,
                 specified_dom_class: null,
                 specified_dom_tag: null,
-                liked: null,
+                liked: false,
                 pdf: pdfScreenShot,
                 audio_playback_position: audioPlayBackPosition,
                 window_inner_width: windowSize.inner_width,
@@ -244,28 +238,39 @@ module popup {
         });
     }
 
-    // 現在開いているコンテンツの高さを取得する
-    function getMaxScrollPositionX(): Promise<number> {
-        // NOTE: 横方向のスクロールを保存したい人なんていないと思うので0を返す
-        return new Promise((resolve) => {
-            resolve(0);
-        });
+    interface MaxScrollPosition {
+        x: number;
+        y: number;
     }
 
-    // 現在開いているコンテンツの幅を取得する
-    function getMaxScrollPositionY(): Promise<number> {
-        return new Promise<number>((resolve) => {
+    // 現在開いているコンテンツのサイズを取得する
+    function getMaxScrollPosition(): Promise<MaxScrollPosition> {
+        return new Promise<MaxScrollPosition>((resolve) => {
             chrome.tabs.query(
                 { active: true, lastFocusedWindow: true },
                 function (tabs) {
                     chrome.tabs.executeScript(
                         <number>tabs[0].id,
                         {
-                            code: `document.documentElement.scrollHeight;`,
+                            code: `
+                            var x = document.documentElement.scrollWidth;
+                            var y = document.documentElement.scrollHeight;
+                            var result = [x, y];
+                            result;
+                            `,
                         },
                         (result) => {
-                            const scrollPositionY: number = Number(result[0]);
-                            resolve(scrollPositionY);
+                            const scrollPositionX: number = Number(
+                                result[0][0]
+                            );
+                            const scrollPositionY: number = Number(
+                                result[0][1]
+                            );
+                            const maxScrollPosition: MaxScrollPosition = {
+                                x: scrollPositionX,
+                                y: scrollPositionY,
+                            };
+                            resolve(maxScrollPosition);
                         }
                     );
                 }
@@ -273,28 +278,39 @@ module popup {
         });
     }
 
-    // 現在開いているタブのコンテンツのスクロール位置(横)を取得する
-    function getScrollPositionX(): Promise<number> {
-        // NOTE: 横方向のスクロールを保存したい人なんていないと思うので0を返す
-        return new Promise((resolve) => {
-            resolve(0);
-        });
+    interface ScrollPosition {
+        x: number;
+        y: number;
     }
 
-    // 現在開いているタブのコンテンツのスクロール位置(縦)を取得する
-    function getScrollPositionY(): Promise<number> {
-        return new Promise<number>((resolve) => {
+    // 現在開いているタブのスクロール位置を取得する
+    function getScrollPosition(): Promise<ScrollPosition> {
+        return new Promise<ScrollPosition>((resolve) => {
             chrome.tabs.query(
                 { active: true, lastFocusedWindow: true },
                 function (tabs) {
                     chrome.tabs.executeScript(
                         <number>tabs[0].id,
                         {
-                            code: `document.documentElement.scrollTop;`,
+                            code: `
+                                var x = document.documentElement.scrollLeft;
+                                var y = document.documentElement.scrollTop;
+                                var result = [x, y];
+                                result;
+                            `,
                         },
                         (result) => {
-                            const scrollPositionY: number = Number(result[0]);
-                            resolve(scrollPositionY);
+                            const scrollPositionX: number = Number(
+                                result[0][0]
+                            );
+                            const scrollPositionY: number = Number(
+                                result[0][1]
+                            );
+                            const scrollPosition: ScrollPosition = {
+                                x: scrollPositionX,
+                                y: scrollPositionY,
+                            };
+                            resolve(scrollPosition);
                         }
                     );
                 }
