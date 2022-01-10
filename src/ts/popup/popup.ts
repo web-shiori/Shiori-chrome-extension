@@ -122,6 +122,7 @@ module popup {
         const maxScrollPositionYPromise = getMaxScrollPositionY();
         const thumbnailImgUrlPromise = getThumbnailImgUrl();
         const pdfScreenShotPromise = getPDFScreenShot();
+        const windowSizePromise = getWindowSize();
         const [
             metaData,
             videoPlayBackPosition,
@@ -132,6 +133,7 @@ module popup {
             maxScrollPositionY,
             thumbnailImgUrl,
             pdfScreenShot,
+            windowSize,
         ] = await Promise.all([
             metaDataPromise,
             videoPlayBackPositionPromise,
@@ -142,6 +144,7 @@ module popup {
             maxScrollPositionYPromise,
             thumbnailImgUrlPromise,
             pdfScreenShotPromise,
+            windowSizePromise,
         ]);
 
         // TODO: エラー起きたときの処理も書く
@@ -162,6 +165,8 @@ module popup {
                 liked: null,
                 pdf: pdfScreenShot,
                 audio_playback_position: audioPlayBackPosition,
+                window_inner_width: windowSize.inner_width,
+                window_inner_height: windowSize.inner_height,
             };
             resolve(postContent);
         });
@@ -400,6 +405,42 @@ module popup {
         return f;
     }
 
+    interface WindowSize {
+        inner_width: number;
+        inner_height: number;
+    }
+
+    // ウィンドウサイズを取得
+    function getWindowSize(): Promise<WindowSize> {
+        return new Promise<WindowSize>((resolve) => {
+            chrome.tabs.query(
+                { active: true, lastFocusedWindow: true },
+                function (tabs) {
+                    chrome.tabs.executeScript(
+                        <number>tabs[0].id,
+                        {
+                            code: `
+                                var w = window.innerWidth;
+                                var h = window.innerHeight;
+                                var result = [w, h];
+                                result;
+                            `,
+                        },
+                        (result) => {
+                            let windowSize: WindowSize = {
+                                inner_width: 0,
+                                inner_height: 0,
+                            };
+                            windowSize.inner_width = Number(result[0][0]);
+                            windowSize.inner_height = Number(result[0][1]);
+                            resolve(windowSize);
+                        }
+                    );
+                }
+            );
+        });
+    }
+
     // `保存する`ボタンをクリックしたときの処理
     const saveButton = document.getElementById('save-button');
     if (saveButton !== null) {
@@ -412,6 +453,8 @@ module popup {
                 <span class="sr-only">Loading...</span>
             </div>
             `;
+
+            getWindowSize();
 
             getContent()
                 .then((content) => {
