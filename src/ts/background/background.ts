@@ -10,7 +10,12 @@ module background {
             content.max_scroll_position_x,
             content.max_scroll_position_y
         );
-        setVideoPlayBackPosition(content.video_playback_position);
+        if (content.video_playback_position != null) {
+            setVideoPlayBackPosition(content.video_playback_position);
+        }
+        if (content.audio_playback_position != null) {
+            setAudioPlayBackPosition(content.audio_playback_position);
+        }
     });
 
     // 動画再生位置を復元する
@@ -32,6 +37,33 @@ module background {
                             const video = document.getElementsByTagName('video')[0];
                             video.addEventListener("loadeddata", function () { 
                                 video.currentTime = videoPlayBackPosition;
+                            })`,
+                        });
+                    }
+                );
+            }
+        );
+    }
+
+    // 音声再生位置を復元する
+    function setAudioPlayBackPosition(audioPlayBackPosition: number) {
+        console.log('音声再生位置', audioPlayBackPosition);
+        chrome.tabs.query(
+            { active: true, lastFocusedWindow: true },
+            function (tabs) {
+                chrome.tabs.executeScript(
+                    <number>tabs[0].id,
+                    {
+                        code:
+                            `const audioPlayBackPosition = ` +
+                            audioPlayBackPosition,
+                    },
+                    () => {
+                        chrome.tabs.executeScript(<number>tabs[0].id, {
+                            code: `
+                            const audio = document.getElementsByTagName('audio')[0];
+                            audio.addEventListener("loadeddata", function () { 
+                                audio.currentTime = audioPlayBackPosition;
                             })`,
                         });
                     }
