@@ -114,6 +114,7 @@ module popup {
     // 現在開いているタブのコンテンツを取得する
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData();
+        const userAgentPromise = getUserAgent();
         const videoPlayBackPositionPromise = getVideoPlayBackPosition();
         const audioPlayBackPositionPromise = getAudioPlayBackPosition();
         const scrollPositionPromise = getScrollPosition();
@@ -123,6 +124,7 @@ module popup {
         const windowSizePromise = getWindowSize();
         const [
             metaData,
+            userAgent,
             videoPlayBackPosition,
             audioPlayBackPosition,
             scrollPosition,
@@ -132,6 +134,7 @@ module popup {
             windowSize,
         ] = await Promise.all([
             metaDataPromise,
+            userAgentPromise,
             videoPlayBackPositionPromise,
             audioPlayBackPositionPromise,
             scrollPositionPromise,
@@ -148,6 +151,7 @@ module popup {
                 url: metaData.url,
                 device: metaData.device,
                 browser: metaData.browser,
+                user_agent: userAgent,
                 thumbnail_img_url: thumbnailImgUrl,
                 scroll_position_x: scrollPosition.x,
                 scroll_position_y: scrollPosition.y,
@@ -187,6 +191,26 @@ module popup {
                         browser,
                     };
                     resolve(metaData);
+                }
+            );
+        });
+    }
+
+    // 現在開いているタブのUAを取得する
+    function getUserAgent(): Promise<string> {
+        return new Promise<string>((resolve) => {
+            chrome.tabs.query(
+                { active: true, lastFocusedWindow: true },
+                function (tabs) {
+                    chrome.tabs.executeScript(
+                        <number>tabs[0].id,
+                        {
+                            code: `navigator.userAgent;`,
+                        },
+                        (result) => {
+                            resolve(result[0]);
+                        }
+                    );
                 }
             );
         });

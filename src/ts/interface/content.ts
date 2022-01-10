@@ -25,6 +25,7 @@ interface Content {
     window_inner_height: number | null;
     device: string | null;
     browser: string | null;
+    user_agent: string | null;
 }
 
 interface PostContent {
@@ -47,4 +48,5 @@ interface PostContent {
     window_inner_height: number | null;
     device: string | null;
     browser: string | null;
+    user_agent: string | null;
 }
