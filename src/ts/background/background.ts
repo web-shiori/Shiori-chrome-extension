@@ -27,16 +27,60 @@ module background {
     }
 
     // 保存時のウィンドウサイズを復元する
-    function restoreWindowSize(windowWidth: number, windowHeight: number) {
+    async function restoreWindowSize(windowWidth: number, windowHeight: number) {
+        const currentWindowSize = await getWindowSize()
+        if (currentWindowSize.outerWidth == windowWidth && currentWindowSize.outerHeight == windowHeight) {
+            return
+        }
         const info = {
             width: windowWidth,
             height: windowHeight,
         };
-        chrome.windows.getCurrent({ populate: true }, function (currentWindow) {
+        chrome.windows.getCurrent({populate: true}, function (currentWindow) {
             if (currentWindow.id != null) {
                 // @ts-ignore
                 chrome.windows.update(currentWindow.id, info);
             }
+        });
+    }
+
+    interface WindowSize {
+        innerWidth: number;
+        innerHeight: number;
+        outerWidth: number;
+        outerHeight: number;
+    }
+
+    // ウィンドウサイズを取得
+    function getWindowSize(): Promise<WindowSize> {
+        return new Promise<WindowSize>((resolve) => {
+            chrome.tabs.query(
+                { active: true, lastFocusedWindow: true },
+                function (tabs) {
+                    chrome.tabs.executeScript(
+                        <number>tabs[0].id,
+                        {
+                            code: `
+                                var iw = window.innerWidth;
+                                var ih = window.innerHeight;
+                                var ow = window.outerWidth;
+                                var oh = window.outerHeight;
+                                var result = [iw, ih, ow, oh];
+                                result;
+                            `,
+                        },
+                        (result) => {
+                            let windowSize: WindowSize = {
+                                innerWidth: Number(result[0][0]),
+                                innerHeight: Number(result[0][1]),
+                                outerWidth: Number(result[0][2]),
+                                outerHeight: Number(result[0][3]),
+                            };
+                            resolve(windowSize);
+                        }
+                    );
+                }
+            );
         });
     }
 
