@@ -24,8 +24,11 @@
     }
   ],
   "permissions": [
+    "tabs",
     "storage",
     "webRequest",
+    "activeTab",
+    "<all_urls>",
     "http://*/",
     "https://*/"
   ],

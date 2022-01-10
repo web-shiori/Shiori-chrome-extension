@@ -40,18 +40,12 @@ module popup {
      */
     const baseUrl: string = 'https://web-shiori.herokuapp.com';
 
-    // 取得したコンテンツを保存する
-    function doPostContent(content: PostContent) {
-        const url = `${baseUrl}/v1/content`;
+    function post(path: string, header: HeadersInit, body: BodyInit) {
+        const url = `${baseUrl}/${path}`;
         return fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'access-token': currentUser!.accessToken,
-                client: currentUser!.client,
-                uid: currentUser!.uid,
-            },
-            body: JSON.stringify(content),
+            headers: header,
+            body: body,
         })
             .then(processResponse)
             .catch((error) => {
@@ -88,6 +82,35 @@ module popup {
         }
     }
 
+    // 取得したコンテンツを保存する
+    function doPostContent(content: PostContent) {
+        const path = `v1/content`;
+        const headers = {
+            'Content-Type': 'application/json',
+            'access-token': currentUser!.accessToken,
+            client: currentUser!.client,
+            uid: currentUser!.uid,
+        };
+        const body = JSON.stringify(content);
+        post(path, headers, body);
+    }
+
+    function postPDF(content: PostContent) {
+        const path = `v1/content`;
+        const formData = new FormData();
+        if (content.pdf != null) {
+            formData.append('pdf', content.pdf);
+        }
+        formData.append('title', content.title);
+        formData.append('url', content.url);
+        const headers = {
+            'access-token': currentUser!.accessToken,
+            client: currentUser!.client,
+            uid: currentUser!.uid,
+        };
+        post(path, headers, formData);
+    }
+
     // 現在開いているタブのコンテンツを取得する
     async function getContent(): Promise<PostContent> {
         const metaDataPromise = getMetaData();
@@ -97,6 +120,7 @@ module popup {
         const maxScrollPositionXPromise = getMaxScrollPositionX();
         const maxScrollPositionYPromise = getMaxScrollPositionY();
         const thumbnailImgUrlPromise = getThumbnailImgUrl();
+        const pdfScreenShotPromise = getPDFScreenShot();
         const [
             metaData,
             videoPlayBackPosition,
@@ -105,6 +129,7 @@ module popup {
             maxScrollPositionX,
             maxScrollPositionY,
             thumbnailImgUrl,
+            pdfScreenShot,
         ] = await Promise.all([
             metaDataPromise,
             videoPlayBackPositionPromise,
@@ -113,6 +138,7 @@ module popup {
             maxScrollPositionXPromise,
             maxScrollPositionYPromise,
             thumbnailImgUrlPromise,
+            pdfScreenShotPromise,
         ]);
 
         // TODO: エラー起きたときの処理も書く
@@ -131,6 +157,7 @@ module popup {
                 specified_dom_class: null,
                 specified_dom_tag: null,
                 liked: null,
+                pdf: pdfScreenShot,
             };
             resolve(postContent);
         });
@@ -143,7 +170,7 @@ module popup {
                 { active: true, lastFocusedWindow: true },
                 function (tabs) {
                     const title = tabs[0].title ?? '';
-                    const url = tabs[0].url ?? 'a';
+                    const url = tabs[0].url ?? '';
                     const metaData: MetaData = {
                         title,
                         url,
@@ -279,9 +306,78 @@ module popup {
         });
     }
 
+    // TODO: 別ファイルに切り出したい.
+    // PDFのスクリーンショット(File型)を返す. PDF出ない場合はnilを返す.
+    async function getPDFScreenShot(): Promise<File | null> {
+        return new Promise<File | null>((resolve) => {
+            isPDF()
+                .then((isPDF) => {
+                    if (isPDF) {
+                        resolve(captureScreenShot());
+                    } else {
+                        resolve(null);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        });
+    }
+
+    // PDFかどうかを判定する.
+    function isPDF(): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
+            chrome.tabs.query(
+                { active: true, lastFocusedWindow: true },
+                function (tabs) {
+                    const urlStr = tabs[0].url ?? '';
+                    const url = new URL(urlStr);
+                    const pdfRegex = new RegExp('\\.pdf');
+                    resolve(pdfRegex.test(url.pathname));
+                }
+            );
+        });
+    }
+
+    // PDFのスクリーンショットを撮影する.
+    function captureScreenShot(): Promise<File | null> {
+        return new Promise<File | null>((resolve) => {
+            chrome.windows.getCurrent(
+                { populate: true },
+                function (currentWindow) {
+                    if (currentWindow.id != null) {
+                        chrome.tabs.captureVisibleTab(
+                            currentWindow.id,
+                            { format: 'png' },
+                            (image) => {
+                                const f = conversionBase64ToFile(image);
+                                resolve(f);
+                            }
+                        );
+                    }
+                }
+            );
+        });
+    }
+
+    // base64エンコードをFileに変換する
+    function conversionBase64ToFile(image: string): File {
+        const blob = atob(image.replace(/^.*,/, ''));
+        let buffer = new Uint8Array(blob.length);
+        for (let i = 0; i < blob.length; i++) {
+            buffer[i] = blob.charCodeAt(i);
+        }
+        const f = new File([buffer.buffer], 'screenshot.png', {
+            type: 'file',
+        });
+        return f;
+    }
+
     // `保存する`ボタンをクリックしたときの処理
     const saveButton = document.getElementById('save-button');
     if (saveButton !== null) {
+        getPDFScreenShot();
+
         saveButton.addEventListener('click', async function () {
             // 保存中インジケータ表示
             saveButton.innerHTML = `
@@ -292,7 +388,11 @@ module popup {
 
             getContent()
                 .then((content) => {
-                    doPostContent(content);
+                    if (content.pdf != null) {
+                        postPDF(content);
+                    } else {
+                        doPostContent(content);
+                    }
                 })
                 .catch((error) => {
                     console.error('エラー', error);

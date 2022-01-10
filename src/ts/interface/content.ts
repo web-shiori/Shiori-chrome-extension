@@ -36,4 +36,5 @@ interface PostContent {
     specified_dom_class: string | null;
     specified_dom_tag: string | null;
     liked: boolean | null;
+    pdf: File | null;
 }
