@@ -4,12 +4,7 @@ module background {
      */
     // TODO: コンテンツを開く、というメッセージのときのみ動作するよう変更する
     chrome.runtime.onMessage.addListener((content: Content) => {
-        setScrollPosition(
-            content.scroll_position_x,
-            content.scroll_position_y,
-            content.max_scroll_position_x,
-            content.max_scroll_position_y
-        );
+        restoreScrollPosition(content);
         if (content.video_playback_position != null) {
             setVideoPlayBackPosition(content.video_playback_position);
         }
@@ -17,6 +12,33 @@ module background {
             setAudioPlayBackPosition(content.audio_playback_position);
         }
     });
+
+    async function restoreScrollPosition(content: Content) {
+        if (
+            content.window_outer_width != null &&
+            content.window_outer_height != null
+        ) {
+            await restoreWindowSize(
+                content.window_outer_width,
+                content.window_outer_height
+            );
+        }
+        setScrollPosition(content.scroll_position_x, content.scroll_position_y);
+    }
+
+    // 保存時のウィンドウサイズを復元する
+    function restoreWindowSize(windowWidth: number, windowHeight: number) {
+        const info = {
+            width: windowWidth,
+            height: windowHeight,
+        };
+        chrome.windows.getCurrent({ populate: true }, function (currentWindow) {
+            if (currentWindow.id != null) {
+                // @ts-ignore
+                chrome.windows.update(currentWindow.id, info);
+            }
+        });
+    }
 
     // 動画再生位置を復元する
     function setVideoPlayBackPosition(videoPlayBackPosition: number) {
@@ -75,9 +97,7 @@ module background {
     // スクロール位置を復元する
     function setScrollPosition(
         scrollPositionX: number,
-        scrollPositionY: number,
-        maxScrollPositionX: number,
-        maxScrollPositionY: number
+        scrollPositionY: number
     ) {
         chrome.tabs.query(
             { active: true, lastFocusedWindow: true },
@@ -88,26 +108,14 @@ module background {
                         code: `
                     const scrollPositionX = ${scrollPositionX};
                     const scrollPositionY = ${scrollPositionY};
-                    const maxScrollPositionX = ${maxScrollPositionX};
-                    const maxScrollPositionY = ${maxScrollPositionY};
-                    const scrollRateY = scrollPositionY / maxScrollPositionY
                 `,
                     },
                     () => {
-                        chrome.tabs.executeScript(
-                            <number>tabs[0].id,
-                            {
-                                code: `
-                                    const maxScrollPositionYOnChrome = document.documentElement.scrollHeight
-                                    const ratedScrollPositionY = maxScrollPositionYOnChrome * scrollRateY
+                        chrome.tabs.executeScript(<number>tabs[0].id, {
+                            code: `
+                                    window.scrollTo(scrollPositionX, scrollPositionY);
                                 `,
-                            },
-                            () => {
-                                chrome.tabs.executeScript(<number>tabs[0].id, {
-                                    code: `window.scrollTo(0, ratedScrollPositionY);`,
-                                });
-                            }
-                        );
+                        });
                     }
                 );
             }

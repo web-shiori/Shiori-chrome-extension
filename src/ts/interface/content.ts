@@ -21,6 +21,13 @@ interface Content {
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
+    window_inner_width: number | null;
+    window_inner_height: number | null;
+    window_outer_width: number | null;
+    window_outer_height: number | null;
+    device: string | null;
+    browser: string | null;
+    user_agent: string | null;
 }
 
 interface PostContent {
@@ -39,4 +46,11 @@ interface PostContent {
     specified_dom_tag: string | null;
     liked: boolean | null;
     pdf: File | null;
+    window_inner_width: number | null;
+    window_inner_height: number | null;
+    window_outer_width: number | null;
+    window_outer_height: number | null;
+    device: string | null;
+    browser: string | null;
+    user_agent: string | null;
 }
