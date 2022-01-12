@@ -100,10 +100,14 @@ module background {
                     () => {
                         chrome.tabs.executeScript(<number>tabs[0].id, {
                             code: `
-                            const video = document.getElementsByTagName('video')[0];
-                            video.addEventListener("loadeddata", function () { 
+                            let video = document.getElementsByTagName('video')[0];
+                            if (video) {
                                 video.currentTime = videoPlayBackPosition;
-                            })`,
+                                video.addEventListener("loadeddata", function () {
+                                    video.currentTime = videoPlayBackPosition;
+                                })
+                            }
+                            `,
                         });
                     }
                 );
@@ -127,10 +131,14 @@ module background {
                     () => {
                         chrome.tabs.executeScript(<number>tabs[0].id, {
                             code: `
-                            const audio = document.getElementsByTagName('audio')[0];
-                            audio.addEventListener("loadeddata", function () { 
+                            let audio = document.getElementsByTagName('audio')[0];
+                            if (audio) {
                                 audio.currentTime = audioPlayBackPosition;
-                            })`,
+                                audio.addEventListener("loadeddata", function () { 
+                                    audio.currentTime = audioPlayBackPosition;
+                                })
+                            }
+                            `,
                         });
                     }
                 );
