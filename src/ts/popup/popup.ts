@@ -122,6 +122,7 @@ module popup {
         const thumbnailImgUrlPromise = getThumbnailImgUrl();
         const pdfScreenShotPromise = getPDFScreenShot();
         const windowSizePromise = getWindowSize();
+        const offsetSizePromise = getOffsetSize();
         const [
             metaData,
             userAgent,
@@ -132,6 +133,7 @@ module popup {
             thumbnailImgUrl,
             pdfScreenShot,
             windowSize,
+            offsetSize,
         ] = await Promise.all([
             metaDataPromise,
             userAgentPromise,
@@ -142,6 +144,7 @@ module popup {
             thumbnailImgUrlPromise,
             pdfScreenShotPromise,
             windowSizePromise,
+            offsetSizePromise,
         ]);
 
         // TODO: エラー起きたときの処理も書く
@@ -169,6 +172,8 @@ module popup {
                 window_inner_height: windowSize.innerHeight,
                 window_outer_width: windowSize.outerWidth,
                 window_outer_height: windowSize.outerHeight,
+                offset_width: offsetSize.offsetWidth,
+                offset_height: offsetSize.offsetHeight
             };
             resolve(postContent);
         });
@@ -488,6 +493,40 @@ module popup {
                                 outerHeight: Number(result[0][3]),
                             };
                             resolve(windowSize);
+                        }
+                    );
+                }
+            );
+        });
+    }
+
+    interface OffsetSize {
+        offsetWidth: number
+        offsetHeight: number
+    }
+
+    // offsetWidth/Heightを取得
+    function getOffsetSize(): Promise<OffsetSize> {
+        return new Promise<OffsetSize>((resolve) => {
+            chrome.tabs.query(
+                { active: true, lastFocusedWindow: true },
+                function (tabs) {
+                    chrome.tabs.executeScript(
+                        <number>tabs[0].id,
+                        {
+                            code: `
+                                var ow = document.documentElement.offsetWidth;
+                                var oh = document.documentElement.offsetHeight;
+                                var result = [ow, oh];
+                                result;
+                            `,
+                        },
+                        (result) => {
+                            let offsetSize: OffsetSize = {
+                                offsetWidth: Number(result[0][0]),
+                                offsetHeight: Number(result[0][1]),
+                            };
+                            resolve(offsetSize);
                         }
                     );
                 }
