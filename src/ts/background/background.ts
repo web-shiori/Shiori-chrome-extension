@@ -18,71 +18,78 @@ module background {
             content.window_outer_width != null &&
             content.window_outer_height != null
         ) {
-            await restoreWindowSize(
-                content.window_outer_width,
-                content.window_outer_height
-            );
+            // await restoreWindowSize(
+            //     content.window_outer_width,
+            //     content.window_outer_height
+            // );
+        }
+        if (content.window_inner_width != null && content.window_inner_height != null) {
+            await setBodyWidth(content.window_inner_width, content.window_inner_height)
         }
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
     }
 
+    /*
+        不要だけど念の為残しておく。
+     */
+
     // 保存時のウィンドウサイズを復元する
-    async function restoreWindowSize(windowWidth: number, windowHeight: number) {
-        const currentWindowSize = await getWindowSize()
-        if (currentWindowSize.outerWidth == windowWidth && currentWindowSize.outerHeight == windowHeight) {
-            return
-        }
-        const info = {
-            width: windowWidth,
-            height: windowHeight,
-        };
-        chrome.windows.getCurrent({populate: true}, function (currentWindow) {
-            if (currentWindow.id != null) {
-                // @ts-ignore
-                chrome.windows.update(currentWindow.id, info);
-            }
-        });
-    }
+    // async function restoreWindowSize(windowWidth: number, windowHeight: number) {
+    //     const currentWindowSize = await getWindowSize()
+    //     if (currentWindowSize.outerWidth == windowWidth && currentWindowSize.outerHeight == windowHeight) {
+    //         return
+    //     }
+    //     const info = {
+    //         width: windowWidth,
+    //         height: windowHeight,
+    //     };
+    //     chrome.windows.getCurrent({populate: true}, function (currentWindow) {
+    //         if (currentWindow.id != null) {
+    //             // @ts-ignore
+    //             chrome.windows.update(currentWindow.id, info);
+    //         }
+    //     });
+    // }
 
-    interface WindowSize {
-        innerWidth: number;
-        innerHeight: number;
-        outerWidth: number;
-        outerHeight: number;
-    }
+    // interface WindowSize {
+    //     innerWidth: number;
+    //     innerHeight: number;
+    //     outerWidth: number;
+    //     outerHeight: number;
+    // }
 
-    // ウィンドウサイズを取得
-    function getWindowSize(): Promise<WindowSize> {
-        return new Promise<WindowSize>((resolve) => {
-            chrome.tabs.query(
-                { active: true, lastFocusedWindow: true },
-                function (tabs) {
-                    chrome.tabs.executeScript(
-                        <number>tabs[0].id,
-                        {
-                            code: `
-                                var iw = window.innerWidth;
-                                var ih = window.innerHeight;
-                                var ow = window.outerWidth;
-                                var oh = window.outerHeight;
-                                var result = [iw, ih, ow, oh];
-                                result;
-                            `,
-                        },
-                        (result) => {
-                            let windowSize: WindowSize = {
-                                innerWidth: Number(result[0][0]),
-                                innerHeight: Number(result[0][1]),
-                                outerWidth: Number(result[0][2]),
-                                outerHeight: Number(result[0][3]),
-                            };
-                            resolve(windowSize);
-                        }
-                    );
-                }
-            );
-        });
-    }
+    // // ウィンドウサイズを取得
+    // function getWindowSize(): Promise<WindowSize> {
+    //     return new Promise<WindowSize>((resolve) => {
+    //         chrome.tabs.query(
+    //             { active: true, lastFocusedWindow: true },
+    //             function (tabs) {
+    //                 chrome.tabs.executeScript(
+    //                     <number>tabs[0].id,
+    //                     {
+    //                         code: `
+    //                             var iw = window.innerWidth;
+    //                             var ih = window.innerHeight;
+    //                             var ow = window.outerWidth;
+    //                             var oh = window.outerHeight;
+    //                             var result = [iw, ih, ow, oh];
+    //                             result;
+    //                         `,
+    //                     },
+    //                     (result) => {
+    //                         let windowSize: WindowSize = {
+    //                             innerWidth: Number(result[0][0]),
+    //                             innerHeight: Number(result[0][1]),
+    //                             outerWidth: Number(result[0][2]),
+    //                             outerHeight: Number(result[0][3]),
+    //                         };
+    //                         resolve(windowSize);
+    //                     }
+    //                 );
+    //             }
+    //         );
+    //     });
+    // }
 
     // 動画再生位置を復元する
     function setVideoPlayBackPosition(videoPlayBackPosition: number) {
@@ -151,6 +158,7 @@ module background {
         scrollPositionX: number,
         scrollPositionY: number
     ) {
+        console.log('スクロール位置', scrollPositionY);
         chrome.tabs.query(
             { active: true, lastFocusedWindow: true },
             function (tabs) {
@@ -166,6 +174,31 @@ module background {
                         chrome.tabs.executeScript(<number>tabs[0].id, {
                             code: `
                                     window.scrollTo(scrollPositionX, scrollPositionY);
+                                `,
+                        });
+                    }
+                );
+            }
+        );
+    }
+
+    // bodyの表示領域を変える
+    function setBodyWidth(innerWidth: number, innerHeight: number) {
+        chrome.tabs.query(
+            { active: true, lastFocusedWindow: true },
+            function (tabs) {
+                chrome.tabs.executeScript(
+                    <number>tabs[0].id,
+                    {
+                        code: `
+                    let innerWidth = '${innerWidth}px';
+                    let innerHeight = '${innerHeight}px';
+                `,
+                    },
+                    () => {
+                        chrome.tabs.executeScript(<number>tabs[0].id, {
+                            code: `
+                                    document.body.style.width = innerWidth;
                                 `,
                         });
                     }
