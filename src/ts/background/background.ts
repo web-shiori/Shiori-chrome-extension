@@ -141,7 +141,7 @@ module background {
                             let audio = document.getElementsByTagName('audio')[0];
                             if (audio) {
                                 audio.currentTime = audioPlayBackPosition;
-                                audio.addEventListener("loadeddata", function () { 
+                                audio.addEventListener("play", function () { 
                                     audio.currentTime = audioPlayBackPosition;
                                 })
                             }
