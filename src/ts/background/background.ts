@@ -14,17 +14,17 @@ module background {
     });
 
     async function restoreScrollPosition(content: Content) {
-        if (
-            content.window_outer_width != null &&
-            content.window_outer_height != null
-        ) {
-            // await restoreWindowSize(
-            //     content.window_outer_width,
-            //     content.window_outer_height
-            // );
-        }
-        if (content.window_inner_width != null && content.window_inner_height != null) {
-            await setBodyWidth(content.window_inner_width, content.window_inner_height)
+        // if (
+        //     content.window_outer_width != null &&
+        //     content.window_outer_height != null
+        // ) {
+        //     await restoreWindowSize(
+        //         content.window_outer_width,
+        //         content.window_outer_height
+        //     );
+        // }
+        if (content.offset_width != null && content.offset_height != null) {
+            await setBodyWidth(content.offset_width, content.offset_height)
         }
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
     }
