@@ -25,6 +25,8 @@ interface Content {
     window_inner_height: number | null;
     window_outer_width: number | null;
     window_outer_height: number | null;
+    offset_width: number | null;
+    offset_height: number | null;
     device: string | null;
     browser: string | null;
     user_agent: string | null;
@@ -50,6 +52,8 @@ interface PostContent {
     window_inner_height: number | null;
     window_outer_width: number | null;
     window_outer_height: number | null;
+    offset_width: number | null;
+    offset_height: number | null;
     device: string | null;
     browser: string | null;
     user_agent: string | null;

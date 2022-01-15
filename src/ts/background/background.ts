@@ -23,8 +23,15 @@ module background {
                 content.window_outer_height
             );
         }
+        // if (content.offset_width != null && content.offset_height != null) {
+        //     await setBodyWidth(content.offset_width, content.offset_height)
+        // }
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
     }
+
+    /*
+        不要だけど念の為残しておく。
+     */
 
     // 保存時のウィンドウサイズを復元する
     async function restoreWindowSize(windowWidth: number, windowHeight: number) {
@@ -134,7 +141,7 @@ module background {
                             let audio = document.getElementsByTagName('audio')[0];
                             if (audio) {
                                 audio.currentTime = audioPlayBackPosition;
-                                audio.addEventListener("loadeddata", function () { 
+                                audio.addEventListener("play", function () { 
                                     audio.currentTime = audioPlayBackPosition;
                                 })
                             }
@@ -151,6 +158,7 @@ module background {
         scrollPositionX: number,
         scrollPositionY: number
     ) {
+        console.log('スクロール位置', scrollPositionY);
         chrome.tabs.query(
             { active: true, lastFocusedWindow: true },
             function (tabs) {
@@ -166,6 +174,32 @@ module background {
                         chrome.tabs.executeScript(<number>tabs[0].id, {
                             code: `
                                     window.scrollTo(scrollPositionX, scrollPositionY);
+                                `,
+                        });
+                    }
+                );
+            }
+        );
+    }
+
+    // bodyの表示領域を変える
+    // @ts-ignore
+    function setBodyWidth(innerWidth: number, innerHeight: number) {
+        chrome.tabs.query(
+            { active: true, lastFocusedWindow: true },
+            function (tabs) {
+                chrome.tabs.executeScript(
+                    <number>tabs[0].id,
+                    {
+                        code: `
+                    let innerWidth = '${innerWidth}px';
+                    let innerHeight = '${innerHeight}px';
+                `,
+                    },
+                    () => {
+                        chrome.tabs.executeScript(<number>tabs[0].id, {
+                            code: `
+                                    document.body.style.width = innerWidth;
                                 `,
                         });
                     }
