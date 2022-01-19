@@ -26,7 +26,7 @@ module background {
         // if (content.offset_width != null && content.offset_height != null) {
         //     await setBodyWidth(content.offset_width, content.offset_height)
         // }
-        setScrollPosition(content.scroll_position_x, content.scroll_position_y);
+        setScrollPosition(content.url, content.scroll_position_x, content.scroll_position_y);
     }
 
     // 保存時のウィンドウサイズを復元する
@@ -152,6 +152,7 @@ module background {
 
     // スクロール位置を復元する
     async function setScrollPosition(
+        url: string,
         scrollPositionX: number,
         scrollPositionY: number
     ) {
@@ -159,19 +160,23 @@ module background {
 
         // ページの読み込みが完了してから実行
         chrome.webNavigation.onCompleted.addListener(function (details) {
-            chrome.tabs.executeScript(details.tabId, {
-              code: `
+                chrome.tabs.executeScript(details.tabId, {
+                    code: `
                 let scrollPositionX = ${scrollPositionX};
                 let scrollPositionY = ${scrollPositionY};
               `
-            }, () => {
-                chrome.tabs.executeScript(details.tabId, {
-                    code: `
+                }, () => {
+                    chrome.tabs.executeScript(details.tabId, {
+                        code: `
                         window.scrollTo(scrollPositionX, scrollPositionY);
                     `,
-                });
-            })
-        }
+                    });
+                })
+            }, {
+                url: [{
+                    urlEquals: url
+                }
+                ]}
         )
         // chrome.tabs.query(
         //     { active: true, lastFocusedWindow: true },
