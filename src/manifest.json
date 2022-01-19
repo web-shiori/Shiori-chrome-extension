@@ -27,6 +27,7 @@
     "tabs",
     "storage",
     "webRequest",
+    "webNavigation",
     "activeTab",
     "<all_urls>",
     "http://*/",

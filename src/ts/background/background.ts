@@ -4,7 +4,7 @@ module background {
      */
     // TODO: コンテンツを開く、というメッセージのときのみ動作するよう変更する
     chrome.runtime.onMessage.addListener((content: Content) => {
-        restoreScrollPosition(content);
+        restoreScrollPosition(content)
         if (content.video_playback_position != null) {
             setVideoPlayBackPosition(content.video_playback_position);
         }
@@ -29,11 +29,8 @@ module background {
         setScrollPosition(content.scroll_position_x, content.scroll_position_y);
     }
 
-    /*
-        不要だけど念の為残しておく。
-     */
-
     // 保存時のウィンドウサイズを復元する
+    // @ts-ignore
     async function restoreWindowSize(windowWidth: number, windowHeight: number) {
         const currentWindowSize = await getWindowSize()
         if (currentWindowSize.outerWidth == windowWidth && currentWindowSize.outerHeight == windowHeight) {
@@ -154,32 +151,51 @@ module background {
     }
 
     // スクロール位置を復元する
-    function setScrollPosition(
+    async function setScrollPosition(
         scrollPositionX: number,
         scrollPositionY: number
     ) {
-        console.log('スクロール位置', scrollPositionY);
-        chrome.tabs.query(
-            { active: true, lastFocusedWindow: true },
-            function (tabs) {
-                chrome.tabs.executeScript(
-                    <number>tabs[0].id,
-                    {
-                        code: `
-                    const scrollPositionX = ${scrollPositionX};
-                    const scrollPositionY = ${scrollPositionY};
-                `,
-                    },
-                    () => {
-                        chrome.tabs.executeScript(<number>tabs[0].id, {
-                            code: `
-                                    window.scrollTo(scrollPositionX, scrollPositionY);
-                                `,
-                        });
-                    }
-                );
-            }
-        );
+        console.log('スクロール位置Y', scrollPositionY);
+
+        // ページの読み込みが完了してから実行
+        chrome.webNavigation.onCompleted.addListener(function (details) {
+            chrome.tabs.executeScript(details.tabId, {
+              code: `
+                let scrollPositionX = ${scrollPositionX};
+                let scrollPositionY = ${scrollPositionY};
+              `
+            }, () => {
+                chrome.tabs.executeScript(details.tabId, {
+                    code: `
+                        window.scrollTo(scrollPositionX, scrollPositionY);
+                    `,
+                });
+            })
+        }
+        )
+        // chrome.tabs.query(
+        //     { active: true, lastFocusedWindow: true },
+        //     function (tabs) {
+        //         chrome.tabs.executeScript(
+        //             <number>tabs[0].id,
+        //             {
+        //                 code: `
+        //             let scrollPositionX = ${scrollPositionX};
+        //             let scrollPositionY = ${scrollPositionY};
+        //         `,
+        //             },
+        //             () => {
+        //                 chrome.tabs.executeScript(<number>tabs[0].id, {
+        //                     code: `
+        //                             console.log('スクロール位置Y', scrollPositionY);
+        //                             window.scrollTo(scrollPositionX, scrollPositionY);
+        //                             console.log(document.documentElement.scrollTop);
+        //                         `,
+        //                 });
+        //             }
+        //         );
+        //     }
+        // );
     }
 
     // bodyの表示領域を変える

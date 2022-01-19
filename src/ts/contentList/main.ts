@@ -336,10 +336,10 @@ module contentList {
         const targetContent: Content = contentList[index];
         const url: string = targetContent.specified_text
             ? generateUrlForSpecifiedText(
-                  targetContent.url,
+                  targetContent.sharing_url,
                   targetContent.specified_text
               )
-            : targetContent.url;
+            : targetContent.sharing_url;
         await chrome.tabs.create({ url });
         chrome.runtime.sendMessage(targetContent);
     }
