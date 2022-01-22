@@ -9,7 +9,7 @@ module background {
             setVideoPlayBackPosition(content.url, content.video_playback_position);
         }
         if (content.audio_playback_position != null) {
-            setAudioPlayBackPosition(content.audio_playback_position);
+            setAudioPlayBackPosition(content.url, content.audio_playback_position);
         }
     });
 
@@ -120,54 +120,22 @@ module background {
                 urlEquals: url
             }
             ]});
-
-        // chrome.tabs.query(
-        //     { active: true, lastFocusedWindow: true },
-        //     function (tabs) {
-        //         chrome.tabs.executeScript(
-        //             <number>tabs[0].id,
-        //             {
-        //                 code: `let videoPlayBackPosition = ` + videoPlayBackPosition,
-        //             },
-        //             () => {
-        //                 chrome.tabs.executeScript(<number>tabs[0].id, {
-        //                     code: `
-        //                     let video = document.getElementsByTagName('video')[0];
-        //                     if (video) {
-        //                         video.currentTime = videoPlayBackPosition;
-        //                         video.addEventListener("loadeddata", function () {
-        //                             video.currentTime = videoPlayBackPosition;
-        //                             alert('現在の再生位置', video.currentTime);
-        //                         })
-        //                     }
-        //                     `,
-        //                 }, function (result) {
-        //                     for (let i = 0; i < result.length; i++) {
-        //                         console.log(result[i])
-        //                     }
-        //                 });
-        //             }
-        //         );
-        //     }
-        // );
     }
 
     // 音声再生位置を復元する
-    function setAudioPlayBackPosition(audioPlayBackPosition: number) {
+    function setAudioPlayBackPosition(url: string, audioPlayBackPosition: number) {
         console.log('音声再生位置', audioPlayBackPosition);
-        chrome.tabs.query(
-            { active: true, lastFocusedWindow: true },
-            function (tabs) {
-                chrome.tabs.executeScript(
-                    <number>tabs[0].id,
-                    {
-                        code:
-                            `const audioPlayBackPosition = ` +
-                            audioPlayBackPosition,
-                    },
-                    () => {
-                        chrome.tabs.executeScript(<number>tabs[0].id, {
-                            code: `
+        chrome.webNavigation.onCompleted.addListener(function (details) {
+            chrome.tabs.executeScript(
+                details.tabId,
+                {
+                    code:
+                        `const audioPlayBackPosition = ` +
+                        audioPlayBackPosition,
+                },
+                () => {
+                    chrome.tabs.executeScript(details.tabId, {
+                        code: `
                             let audio = document.getElementsByTagName('audio')[0];
                             if (audio) {
                                 audio.currentTime = audioPlayBackPosition;
@@ -176,11 +144,14 @@ module background {
                                 })
                             }
                             `,
-                        });
-                    }
-                );
+                    });
+                }
+            );
+        },{
+            url: [{
+                urlEquals: url
             }
-        );
+            ]});
     }
 
     // スクロール位置を復元する
