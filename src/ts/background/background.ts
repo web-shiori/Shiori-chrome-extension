@@ -6,7 +6,7 @@ module background {
     chrome.runtime.onMessage.addListener((content: Content) => {
         restoreScrollPosition(content)
         if (content.video_playback_position != null) {
-            setVideoPlayBackPosition(content.video_playback_position);
+            setVideoPlayBackPosition(content.url, content.video_playback_position);
         }
         if (content.audio_playback_position != null) {
             setAudioPlayBackPosition(content.audio_playback_position);
@@ -89,21 +89,17 @@ module background {
     }
 
     // 動画再生位置を復元する
-    function setVideoPlayBackPosition(videoPlayBackPosition: number) {
+    function setVideoPlayBackPosition(url: string, videoPlayBackPosition: number) {
         console.log('再生位置', videoPlayBackPosition);
-        chrome.tabs.query(
-            { active: true, lastFocusedWindow: true },
-            function (tabs) {
-                chrome.tabs.executeScript(
-                    <number>tabs[0].id,
-                    {
-                        code:
-                            `const videoPlayBackPosition = ` +
-                            videoPlayBackPosition,
-                    },
-                    () => {
-                        chrome.tabs.executeScript(<number>tabs[0].id, {
-                            code: `
+        chrome.webNavigation.onCompleted.addListener(function (details) {
+            chrome.tabs.executeScript(
+                details.tabId,
+                {
+                    code: `let videoPlayBackPosition = ` + videoPlayBackPosition,
+                },
+                () => {
+                    chrome.tabs.executeScript(details.tabId, {
+                        code: `
                             let video = document.getElementsByTagName('video')[0];
                             if (video) {
                                 video.currentTime = videoPlayBackPosition;
@@ -112,11 +108,48 @@ module background {
                                 })
                             }
                             `,
-                        });
-                    }
-                );
+                    }, function (result) {
+                        for (let i = 0; i < result.length; i++) {
+                            console.log(result[i])
+                        }
+                    });
+                }
+            );
+        },{
+            url: [{
+                urlEquals: url
             }
-        );
+            ]});
+
+        // chrome.tabs.query(
+        //     { active: true, lastFocusedWindow: true },
+        //     function (tabs) {
+        //         chrome.tabs.executeScript(
+        //             <number>tabs[0].id,
+        //             {
+        //                 code: `let videoPlayBackPosition = ` + videoPlayBackPosition,
+        //             },
+        //             () => {
+        //                 chrome.tabs.executeScript(<number>tabs[0].id, {
+        //                     code: `
+        //                     let video = document.getElementsByTagName('video')[0];
+        //                     if (video) {
+        //                         video.currentTime = videoPlayBackPosition;
+        //                         video.addEventListener("loadeddata", function () {
+        //                             video.currentTime = videoPlayBackPosition;
+        //                             alert('現在の再生位置', video.currentTime);
+        //                         })
+        //                     }
+        //                     `,
+        //                 }, function (result) {
+        //                     for (let i = 0; i < result.length; i++) {
+        //                         console.log(result[i])
+        //                     }
+        //                 });
+        //             }
+        //         );
+        //     }
+        // );
     }
 
     // 音声再生位置を復元する
